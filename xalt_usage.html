@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <!-- Meta, title, CSS, favicons, etc. -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>XALT! | </title>
+
+        <!-- Bootstrap core CSS -->
+
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+
+        <link href="fonts/css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/animate.min.css" rel="stylesheet">
+
+        <!-- Custom styling plus plugins -->
+        <link href="css/custom.css" rel="stylesheet">
+        <link href="css/icheck/flat/green.css" rel="stylesheet">
+
+
+        <script src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+        <!--[if lt IE 9]>
+        <script src="../assets/js/ie8-responsive-file-warning.js"></script>
+        <![endif]-->
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+
+
+    <body class="nav-md">
+
+        <div class="container body">
+
+
+            <div class="main_container">
+
+                <div class="col-md-3 left_col">
+                    <div class="left_col scroll-view">
+
+                        <div class="navbar nav_title" style="border: 0;">
+                            <a href="xaltindex.html" class="site_title"><i class="fa fa-space-shuttle"></i> <span>XALT!</span></a>
+                        </div>
+                        <div class="clearfix"></div>
+
+                        <!-- menu prile quick info -->
+                        <div class="profile">
+                            <div class="profile_pic">
+                                <img src="images/xalt-image.png" alt="..." class="img-circle profile_img">
+                            </div>
+                            <div class="profile_info">
+                                <span>Welcome,</span>
+                                <h2>XALT! Metrics on Demand</h2>
+                            </div>
+                        </div>
+                        <!-- /menu prile quick info -->
+
+                        <br />
+
+                        <!-- sidebar menu -->
+                        <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+
+                            <div class="menu_section">
+                                <h3>General</h3>
+                                <ul class="nav side-menu">
+                                    <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu" style="display: none">
+                                        <li><a href="xalt_usp.html">User Provenance</a>
+                                        </li>
+                                        <li><a href="xalt_usage.html">Usage</a>
+                                        </li>
+                                        <li><a href="xaltindex.html">Dashboard</a>
+                                        </li>
+                                    </ul>
+                                    </li>
+                                    <li><a><i class="fa fa-table"></i> Tables <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu" style="display: none">
+                                        <li><a href="tables.html">Tables</a>
+                                        </li>
+                                        <li><a href="tables_dynamic.html">Table Dynamic</a>
+                                        </li>
+                                    </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="menu_section">
+                                <h3>Live On</h3>
+                                <ul class="nav side-menu">
+                                    <li><a><i class="fa fa-bug"></i> Additional Pages <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu" style="display: none">
+                                        <li><a href="https://github.com/Fahey-McLay/xalt" target="_blank">Download from Github</a>
+                                        </li>
+                                        <li><a href="https://sourceforge.net/projects/xalt" target="_blank">Download from Sourceforge</a>
+                                        </li>
+                                    </ul>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+                        <!-- /sidebar menu -->
+
+                        <!-- /menu footer buttons -->
+                        <div class="sidebar-footer hidden-small">
+                            <a data-toggle="tooltip" data-placement="top" title="Settings">
+                                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                            </a>
+                            <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+                            </a>
+                            <a data-toggle="tooltip" data-placement="top" title="Lock">
+                                <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+                            </a>
+                            <a data-toggle="tooltip" data-placement="top" title="Logout">
+                                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                            </a>
+                        </div>
+                        <!-- /menu footer buttons -->
+                    </div>
+                </div>
+
+                <!-- top navigation -->
+                <div class="top_nav">
+
+                    <div class="nav_menu">
+                        <nav class="" role="navigation">
+                        <div class="nav toggle">
+                            <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                        </div>
+                        </nav>
+                    </div>
+
+                </div>
+                <!-- /top navigation -->
+
+                <!-- page content -->
+                <div class="right_col" role="main">
+                    <div class="">
+                        <div class="page-title">
+                            <div class="title_left">
+                                <h3>Usage</h3>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+
+                        <div class="row">
+
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="x_panel" style="height:80px;">
+                                    <div class="x_title">
+                                        <div class="clearfix"></div>
+                                    </div> <!-- x_title -->
+                                    <p align="justify"> Results presented here are taken from XALT database at National Institute for Computational Sciences at Oak Ridge National Laboratory. XALT went live on November 2014 the data presented here is realtime.rmation that most computing centers need or want.
+                                    </p>
+                                </div> <!-- x_panel -->
+                            </div>
+                        </div> <!-- row -->
+
+                        <div class="row">
+
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="dashboard_graph x_panel">
+                                    <div class="x_title">
+                                        <div class="clearfix"></div>
+                                        <p align="justify"> Select syshost and date range for your queries. </p>
+                                    </div> <!-- x_title -->
+
+                                    <form id="demo-form1" class="form-inline">
+                                        <div class="form-group"> 
+                                            <label class="pull-left" for="sysHost">Select Syshost<span class="required">*</span>
+                                                <select id="select-sysHost" 
+                                                    style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc"> </select>
+                                            </label>
+                                        </div>
+                                        <div class="form-group">
+                                            <label id="reportrange" class="pull-left" 
+                                                style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
+                                                <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+
+                                                <span>December 30, 2014 - January 28, 2015</span> <b class="caret"></b>
+                                            </label>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <span class="btn btn-default btn-xs" id="startBtn">Submit</span>
+                                        </div>
+                                    </form>
+                                </div> <!-- x_panel -->
+
+                            </div> <!-- col-md -->
+                        </div> <!-- row -->
+
+                        <div class="row">
+                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                <div class="dashboard_graph x_panel">
+                                    <div class="row x_title">
+                                        <div class="col-md-20">
+                                            <h2>Modules Usage 
+                                                <ul class="nav navbar-right panel_toolbox">
+                                                    <li><a class="collapse-link" ><i class="fa fa-chevron-up"></i></a></li>
+                                                </ul>
+                                                <div class="clearfix"></div>
+                                            </h2>
+                                        </div>
+                                    </div>
+
+                                    <div class="x_content">
+                                        <div id="mod1_div"></div> <!-- module pie chart -->
+                                        <div id="mod2_div"></div> <!-- module table chart -->
+                                        <label id="lblMod" style="visibility: hidden;"> 
+                                            <small>[Click on Moduels to get version details]</small>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>  <!-- col-md -->
+
+                            <div class="col-md-8 col-sm-6 col-xs-12">
+                                <div class="dashboard_graph x_panel">
+                                    <div class="row x_title">
+                                        <div class="col-md-20">
+                                            <h2>Further Details </h2></br>
+                                            <ul class="nav navbar-right panel_toolbox">
+                                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                                            </ul>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </div>
+                                    <div class="x_content">
+                                        <div class="row">
+                                            <div class="col-xs-7">
+                                                <label id="lblModVer0" style="visibility: hidden;">List of Version(s) 
+                                                    <small>(for given Module)</small>
+                                                </label>
+                                                <div id="mod3_div" style="visibility: hidden;"></div> <!-- Version table chart --> 
+                                                <label id="lblModVer1" style="visibility: hidden;"> 
+                                                    <small>[Count = Number of objects for given Module-Version]</small>
+                                                </label>
+                                            </div>
+                                            <div class="col-xs-5">
+                                                <label id="lblUserList0" style="visibility: hidden">List of User(s)
+                                                    <small>(for given module-verison)</small>
+                                                </label>
+                                                <div id="mod4_div" style="visibility: hidden;"></div> <!-- User table chart -->
+                                                <label id="lblUserList1" style="visibility: hidden">
+                                                    <small>[Count = Number of Executable linked by the User]</small>
+                                                </label>
+                                            </div>
+                                            <div class="col-xs-12">
+                                                </br>
+                                                <label id="lblExecList0" style="visibility: hidden">List of Executable(s)
+                                                    <small>(for given user-module-version)</small>
+                                                </label>
+                                                <div id="exec_div" style="visibility: hidden;"></div> <!-- Exec table chart -->
+                                                <label id="lblExecList1" style="visibility: hidden">
+                                                    <small>[Count = Number of Executable Linked Grouped by same ExecName]</small>
+                                                </label>
+                                                </br> </br>
+                                                <label id="lblExecDetailList" style="visibility: hidden">Executable details 
+                                                    <small>(*same executable name can be used for multiple linkages)</small>
+                                                </label>
+                                                <div id="exec_detail_div" style="visibility: hidden;" ></div> <!-- Exec Detail table chart -->
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-auto">
+                                                </br> </br>
+                                                <label id="lblRunDetail" style="visibility: hidden">Job Run details 
+                                                    <small>(*nC-nJC-nN-nT ~ #Cores-#JobNumCores-#Nodes-#Threads)</small>
+                                                </label>
+                                                <div id="run_detail_div" style="visibility: hidden;"></div> <!-- Job Run table chart -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>  <!-- col-md -->
+                        </div> <!-- row -->
+
+
+                        <div class="row">
+                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                <div class="dashboard_graph x_panel">
+                                    <div class="row x_title">
+                                        <div class="col-md-20">
+                                            <h2>Link Program Usage 
+                                                <ul class="nav navbar-right panel_toolbox">
+                                                    <li><a class="collapse-link" ><i class="fa fa-chevron-up"></i></a></li>
+                                                </ul>
+                                                <div class="clearfix"></div>
+                                            </h2>
+                                        </div>
+                                    </div>
+
+                                    <div class="x_content">
+                                        <div id="comp1_div"></div> <!-- compiler pie chart -->
+                                        <div id="comp2_div"></div> <!-- compiler table list -->
+                                        <label id="lblComp" style="visibility: hidden;"> 
+                                            <small>[Count = Number of executbale linked to link_program]</small>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>  <!-- col-md -->
+
+                            <div class="col-md-8 col-sm-6 col-xs-12">
+                                <div class="dashboard_graph x_panel">
+                                    <div class="row x_title">
+                                        <div class="col-md-20">
+                                            <h2>Further Details</h2></br> 
+                                            <ul class="nav navbar-right panel_toolbox">
+                                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                                            </ul>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </div>
+                                    <div class="x_content">
+                                        <div class="row">
+                                            <div class="col-xs-4">
+                                                <label id="lblCompUser0" style="visibility: hidden;">List of User(s) 
+                                                    <small>(for given LinkProgram)</small>
+                                                </label>
+                                                <div id="comp3_div"></div>
+                                                <label id="lblCompUser1" style="visibility: hidden;"> 
+                                                    <small>[Count = Number of Executable linked by the User]</small>
+                                                </label>
+                                            </div>
+                                            <div class="col-xs-8">
+                                                <label id="lblCompExec0" style="visibility: hidden;">List of Executable(s) 
+                                                    <small>(for given user-linkProgram)</small>
+                                                </label>
+                                                <div id="comp4_div"></div>
+                                                <label id="lblCompExec1" style="visibility: hidden;"> 
+                                                    <small>[Count = Number of Executable Linked Grouped by same ExecName]</small>
+                                                </label>
+                                            </div>
+                                            <div class="col-xs-12">
+                                                </br>
+                                                <label id="lblCompExecDetail0" style="visibility: hidden;">Executable Detail 
+                                                    <small>(*same executable name may be used for multiple linkages)</small>
+                                                </label>
+                                                <div id="comp5_div"></div>
+                                                <label id="lblCompExecDetail1" style="visibility: hidden;"> 
+                                                    <small>[Count = Number of Executable Linked Grouped by same ExecName]</small>
+                                                </label>
+                                                </br>
+                                                <label id="lblCompRun0" style="visibility: hidden;">Job Run Detail 
+                                                    <small>(*Job run detail for the given UUID)</small>
+                                                </label>
+                                                <div id="comp6_div"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>  <!-- col-md -->
+                        </div> <!-- row -->
+
+
+                        <div class="row">
+                            <div class="col-md-4 col-sm-12 col-xs-12">
+                                <div class="x_panel">
+                                    <div class="x_title">
+                                        <h2>Indentify User <small>Who used a particular library</small></h2>
+                                        <ul class="nav navbar-right panel_toolbox">
+                                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                            </li>
+                                        </ul>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="x_content">
+                                        <form id="demo-form" data-parsley-validate>
+
+                                            <label class="col-md-6 col-sm-3 col-xs-12" for="objPath">Enter library path<span class="required">*</span>
+                                            </label>
+                                            <input type="text" id="objPath" required="required" class="form-control">
+                                            <div class="ln_solid"></div>
+                                            <span class="btn btn-primary">Submit</span>
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>  <!-- col-md -->
+
+                            <div class="col-md-8 col-sm-6 col-xs-12">
+                                <div class="dashboard_graph x_panel">
+                                    <div class="row x_title">
+                                        <div class="col-md-20">
+                                            <h2>Further Details </h2>
+                                            <ul class="nav navbar-right panel_toolbox">
+                                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                                            </ul>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </div>
+                                    <div class="x_content">
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <label id="lblIdentifyUser0" style="visibility: hidden;">List of Users(s) 
+                                                </label>
+                                                <div id="identify_user_div"></div>
+                                                <label id="lblIdentifyUser1" style="visibility: hidden;"> 
+                                                    <small>[Count = Number of times User linked to given Object Path]</small>
+                                                </label>
+                                            </div>
+                                            <div class="col-xs-8">
+                                                </br>
+                                                <label id="lblIdentifyExec0" style="visibility: hidden;"> Executable List
+                                                </label>
+                                                <div id="identify_exec_div"></div>
+                                                <label id="lblIdentifyExec1" style="visibility: hidden;"> 
+                                                    <small>[Count = Number of Executable linked to given User-Object_Path]</small>
+                                                </label>
+                                            </div>
+                                            <div class="col-xs-12">
+                                                <div id="exec_detail_comp_div"></div>
+                                                <div id="run_detail_comp_div"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>  <!-- col-md -->
+
+                        </div> <!-- row -->
+
+
+                    </div>
+
+                    <!-- footer content -->
+                    <footer>
+                    <div class="">
+                        <p class="pull-right">Thanks.  <a>Kapil Agrawal</a>. |
+                        <span class="lead"> <i class="fa fa-paw"></i> XALT!</span>
+                        </p>
+                    </div>
+                    <div class="clearfix"></div>
+                    </footer>
+                    <!-- /footer content -->
+
+                </div>
+                <!-- /page content -->
+            </div>
+
+        </div>
+
+        <div id="custom_notifications" class="custom-notifications dsp_none">
+            <ul class="list-unstyled notifications clearfix" data-tabbed_notifications="notif-group">
+            </ul>
+            <div class="clearfix"></div>
+            <div id="notif-group" class="tabbed_notifications"></div>
+        </div>
+
+        <script src="js/bootstrap.min.js"></script>
+
+        <!-- chart js -->
+        <script src="js/chartjs/chart.min.js"></script>
+        <!-- bootstrap progress js -->
+        <script src="js/progressbar/bootstrap-progressbar.min.js"></script>
+        <script src="js/nicescroll/jquery.nicescroll.min.js"></script>
+        <!-- daterangepicker -->
+        <script type="text/javascript" src="js/moment.min2.js"></script>
+        <script type="text/javascript" src="js/datepicker/daterangepicker.js"></script>
+        <!-- icheck -->
+        <script src="js/icheck/icheck.min.js"></script>
+
+        <script src="js/custom.js"></script>
+
+        <!-- moris js
+        <script src="js/moris/raphael-min.js"></script>
+        <script src="js/moris/morris.js"></script>
+        <script src="js/moris/example.js"></script>
+        -->
+
+        <!-- google/chart -->
+        <script type="text/javascript" src="js/google/mostUsedModules.js"></script>
+        <script type="text/javascript" src="js/google/compilerMostUsed.js"></script>
+        <script type="text/javascript" src="js/google/identifyUser.js"></script>
+
+        <!-- form validation STARTs-->
+        <script type="text/javascript" src="js/parsley/parsley.min.js"></script>
+
+        <script>
+            $(document).ready(function () {
+                $.listen('parsley:field:validate', function () {
+                    validateFront();
+                });
+                $('#demo-form .btn').on('click', function () {
+                    $('#demo-form').parsley().validate();
+                    validateFront();
+                });
+                var validateFront = function () {
+                    if (true === $('#demo-form').parsley().isValid()) {
+                        $('.bs-callout-info').removeClass('hidden');
+                        $('.bs-callout-warning').addClass('hidden');
+                        } else {
+                        $('.bs-callout-info').addClass('hidden');
+                        $('.bs-callout-warning').removeClass('hidden');
+                    }
+                };  
+                $('#demo-form .btn').on('click', function () {
+                    if (true === $('#demo-form').parsley().isValid()) {
+                        console.log("OBJPATH " + document.getElementById("objPath").value);
+                        identifyUser(document.getElementById("objPath").value);
+                    }
+
+                }); 
+
+            });
+            try {
+                hljs.initHighlightingOnLoad();
+            } catch (err) {} 
+        </script>
+        <!-- form validation  ENDs-->
+
+        <!-- Include syshost Start++ -->
+        <script>
+            var sysHost;
+            $(document).ready(function () {
+                var request = $.ajax
+                ({url: "include/syshost.php",type: "POST",
+                    dataType: "html"});
+
+                request.done(function(data){
+                    $("#select-sysHost").html(data);
+                    sysHost = document.getElementById("select-sysHost").value;
+                });
+                $('#select-sysHost').change(function() {
+                    sysHost = document.getElementById("select-sysHost").value;
+                    console.log("Syshost Selected:  " + sysHost);
+                });
+            });
+
+        </script>
+        <!-- Include syshost Ends -->
+
+
+        <!-- datepicker -->
+        <script type="text/javascript">
+
+            var startDate;
+            var endDate;
+
+            $(document).ready(function () {
+
+                    var cb = function (start, end, label) {
+                    console.log(start.toISOString(), end.toISOString(), label);
+                    $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+                    }
+
+                    var optionSet1 = {startDate: moment().subtract(29, 'days'),
+                    endDate: moment(),
+                    minDate: '01/11/2014',
+                    maxDate: moment(),
+                    dateLimit: {days: 365},
+                    showDropdowns: true,showWeekNumbers: true,timePicker: false,timePickerIncrement: 1,timePicker12Hour: true,ranges: 
+                    {'This Year': [moment().startOf('year'), moment().endOf('month')],
+                    'Today': [moment(), moment()],
+                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                    },opens: 'left',buttonClasses: ['btn btn-default'],applyClass: 
+            'btn-small btn-primary',
+                cancelClass: 'btn-small',format: 'MM/DD/YYYY',separator: ' to ',locale: {applyLabel: 'Submit',cancelLabel: 'Clear',
+                    fromLabel: 'From',
+                    toLabel: 'To',
+                    customRangeLabel: 'Custom',
+                    daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+                    monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                    firstDay: 1
+                }
+                    };
+
+                    $('#reportrange span').html(moment().subtract(29, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
+
+                    $('#reportrange').daterangepicker(optionSet1, cb);
+
+                    startDate = moment().subtract(29, 'days').format('YYYY-MM-DD');
+                    endDate = moment().format('YYYY-MM-DD'); 
+                    $('#reportrange').on('show.daterangepicker', function () {
+                            console.log("show event fired");
+                            });
+                    $('#reportrange').on('hide.daterangepicker', function () {
+                            console.log("hide event fired");
+                            });
+                    $('#reportrange').on('apply.daterangepicker', function (ev, picker) {
+                            startDate = picker.startDate.format('YYYY-MM-DD');
+                            endDate = picker.endDate.format('YYYY-MM-DD');
+                            sysHost = document.getElementById("select-sysHost").value;
+
+                            console.log("apply event fired, start/end dates are " + picker.startDate.format('MMMM D, YYYY') + " to " + picker.endDate.format('MMMM D, YYYY') + " to Syshost " + sysHost );
+                            });
+                    $('#reportrange').on('cancel.daterangepicker', function (ev, picker) {
+                            console.log("cancel event fired");
+                            });
+                    $('#options1').click(function () {
+                            $('#reportrange').data('daterangepicker').setOptions(optionSet1, cb);
+                            });
+                    $('#options2').click(function () {
+                            $('#reportrange').data('daterangepicker').setOptions(optionSet2, cb);
+                            });
+                    $('#destroy').click(function () {
+                            $('#reportrange').data('daterangepicker').remove();
+                            });
+                    $('#startBtn').on('click', function () {
+                            console.log("start/end dates are " + startDate + " to " + endDate + " to Syshost " + sysHost );
+                            query = 1;              // top level query
+                            mostUsedModules(sysHost, startDate, endDate);
+                            compilerMostUsed(sysHost, startDate, endDate);
+                            console.log(startDate + endDate + sysHost);
+                            });
+            });
+        </script>
+        <!-- /datepicker -->
+        <!--
+        <script>
+            $('#startBtn').on('click', function () {
+            query = 1;              // top level query
+            mostUsedModules(sysHost, startDate, endDate);
+            compilerMostUsed(sysHost, startDate, endDate);
+            console.log(startDate + endDate + sysHost);
+            });
+
+        </script>
+        -->
+
+
+    </body>
+
+
+</html>
