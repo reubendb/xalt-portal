@@ -22,6 +22,7 @@ try {
     WHERE xo.object_path NOT LIKE '%usr%'; 
     ";
 
+    
 /*
     $sql=" SELECT xo.object_path AS ObjPath, xo.module_name as ModuleName, 
         xl.build_user AS BuildUser, xl.exit_code AS ExitCode, 
