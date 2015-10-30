@@ -55,9 +55,6 @@ function gTi1(objPath, user) {        /* Get Exec List */
          datatype: "json", async: false
          }).responseText;
 
-    console.log("HERE " + jsonTableData);
-
-
     var div_id = 'identify_exec_div';
 
     var count = checkJsonData(jsonTableData);             /* if no data is returned do Nothing!! */
