@@ -14,21 +14,24 @@ try {
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     if ($linkProgram == 'gpp') { $linkProgram = 'g++'; }              # specail condition for g++ as ajax call reads + as special character
 
-        $sql="SELECT xl.uuid as Uuid, xl.date as Date,
+        $sql="
+        SELECT
+        xl.exec_path as ExecPath,
+        xl.date as BuildDate,
+        xl.link_program as LinkProgram,
+        xl.exit_code as ExitCode,
+        xl.build_user as BuildUser,
         IF (
             (SELECT COUNT(*) 
             FROM xalt_run xr
             WHERE xr.uuid = xl.uuid) >= 1, 'true', 'false'
-        ) as JobRun
+        ) as JobRun,
+        xl.uuid as Uuid
         FROM xalt_link xl  
         WHERE xl.build_user = '$user' AND
         xl.build_syshost = '$sysHost' AND
         xl.link_program = '$linkProgram' AND
         xl.date BETWEEN '$startDate' AND '$endDate' AND
-        xl.exec_path NOT LIKE '%.so' AND -- exec filter starts  
-        xl.exec_path NOT LIKE '%.o' AND                         
-        xl.exec_path NOT LIKE '%.o.%' AND                       
-        xl.exec_path NOT LIKE '%.so.%' AND -- exec filter ends  
         SUBSTRING_INDEX(xl.exec_path, '/', -1) = '$exec'
         ORDER BY Date desc ;";
 
@@ -39,9 +42,13 @@ try {
     $result = $query->fetchAll(PDO:: FETCH_ASSOC);
 
     echo "{ \"cols\": [
-    {\"id\":\"\",\"label\":\"Uuid\",\"pattern\":\"\",\"type\":\"string\"}, 
+    {\"id\":\"\",\"label\":\"Executable Path\",\"pattern\":\"\",\"type\":\"string\"}, 
     {\"id\":\"\",\"label\":\"Build Date\",\"pattern\":\"\",\"type\":\"string\"}, 
-    {\"id\":\"\",\"label\":\"Job Run[T/F]\",\"pattern\":\"\",\"type\":\"boolean\"} 
+    {\"id\":\"\",\"label\":\"Link Program\",\"pattern\":\"\",\"type\":\"string\"}, 
+    {\"id\":\"\",\"label\":\"ExitCode\",\"pattern\":\"\",\"type\":\"string\"}, 
+    {\"id\":\"\",\"label\":\"Build User\",\"pattern\":\"\",\"type\":\"string\"}, 
+    {\"id\":\"\",\"label\":\"Job Run[T/F]\",\"pattern\":\"\",\"type\":\"boolean\"}, 
+    {\"id\":\"\",\"label\":\"Uuid\",\"pattern\":\"\",\"type\":\"string\"} 
     ], 
     \"rows\": [ ";
 
@@ -53,15 +60,23 @@ try {
 
         if ($row_num == $total_rows){
             echo "{\"c\":[
-        {\"v\":\"" . $row['Uuid'] . "\",\"f\":null},
-        {\"v\":\"" . $row['Date'] . "\",\"f\":null},
-        {\"v\":" . $row['JobRun'] . ",\"f\":null}
+        {\"v\":\"" . $row['ExecPath'] . "\",\"f\":null},
+        {\"v\":\"" . $row['BuildDate'] . "\",\"f\":null},
+        {\"v\":\"" . $row['LinkProgram'] . "\",\"f\":null},
+        {\"v\":\"" . $row['ExitCode'] . "\",\"f\":null},
+        {\"v\":\"" . $row['BuildUser'] . "\",\"f\":null},
+        {\"v\":" . $row['JobRun'] . ",\"f\":null},
+        {\"v\":\"" . $row['Uuid'] . "\",\"f\":null}
         ]}";
         } else {
             echo "{\"c\":[
-        {\"v\":\"" . $row['Uuid'] . "\",\"f\":null},
-        {\"v\":\"" . $row['Date'] . "\",\"f\":null},
-        {\"v\":" . $row['JobRun'] . ",\"f\":null}
+        {\"v\":\"" . $row['ExecPath'] . "\",\"f\":null},
+        {\"v\":\"" . $row['BuildDate'] . "\",\"f\":null},
+        {\"v\":\"" . $row['LinkProgram'] . "\",\"f\":null},
+        {\"v\":\"" . $row['ExitCode'] . "\",\"f\":null},
+        {\"v\":\"" . $row['BuildUser'] . "\",\"f\":null},
+        {\"v\":" . $row['JobRun'] . ",\"f\":null},
+        {\"v\":\"" . $row['Uuid'] . "\",\"f\":null}
         ]}, ";
         } 
 
