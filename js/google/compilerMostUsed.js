@@ -162,8 +162,8 @@ function gTc3(sysHost, startDate, endDate, linkProgram, user, exec) {
     var count = checkJsonData(jsonTableData);             /* if no data is returned do Nothing!! */
     if (count != 0) {
 
+        document.getElementById("lblCompExecRow").style.visibility = 'visible';
         document.getElementById("lblCompExecDetail0").style.visibility = 'visible';
-        document.getElementById("lblCompExecDetail1").style.visibility = 'visible';
 
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);
@@ -178,7 +178,7 @@ function gTc3(sysHost, startDate, endDate, linkProgram, user, exec) {
             var selection = table.getSelection();
             var row = selection[0].row;
             var col = selection[0].column;
-            var uuid = TableData.getValue(row,0);
+            var uuid = TableData.getValue(row,6);
 
             // Not passing start/end date as user might run even after the date range.
             gTc4(sysHost, uuid, user);
