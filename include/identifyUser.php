@@ -10,7 +10,8 @@ try {
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 
-    $sql = "SELECT xl.build_user as Users, count(*) as Count,
+    $sql = "
+        SELECT xl.build_user as Users, count(*) as Count,
         MIN(xl.date) AS fromdate, MAX(xl.date) AS todate
         FROM xalt_link xl 
         INNER JOIN 
@@ -21,14 +22,10 @@ try {
         xo.object_path like CONCAT('%','$objPath', '%')
     ) 
     ka ON ka.link_id = xl.link_id 
-    WHERE     
-    xl.exec_path NOT LIKE '%.so' AND -- exec filter starts                
-    xl.exec_path NOT LIKE '%.o' AND                                       
-    xl.exec_path NOT LIKE '%.o.%' AND                                     
-    xl.exec_path NOT LIKE '%.so.%'  -- exec filter ends 
     group by Users
     ORDER BY Count Desc
-    ;";
+    ;
+    ";
 
 #    print_r($sql);
 
@@ -40,9 +37,9 @@ try {
     echo "{ \"cols\": 
         [
 {\"id\":\"\",\"label\":\"User\",\"pattern\":\"\",\"type\":\"string\"}, 
-{\"id\":\"\",\"label\":\"Count\",\"pattern\":\"\",\"type\":\"number\"}, 
-{\"id\":\"\",\"label\":\"From Date\",\"pattern\":\"\",\"type\":\"string\"}, 
-{\"id\":\"\",\"label\":\"To Date\",\"pattern\":\"\",\"type\":\"string\"} 
+{\"id\":\"\",\"label\":\"Earliest_LinkDate\",\"pattern\":\"\",\"type\":\"string\"}, 
+{\"id\":\"\",\"label\":\"Latest_LinkDate\",\"pattern\":\"\",\"type\":\"string\"}, 
+{\"id\":\"\",\"label\":\"Count\",\"pattern\":\"\",\"type\":\"number\"}
 ], 
 \"rows\": [ ";
 
@@ -54,16 +51,16 @@ foreach($result as $row){
     if ($row_num == $total_rows){
         echo "{\"c\":[
     {\"v\":\"" . $row['Users'] . "\",\"f\":null},
-    {\"v\":" . $row['Count'] . ",\"f\":null},
     {\"v\":\"" . $row['fromdate'] . "\",\"f\":null},
-    {\"v\":\"" . $row['todate'] . "\",\"f\":null}
+    {\"v\":\"" . $row['todate'] . "\",\"f\":null},
+    {\"v\":" . $row['Count'] . ",\"f\":null}
     ]}";
     } else {
         echo "{\"c\":[
     {\"v\":\"" . $row['Users'] . "\",\"f\":null},
-    {\"v\":" . $row['Count'] . ",\"f\":null},
     {\"v\":\"" . $row['fromdate'] . "\",\"f\":null},
-    {\"v\":\"" . $row['todate'] . "\",\"f\":null}
+    {\"v\":\"" . $row['todate'] . "\",\"f\":null},
+    {\"v\":" . $row['Count'] . ",\"f\":null}
     ]}, ";
     }
 }
