@@ -189,7 +189,7 @@ function gT1(sysHost, startDate, endDate, module, version) {      /* List of Use
 
 function gT2(sysHost, startDate, endDate, module, version, user) {       /* List of executables */
 
-    console.log("&module=" + module + "&version=" + version + "&user= " + user);
+    console.log("&module=" + module + "&version=" + version + "&user=" + user);
 
     var jsonTableData = $.ajax
         ({url:"include/execList.php", 
