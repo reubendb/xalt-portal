@@ -27,21 +27,18 @@ try {
     }
 
 
-    $sql= "SELECT xl.build_user as Users, count(*) as Count
+    $sql= "SELECT xl.build_user as Users, count(*) as Count,
+        min(xl.date) as minDate, max(xl.date) as maxDate
         FROM xalt_link xl 
         INNER JOIN (
             SELECT DISTINCT jlo.link_id 
             FROM join_link_object jlo 
             INNER JOIN xalt_object xo ON (jlo.obj_id = xo.obj_id)
             WHERE xo.syshost='$sysHost' AND 
-            xo.module_name LIKE '$moduleName' AND
-            xo.timestamp BETWEEN '$startDate' AND '$endDate'
+            xo.module_name LIKE '$moduleName' 
         ) 
         ka ON ka.link_id = xl.link_id AND
-        xl.exec_path NOT LIKE '%.so' AND -- exec filter starts                
-        xl.exec_path NOT LIKE '%.o' AND                                       
-        xl.exec_path NOT LIKE '%.o.%' AND                                     
-        xl.exec_path NOT LIKE '%.so.%'  -- exec filter ends 
+        xl.date BETWEEN '$startDate' AND '$endDate'
         GROUP BY Users
         ORDER BY Count Desc
         ;";
@@ -55,6 +52,8 @@ try {
 
     echo "{ \"cols\": [
     {\"id\":\"\",\"label\":\"Users\",\"pattern\":\"\",\"type\":\"string\"}, 
+    {\"id\":\"\",\"label\":\"Earliest_LinkDate\",\"pattern\":\"\",\"type\":\"string\"}, 
+    {\"id\":\"\",\"label\":\"Latest_LinkDate\",\"pattern\":\"\",\"type\":\"string\"}, 
     {\"id\":\"\",\"label\":\"Count\",\"pattern\":\"\",\"type\":\"number\"} 
     ], 
     \"rows\": [ ";
@@ -69,11 +68,15 @@ try {
 
             echo "{\"c\":[
         {\"v\":\"" . $row['Users'] . "\",\"f\":null},
+        {\"v\":\"" . $row['minDate'] . "\",\"f\":null},
+        {\"v\":\"" . $row['maxDate'] . "\",\"f\":null},
         {\"v\":" . $row['Count'] . ",\"f\":null}
         ]}";
         } else {
             echo "{\"c\":[
         {\"v\":\"" . $row['Users'] . "\",\"f\":null},
+        {\"v\":\"" . $row['minDate'] . "\",\"f\":null},
+        {\"v\":\"" . $row['maxDate'] . "\",\"f\":null},
         {\"v\":" . $row['Count'] . ",\"f\":null}
         ]}, ";
         } 
