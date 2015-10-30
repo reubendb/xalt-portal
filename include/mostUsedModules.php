@@ -55,6 +55,24 @@ try {
     } else if ($q == 1) {  /* if called from xalt_usage.html */
 
         $sql="
+            SELECT DISTINCT SUBSTRING_INDEX(xo.module_name,'/',1) AS Modules,
+                COUNT(distinct ka.link_id) as Count
+                FROM xalt_object xo           
+                INNER JOIN 
+                (SELECT distinct jlo.obj_id, jlo.link_id 
+                FROM join_link_object jlo 
+                INNER JOIN xalt_link xl   ON (jlo.link_id = xl.link_id)
+                WHERE 
+                xl.build_syshost='$sysHost' AND
+                xl.date BETWEEN  '$startDate' AND '$endDate'
+            ) 
+            ka ON ka.obj_id = xo.obj_id
+            WHERE xo.syshost='$sysHost' AND                             
+            xo.module_name IS NOT NULL
+            GROUP BY Modules                                             
+            ORDER BY Modules
+            ";
+/*        $sql="
             SELECT CASE                                                       
             WHEN substring_index(xo.module_name, '/', 1) like '%-%'           
             then SUBSTRING_INDEX(SUBSTRING_INDEX(xo.module_name,'/',1), '-',1)
@@ -71,13 +89,33 @@ try {
             GROUP BY Modules                                                  
             ORDER BY count desc, Modules
             ;";
-
+ */
         $columns = "
     {\"id\":\"\",\"label\":\"Modules\",\"pattern\":\"\",\"type\":\"string\"}, 
     {\"id\":\"\",\"label\":\"Count\",\"pattern\":\"\",\"type\":\"number\"}";
 
     } else if ($q == 2) {      /* Go deep to look for versions xalt_usage.html */
 
+        $sql="
+            SELECT DISTINCT SUBSTRING_INDEX(xo.module_name,'/',1) AS Modules,
+                SUBSTRING_INDEX(xo.module_name,'/',-1) as Versions,
+                COUNT(distinct ka.link_id) as Count
+                FROM xalt_object xo           
+                INNER JOIN 
+                (SELECT distinct jlo.obj_id, jlo.link_id 
+                FROM join_link_object jlo 
+                INNER JOIN xalt_link xl   ON (jlo.link_id = xl.link_id)
+                WHERE 
+                xl.build_syshost='$sysHost' AND
+                xl.date BETWEEN  '$startDate' AND '$endDate'
+            ) 
+            ka ON ka.obj_id = xo.obj_id
+            WHERE xo.syshost='$sysHost' AND                             
+            SUBSTRING_INDEX(xo.module_name,'/',1) = '$module'
+            GROUP BY Modules, Versions                                             
+            ORDER BY Modules
+            ";
+/*
         $sql="
             SELECT                                                          
             SUBSTRING_INDEX(xo.module_name,'/',1) as Modules,                 
@@ -92,13 +130,14 @@ try {
             GROUP BY Modules, Versions                                        
             ORDER BY Modules, Count Desc
             ;";
-
+    {\"id\":\"\",\"label\":\"MinDate\",\"pattern\":\"\",\"type\":\"string\"}, 
+    {\"id\":\"\",\"label\":\"MaxDate\",\"pattern\":\"\",\"type\":\"string\"}, 
+ */
         $columns = "
     {\"id\":\"\",\"label\":\"Modules\",\"pattern\":\"\",\"type\":\"string\"}, 
     {\"id\":\"\",\"label\":\"Versions\",\"pattern\":\"\",\"type\":\"string\"}, 
-    {\"id\":\"\",\"label\":\"MinDate\",\"pattern\":\"\",\"type\":\"string\"}, 
-    {\"id\":\"\",\"label\":\"MaxDate\",\"pattern\":\"\",\"type\":\"string\"}, 
-    {\"id\":\"\",\"label\":\"Count\",\"pattern\":\"\",\"type\":\"number\"}";
+    {\"id\":\"\",\"label\":\"Count\",\"pattern\":\"\",\"type\":\"number\"}
+    ";
 
     } else if ($q == 3) {      /* Go deep to look for versions  xalt_usp.html */
 
@@ -168,8 +207,6 @@ try {
                 echo "{\"c\":[
             {\"v\":\"" . $row['Modules'] . "\",\"f\":null},
             {\"v\":\"" . $row['Versions'] . "\",\"f\":null},
-            {\"v\":\"" . $row['MinDate'] . "\",\"f\":null},
-            {\"v\":\"" . $row['MaxDate'] . "\",\"f\":null},
             {\"v\":" . $row['Count'] . ",\"f\":null}
             ]}";
             }
@@ -184,8 +221,6 @@ try {
                 echo "{\"c\":[
             {\"v\":\"" . $row['Modules'] . "\",\"f\":null},
             {\"v\":\"" . $row['Versions'] . "\",\"f\":null},
-            {\"v\":\"" . $row['MinDate'] . "\",\"f\":null},
-            {\"v\":\"" . $row['MaxDate'] . "\",\"f\":null},
             {\"v\":" . $row['Count'] . ",\"f\":null}
             ]}, ";
             } 
