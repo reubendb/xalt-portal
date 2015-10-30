@@ -241,6 +241,7 @@ function gT3(sysHost, startDate, endDate, module, version, user, exec) { /* Exec
 
     var count = checkJsonData(jsonTableData);             /* if no data is returned do Nothing!! */
     if (count != 0) {
+        document.getElementById("lblExecDetailRow").style.visibility = 'visible';
         document.getElementById("lblExecDetailList").style.visibility = 'visible';
         document.getElementById("exec_detail_div").style.visibility = 'visible';
 
