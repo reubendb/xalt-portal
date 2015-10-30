@@ -18,10 +18,6 @@ try {
         FROM xalt_link xl
         WHERE xl.build_syshost='$sysHost' AND 
         xl.link_program IS NOT NULL AND 
-        xl.exec_path NOT LIKE '%.so' AND -- exec filter starts  
-        xl.exec_path NOT LIKE '%.o' AND                         
-        xl.exec_path NOT LIKE '%.o.%' AND                       
-        xl.exec_path NOT LIKE '%.so.%' AND -- exec filter ends  
         xl.date BETWEEN '$startDate' AND '$endDate' 
         GROUP BY xl.link_program 
         ORDER BY Count DESC 
