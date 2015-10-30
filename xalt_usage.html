@@ -206,7 +206,7 @@
                                         <div class="col-md-20">
                                             <h2>Modules Usage 
                                                 <ul class="nav navbar-right panel_toolbox">
-                                                    <li><a class="collapse-link" ><i class="fa fa-chevron-up"></i></a></li>
+                                                    <li><a class="collapse-link" ><i class="fa fa-chevron-down"></i></a></li>
                                                 </ul>
                                                 <div class="clearfix"></div>
                                             </h2>
@@ -230,7 +230,7 @@
                                         <div class="col-md-20">
                                             <h2>Further Details </h2></br>
                                             <ul class="nav navbar-right panel_toolbox">
-                                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                                                <li><a class="collapse-link"><i class="fa fa-chevron-down"></i></a></li>
                                             </ul>
                                             <div class="clearfix"></div>
                                         </div>
@@ -263,22 +263,11 @@
                                                 <div id="exec_div" style="visibility: hidden;"></div> <!-- Exec table chart -->
                                                 <label id="lblExecList1" style="visibility: hidden">
                                                     <small>[Count = Number of Executable Linked Grouped by same ExecName]</small>
-                                                </label>
-                                                </br> </br>
-                                                <label id="lblExecDetailList" style="visibility: hidden">Executable details 
                                                     <small>(*same executable name can be used for multiple linkages)</small>
                                                 </label>
-                                                <div id="exec_detail_div" style="visibility: hidden;" ></div> <!-- Exec Detail table chart -->
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-xs-auto">
-                                                </br> </br>
-                                                <label id="lblRunDetail" style="visibility: hidden">Job Run details 
-                                                    <small>(*nC-nJC-nN-nT ~ #Cores-#JobNumCores-#Nodes-#Threads)</small>
-                                                </label>
-                                                <div id="run_detail_div" style="visibility: hidden;"></div> <!-- Job Run table chart -->
-                                            </div>
                                         </div>
                                     </div>
 
@@ -288,13 +277,46 @@
 
 
                         <div class="row">
+                            <div class="col-md-20 col-sm-20 col-xs-20">
+                                <div class="dashboard_graph x_panel">
+                                    <div class="row x_title">
+                                        <div class="col-md-20">
+                                            <h2>Executable Details </h2></br>
+                                            <ul class="nav navbar-right panel_toolbox">
+                                                <li><a class="collapse-link"><i class="fa fa-chevron-down"></i></a></li>
+                                            </ul>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </div>
+                                    <div class="x_content">
+                                        <div class="row">
+                                            <div class="col-xs-auto">
+                                                <label id="lblExecDetailList" style="visibility: hidden">Executable details </label>
+                                                <div id="exec_detail_div" style="visibility: hidden;" ></div> <!-- Exec Detail table chart -->
+                                            </div> 
+                                            <div class="col-xs-auto">
+                                                </br>
+                                                <label id="lblRunDetail" style="visibility: hidden">Job Run details 
+                                                    <small>(*nC-nJC-nN-nT ~ #Cores-#JobNumCores-#Nodes-#Threads)</small>
+                                                </label>
+                                                <div id="run_detail_div" style="visibility: hidden;"></div> <!-- Job Run table chart -->
+                                            </div>
+                                        </div> <!-- row -->
+                                    </div>
+                                </div>
+                            </div>  <!-- col-md -->
+                        </div> <!-- row -->
+
+
+
+                        <div class="row">
                             <div class="col-md-4 col-sm-6 col-xs-12">
                                 <div class="dashboard_graph x_panel">
                                     <div class="row x_title">
                                         <div class="col-md-20">
                                             <h2>Link Program Usage 
                                                 <ul class="nav navbar-right panel_toolbox">
-                                                    <li><a class="collapse-link" ><i class="fa fa-chevron-up"></i></a></li>
+                                                    <li><a class="collapse-link" ><i class="fa fa-chevron-down"></i></a></li>
                                                 </ul>
                                                 <div class="clearfix"></div>
                                             </h2>
@@ -317,7 +339,7 @@
                                         <div class="col-md-20">
                                             <h2>Further Details</h2></br> 
                                             <ul class="nav navbar-right panel_toolbox">
-                                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                                                <li><a class="collapse-link"><i class="fa fa-chevron-down"></i></a></li>
                                             </ul>
                                             <div class="clearfix"></div>
                                         </div>
@@ -371,7 +393,7 @@
                                     <div class="x_title">
                                         <h2>Indentify User <small>Who used a particular library</small></h2>
                                         <ul class="nav navbar-right panel_toolbox">
-                                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                            <li><a class="collapse-link"><i class="fa fa-chevron-down"></i></a>
                                             </li>
                                         </ul>
                                         <div class="clearfix"></div>
@@ -396,7 +418,7 @@
                                         <div class="col-md-20">
                                             <h2>Further Details </h2>
                                             <ul class="nav navbar-right panel_toolbox">
-                                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                                                <li><a class="collapse-link"><i class="fa fa-chevron-down"></i></a></li>
                                             </ul>
                                             <div class="clearfix"></div>
                                         </div>
