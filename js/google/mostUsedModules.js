@@ -260,7 +260,7 @@ function gT3(sysHost, startDate, endDate, module, version, user, exec) { /* Exec
             var selection = table.getSelection();
             var row = selection[0].row;
             var col = selection[0].column;
-            var uuid = TableData.getValue(row,0);
+            var uuid = TableData.getValue(row,6);
 
             gT4(uuid);
             if (query == 3) {         /* Call from xalt_usp.html page */
@@ -368,11 +368,10 @@ function makeTable(TableData, div_id) {
 
     var tab_options = {title: 'Table View',
         showRowNumber: true,
-        height: 200,
+        height: '100%',
         width: '100%',
         allowHtml: true,
-        alternatingRowStyle: true,
-        height: 200}
+        alternatingRowStyle: true}
 
     // Instantiate and Draw our Table
     var table = new google.visualization.Table(document.getElementById(div_id));
