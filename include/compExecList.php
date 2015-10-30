@@ -12,21 +12,20 @@ try {
     $conn = new PDO("mysql:host=$servername;dbname=$db", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    if ($linkProgram == 'gpp') { $linkProgram = 'g++'; }              # specail condition for g++ as ajax call reads + as special character
-
-    $sql="SELECT SUBSTRING_INDEX(xl.exec_path, '/', -1) as Executable, 
-    COUNT(xl.date) as Count 
-    FROM xalt_link xl  
-    WHERE xl.build_syshost = '$sysHost' AND 
-    xl.link_program = '$linkProgram' AND 
-    xl.build_user = '$user' AND
-    xl.exec_path NOT LIKE '%.so' AND -- exec filter starts  
-    xl.exec_path NOT LIKE '%.o' AND                         
-    xl.exec_path NOT LIKE '%.o.%' AND                       
-    xl.exec_path NOT LIKE '%.so.%' AND -- exec filter ends  
-    xl.date BETWEEN '$startDate' AND '$endDate'
-    GROUP BY Executable 
-    ORDER BY Count desc;";
+    if ($linkProgram == 'gpp') { $linkProgram = 'g++'; }              # specail condition for g++ as 
+                                                                      # ajax call reads + as special character
+        $sql="
+        SELECT SUBSTRING_INDEX(xl.exec_path, '/', -1) as Executable, 
+        COUNT(xl.date) as Count,
+        min(xl.date) as MinDate,
+        max(xl.date) as MaxDate
+        FROM xalt_link xl  
+        WHERE xl.build_syshost = '$sysHost' AND 
+        xl.link_program = '$linkProgram' AND 
+        xl.build_user = '$user' AND
+        xl.date BETWEEN '$startDate' AND '$endDate'
+        GROUP BY Executable 
+        ORDER BY Count desc;";
 
     $query = $conn->prepare($sql);
     $query->execute();
@@ -35,6 +34,8 @@ try {
 
     echo "{ \"cols\": [
     {\"id\":\"\",\"label\":\"Executable\",\"pattern\":\"\",\"type\":\"string\"}, 
+    {\"id\":\"\",\"label\":\"LinkDate_Oldest\",\"pattern\":\"\",\"type\":\"string\"}, 
+    {\"id\":\"\",\"label\":\"LinkDate_Latest\",\"pattern\":\"\",\"type\":\"string\"}, 
     {\"id\":\"\",\"label\":\"Count\",\"pattern\":\"\",\"type\":\"number\"} 
     ], 
     \"rows\": [ ";
@@ -48,11 +49,15 @@ try {
         if ($row_num == $total_rows){
             echo "{\"c\":[
         {\"v\":\"" . $row['Executable'] . "\",\"f\":null},
+        {\"v\":\"" . $row['MinDate'] . "\",\"f\":null},
+        {\"v\":\"" . $row['MaxDate'] . "\",\"f\":null},
         {\"v\":" . $row['Count'] . ",\"f\":null}
         ]}";
         } else {
             echo "{\"c\":[
         {\"v\":\"" . $row['Executable'] . "\",\"f\":null},
+        {\"v\":\"" . $row['MinDate'] . "\",\"f\":null},
+        {\"v\":\"" . $row['MaxDate'] . "\",\"f\":null},
         {\"v\":" . $row['Count'] . ",\"f\":null}
         ]}, ";
         } 
