@@ -27,7 +27,8 @@ try {
     }
 
     $sql = "SELECT SUBSTRING_INDEX(xl.exec_path, '/', -1) as Executable,    
-        COUNT(xl.date) as Count
+        COUNT(xl.date) as Count,
+        MIN(xl.date) as minDate, max(xl.date) as maxDate
         FROM xalt_link xl 
         INNER JOIN (
             SELECT DISTINCT jlo.link_id
@@ -35,19 +36,15 @@ try {
             INNER JOIN xalt_object xo ON (jlo.obj_id = xo.obj_id)
             WHERE 
             xo.syshost='$sysHost' AND 
-            xo.module_name LIKE '$moduleName' AND
-            xo.timestamp BETWEEN '$startDate' AND '$endDate'
+            xo.module_name LIKE '$moduleName'
         ) 
         ka ON ka.link_id = xl.link_id  AND
         xl.build_user like CONCAT('%', '$user', '%') AND
-        xl.exec_path NOT LIKE '%.so' AND -- exec filter starts                
-        xl.exec_path NOT LIKE '%.o' AND                                       
-        xl.exec_path NOT LIKE '%.o.%' AND                                     
-        xl.exec_path NOT LIKE '%.so.%'  -- exec filter ends 
+        xl.date BETWEEN '$startDate' AND '$endDate'
         GROUP BY Executable
         ORDER BY Count Desc";
 
-    #  print_r($sql);
+#    print_r($sql);
 
     $query = $conn->prepare($sql);
     $query->execute();
@@ -56,6 +53,8 @@ try {
 
     echo "{ \"cols\": [
     {\"id\":\"\",\"label\":\"Executable Name\",\"pattern\":\"\",\"type\":\"string\"}, 
+    {\"id\":\"\",\"label\":\"LinkDate_Oldest\",\"pattern\":\"\",\"type\":\"string\"}, 
+    {\"id\":\"\",\"label\":\"LinkDate_Latest\",\"pattern\":\"\",\"type\":\"string\"}, 
     {\"id\":\"\",\"label\":\"Count\",\"pattern\":\"\",\"type\":\"number\"} 
     ], 
     \"rows\": [ ";
@@ -69,11 +68,15 @@ try {
         if ($row_num == $total_rows){
             echo "{\"c\":[
         {\"v\":\"" . $row['Executable'] . "\",\"f\":null},
+        {\"v\":\"" . $row['minDate'] . "\",\"f\":null},
+        {\"v\":\"" . $row['maxDate'] . "\",\"f\":null},
         {\"v\":" . $row['Count'] . ",\"f\":null}
         ]}";
         } else {
             echo "{\"c\":[
         {\"v\":\"" . $row['Executable'] . "\",\"f\":null},
+        {\"v\":\"" . $row['minDate'] . "\",\"f\":null},
+        {\"v\":\"" . $row['maxDate'] . "\",\"f\":null},
         {\"v\":" . $row['Count'] . ",\"f\":null}
         ]}, ";
         } 
