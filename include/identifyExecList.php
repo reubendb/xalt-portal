@@ -1,14 +1,15 @@
 <?php
-
-$user=$_GET["user"];
-$objPath=$_GET["objPath"];
+$sysHost    = $_GET["sysHost"];   
+$startDate  = $_GET["startDate"]; 
+$endDate    = $_GET["endDate"];   
+$objPath    = $_GET["objPath"];   
+$user       = $_GET["user"];
 
 try {
     include (__DIR__ ."/conn.php");
 
     $conn = new PDO("mysql:host=$servername;dbname=$db", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
 
     $sql="
         SELECT SUBSTRING_INDEX(xl.exec_path, '/' ,-1) AS Executable, 
@@ -22,10 +23,12 @@ try {
             FROM join_link_object jlo 
             INNER JOIN xalt_object xo   ON (jlo.obj_id = xo.obj_id)
             WHERE 
+            xo.sysHost='$sysHost' AND
             xo.object_path like CONCAT('%','$objPath', '%')
         ) 
         ka ON ka.link_id = xl.link_id 
         WHERE     
+        xl.date BETWEEN '$startDate' AND '$endDate' AND
         xl.build_user = '$user'
         GROUP BY Executable 
         ORDER BY Count Desc;";
