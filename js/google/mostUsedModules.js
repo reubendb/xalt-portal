@@ -43,18 +43,7 @@ function mostUsedModules(sysHost, startDate, endDate) {
         // Instantiate and draw chart.
         var chart = new google.visualization.ColumnChart(document.getElementById('mod1_div'));
         chart.draw(ChartData, options);
-/*
-        // Define Chart Options .
-        var options = {title: 'Most Used Modules',
-            pieHole: 0.4,
-            sliceVisibilityThreshold: 0.01,
-        };
 
-        // Instantiate and draw chart.
-        var chart = new google.visualization.PieChart(document.getElementById('mod1_div'));
-
-        chart.draw(ChartData, options);
-*/
         // Create our datatable out of Json Data loaded from php call.
         var div_id = 'mod2_div';
         var table = makeTable(ChartData, div_id);
@@ -64,12 +53,19 @@ function mostUsedModules(sysHost, startDate, endDate) {
         google.visualization.events.addListener(chart, 'select', selectChart);
         google.visualization.events.addListener(table, 'select', selectTable);
 
+        // List ids to hide
+        var idsToHide = ['lblModVer0', 'mod3_div', 'lblModVer1', 'lblUserList0', 'mod4_div',
+            'lblUserList1','lblExecList0','exec_div', 'lblExecList1', 'lblExecDetailRow', 
+            'lblExecDetailList','exec_detail_div','lblRunDetail','run_detail_div'];
+        hideAllDivs(idsToHide);
+
         function selectChart() {
             // grab a few details before redirecting
             var selection = chart.getSelection();
             var row = selection[0].row;
             var col = selection[0].column;
             var module = [ChartData.getValue(row,0)];
+
 
             if (query == 0) { query = 3 } else if (query == 1) { query = 2 }
             console.log('query = ' + query);
@@ -128,6 +124,11 @@ function gT0(syshost, startDate, endDate, module) {         /* List version of g
         // Add our Actions handler.
         google.visualization.events.addListener(table, 'select', selectHandler);
 
+        // List ids to hide
+        var idsToHide = ['lblUserList0', 'mod4_div','lblUserList1','lblExecList0','exec_div', 'lblExecList1', 'lblExecDetailRow', 
+            'lblExecDetailList','exec_detail_div','lblRunDetail','run_detail_div'];
+        hideAllDivs(idsToHide);
+
         function selectHandler() {
 
             // grab a few details before redirecting
@@ -136,6 +137,7 @@ function gT0(syshost, startDate, endDate, module) {         /* List version of g
             var col = selection[0].column;
             var module = TableData.getValue(row,0);
             var version = TableData.getValue(row,1);
+
 
             if (query == 3){
                 gT2(sysHost, startDate, endDate, module, version, userId);
@@ -174,6 +176,11 @@ function gT1(sysHost, startDate, endDate, module, version) {      /* List of Use
         // Add our Actions handler.
         google.visualization.events.addListener(table, 'select', selectHandler);
 
+        // List ids to hide
+        var idsToHide = ['lblExecList0','exec_div', 'lblExecList1', 'lblExecDetailRow', 
+            'lblExecDetailList','exec_detail_div','lblRunDetail','run_detail_div'];
+        hideAllDivs(idsToHide);
+
         function selectHandler() {
 
             // grab a few details before redirecting
@@ -181,6 +188,7 @@ function gT1(sysHost, startDate, endDate, module, version) {      /* List of Use
             var row = selection[0].row;
             var col = selection[0].column;
             var user = TableData.getValue(row,0);
+
 
             gT2(sysHost, startDate, endDate, module, version, user);
         }
@@ -213,6 +221,10 @@ function gT2(sysHost, startDate, endDate, module, version, user) {       /* List
         // Add our Actions handler.
         google.visualization.events.addListener(table, 'select', selectHandler);
 
+        // List ids to hide
+        var idsToHide = ['lblExecDetailRow','lblExecDetailList','exec_detail_div','lblRunDetail','run_detail_div'];
+        hideAllDivs(idsToHide);
+
         function selectHandler() {
 
             // grab a few details before redirecting
@@ -220,6 +232,7 @@ function gT2(sysHost, startDate, endDate, module, version, user) {       /* List
             var row = selection[0].row;
             var col = selection[0].column;
             var exec = TableData.getValue(row,0);
+
 
             gT3(sysHost, startDate, endDate, module, version, user, exec);
         }
@@ -254,6 +267,10 @@ function gT3(sysHost, startDate, endDate, module, version, user, exec) { /* Exec
 
         // Add our Actions handler.
         google.visualization.events.addListener(table, 'select', selectHandler);
+
+        // List ids to hide
+        var idsToHide = ['lblRunDetail','run_detail_div'];
+        hideAllDivs(idsToHide);
 
         function selectHandler() {
 
@@ -314,7 +331,7 @@ function gT4(uuid) {               /* get job run details */
                 var runId = TableData.getValue(row,0);
 
                 console.log(runId); 
-                 gT6(runId);            /* get runtime env info */ 
+                gT6(runId);            /* get runtime env info */ 
             }
         }
     }
@@ -391,16 +408,15 @@ function checkJsonData (jsonTableData) {
 
 }
 
-function hideAllDivs () {
+function hideAllDivs (idsToHide) {
 
-    var divsToHide = document.getElementsByClassName("row-module");
-    for(var i = 0; i < divsToHide.length; i++)
-    {
-        console.log(divsToHide[i]);
-        divsToHide[i].style.visibility="hidden";
+    var attrToHide = document.querySelectorAll("*[style]");
+
+    for(var i=0; i< attrToHide.length; i++) {
+        if ($.inArray(attrToHide[i].id, idsToHide) != -1){     // if ID is present in the list Hide it
+            attrToHide[i].style.visibility = "hidden";
+        }
     }
+
 }
 
-
-//alert(ChartData.getValue(row,0) + ChartData.getValue(row,1));
-//location.href = 'http://www.google.com?row=' + row + '&col=' + col;
