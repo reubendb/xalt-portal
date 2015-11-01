@@ -38,7 +38,8 @@ try {
             xo.syshost='$sysHost' AND 
             xo.module_name LIKE '$moduleName'
         ) 
-        ka ON ka.link_id = xl.link_id  AND
+        ka ON ka.link_id = xl.link_id 
+        WHERE
         xl.build_user like CONCAT('%', '$user', '%') AND
         xl.date BETWEEN '$startDate' AND '$endDate'
         GROUP BY Executable
