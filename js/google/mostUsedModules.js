@@ -26,6 +26,12 @@ function mostUsedModules(sysHost, startDate, endDate) {
              }).responseText;
     }
 
+    // Hide all tables which are not required.
+    var idsToHide = ['lblModVer0', 'mod3_div', 'lblModVer1', 'lblUserList0', 'mod4_div',
+        'lblUserList1','lblExecList0','exec_div', 'lblExecList1', 'lblExecDetailRow', 
+        'lblExecDetailList','exec_detail_div','lblRunDetail','run_detail_div'];
+    hideAllDivs(idsToHide);
+
     var count = checkJsonData(jsonChartData);             /* if no data is returned do Nothing!! */
     if (count != 0) {
 
@@ -53,11 +59,6 @@ function mostUsedModules(sysHost, startDate, endDate) {
         google.visualization.events.addListener(chart, 'select', selectChart);
         google.visualization.events.addListener(table, 'select', selectTable);
 
-        // List ids to hide
-        var idsToHide = ['lblModVer0', 'mod3_div', 'lblModVer1', 'lblUserList0', 'mod4_div',
-            'lblUserList1','lblExecList0','exec_div', 'lblExecList1', 'lblExecDetailRow', 
-            'lblExecDetailList','exec_detail_div','lblRunDetail','run_detail_div'];
-        hideAllDivs(idsToHide);
 
         function selectChart() {
             // grab a few details before redirecting
@@ -110,6 +111,11 @@ function gT0(syshost, startDate, endDate, module) {         /* List version of g
     }
     var div_id = 'mod3_div';
 
+    // List ids to hide
+    var idsToHide = ['lblUserList0', 'mod4_div','lblUserList1','lblExecList0','exec_div', 'lblExecList1', 'lblExecDetailRow', 
+        'lblExecDetailList','exec_detail_div','lblRunDetail','run_detail_div'];
+    hideAllDivs(idsToHide);
+
     var count = checkJsonData(jsonTableData);             /* if no data is returned do Nothing!! */
     if (count != 0) {
 
@@ -124,11 +130,6 @@ function gT0(syshost, startDate, endDate, module) {         /* List version of g
         // Add our Actions handler.
         google.visualization.events.addListener(table, 'select', selectHandler);
 
-        // List ids to hide
-        var idsToHide = ['lblUserList0', 'mod4_div','lblUserList1','lblExecList0','exec_div', 'lblExecList1', 'lblExecDetailRow', 
-            'lblExecDetailList','exec_detail_div','lblRunDetail','run_detail_div'];
-        hideAllDivs(idsToHide);
-
         function selectHandler() {
 
             // grab a few details before redirecting
@@ -137,7 +138,6 @@ function gT0(syshost, startDate, endDate, module) {         /* List version of g
             var col = selection[0].column;
             var module = TableData.getValue(row,0);
             var version = TableData.getValue(row,1);
-
 
             if (query == 3){
                 gT2(sysHost, startDate, endDate, module, version, userId);
@@ -161,6 +161,11 @@ function gT1(sysHost, startDate, endDate, module, version) {      /* List of Use
 
     var div_id = 'mod4_div';
 
+    // List ids to hide
+    var idsToHide = ['lblExecList0','exec_div', 'lblExecList1', 'lblExecDetailRow', 
+        'lblExecDetailList','exec_detail_div','lblRunDetail','run_detail_div'];
+    hideAllDivs(idsToHide);
+
     var count = checkJsonData(jsonTableData);             /* if no data is returned do Nothing!! */
     if (count != 0) {
 
@@ -175,11 +180,6 @@ function gT1(sysHost, startDate, endDate, module, version) {      /* List of Use
 
         // Add our Actions handler.
         google.visualization.events.addListener(table, 'select', selectHandler);
-
-        // List ids to hide
-        var idsToHide = ['lblExecList0','exec_div', 'lblExecList1', 'lblExecDetailRow', 
-            'lblExecDetailList','exec_detail_div','lblRunDetail','run_detail_div'];
-        hideAllDivs(idsToHide);
 
         function selectHandler() {
 
@@ -207,6 +207,10 @@ function gT2(sysHost, startDate, endDate, module, version, user) {       /* List
 
     var div_id = 'exec_div';
 
+    // List ids to hide
+    var idsToHide = ['lblExecDetailRow','lblExecDetailList','exec_detail_div','lblRunDetail','run_detail_div'];
+    hideAllDivs(idsToHide);
+
     var count = checkJsonData(jsonTableData);             /* if no data is returned do Nothing!! */
     if (count != 0) {
 
@@ -220,10 +224,6 @@ function gT2(sysHost, startDate, endDate, module, version, user) {       /* List
 
         // Add our Actions handler.
         google.visualization.events.addListener(table, 'select', selectHandler);
-
-        // List ids to hide
-        var idsToHide = ['lblExecDetailRow','lblExecDetailList','exec_detail_div','lblRunDetail','run_detail_div'];
-        hideAllDivs(idsToHide);
 
         function selectHandler() {
 
@@ -252,6 +252,10 @@ function gT3(sysHost, startDate, endDate, module, version, user, exec) { /* Exec
 
     var div_id = 'exec_detail_div';
 
+    // List ids to hide
+    var idsToHide = ['lblRunDetail','run_detail_div'];
+    hideAllDivs(idsToHide);
+
     var count = checkJsonData(jsonTableData);             /* if no data is returned do Nothing!! */
     if (count != 0) {
         document.getElementById("lblExecDetailRow").style.visibility = 'visible';
@@ -267,10 +271,6 @@ function gT3(sysHost, startDate, endDate, module, version, user, exec) { /* Exec
 
         // Add our Actions handler.
         google.visualization.events.addListener(table, 'select', selectHandler);
-
-        // List ids to hide
-        var idsToHide = ['lblRunDetail','run_detail_div'];
-        hideAllDivs(idsToHide);
 
         function selectHandler() {
 
