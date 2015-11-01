@@ -49,20 +49,19 @@ try {
             xo.syshost='$sysHost' AND 
             xo.module_name LIKE '$moduleName' 
         ) 
-        ka ON ka.link_id = xl.link_id  AND
+        ka ON ka.link_id = xl.link_id 
+        WHERE 
         xl.date BETWEEN '$startDate' AND '$endDate' AND
         SUBSTRING_INDEX(xl.exec_path, '/', -1) = '$exec' 
         ORDER BY Date desc
         ;";
 
-
-#    print_r($sql);
+    #    print_r($sql);
 
     $query = $conn->prepare($sql);
     $query->execute();
 
     $result = $query->fetchAll(PDO:: FETCH_ASSOC);
-#    print_r($result);
 
     echo "{ \"cols\": [
     {\"id\":\"\",\"label\":\"Executable Path\",\"pattern\":\"\",\"type\":\"string\"}, 
