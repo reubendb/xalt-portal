@@ -404,103 +404,6 @@
                             </div>  <!-- col-md -->
                         </div> <!-- row -->
 
-                        <div class="row">
-                            <div class="col-md-4 col-sm-12 col-xs-12">
-                                <div class="x_panel">
-                                    <div class="x_title">
-                                        <h2>Indentify User <small>Who used a particular library</small></h2>
-                                        <ul class="nav navbar-right panel_toolbox">
-                                            <li><a class="collapse-link"><i class="fa fa-chevron-down"></i></a>
-                                            </li>
-                                        </ul>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                    <div class="x_content">
-                                        <form id="demo-form" data-parsley-validate>
-                                            <label class="col-md-6 col-sm-6 col-xs-12" for="objPath">
-                                                Enter object path <span class="required">*</span>
-                                            </label>
-                                            <input type="text" id="objPath" required="required" class="form-control"
-                                            placeholder="Full path or part of it">
-                                            <div class="ln_solid"></div>
-                                            <span class="btn btn-primary">Submit</span>
-
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>  <!-- col-md -->
-
-                            <div class="col-md-8 col-sm-6 col-xs-12">
-                                <div class="dashboard_graph x_panel">
-                                    <div class="row x_title">
-                                        <div class="col-md-20">
-                                            <h2>Further Details </h2>
-                                            <ul class="nav navbar-right panel_toolbox">
-                                                <li><a class="collapse-link"><i class="fa fa-chevron-down"></i></a></li>
-                                            </ul>
-                                            <div class="clearfix"></div>
-                                        </div>
-                                    </div>
-                                    <div class="x_content">
-                                        <div class="row">
-                                            <div class="col-xs-auto">
-                                                <label id="lblIdentifyUser0" style="visibility: hidden;">List of Users(s) 
-                                                </label>
-                                                <div id="identify_user_div" style="visibility: hidden;"></div>
-                                                <label id="lblIdentifyUser1" style="visibility: hidden;"> 
-                                                    <small>[Count = Number of times User linked to given Object Path]</small>
-                                                </label>
-                                            </div>
-                                            <div class="col-xs-auto">
-                                                </br>
-                                                <label id="lblIdentifyExec0" style="visibility: hidden;"> 
-                                                    List of Executable(s) 
-                                                    <small> (for given user-objectPath)</small>
-                                                </label>
-                                                <div id="identify_exec_div" style="visibility: hidden;"></div>
-                                                <label id="lblIdentifyExec1" style="visibility: hidden;"> 
-                                                    <small>[Count = Number of Executable linked to given User-Object_Path]</small>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>  <!-- col-md -->
-                        </div> <!-- row -->
-
-                        <div class="row" id="lblIdenExecRow" style="visibility: hidden">
-                            <div class="col-md-20 col-sm-20 col-xs-20">
-                                <div class="dashboard_graph x_panel">
-                                    <div class="row x_title">
-                                        <div class="col-md-20">
-                                            <h2>Executable Details </h2></br>
-                                            <ul class="nav navbar-right panel_toolbox">
-                                                <li><a class="collapse-link">
-                                                    <i class="fa fa-chevron-down"></i>
-                                                </a></li>
-                                            </ul>
-                                            <div class="clearfix"></div>
-                                        </div>
-                                    </div>
-                                    <div class="x_content">
-                                        <div class="row">
-                                            <div class="col-xs-auto">
-                                                <label id="lblIdenExecDetail0" style="visibility: hidden">Executable Details </label>
-                                                <div id="identify_exDeatil_div" style="visibility: hidden;"></div> <!-- Exec Detail table chart -->
-                                            </div> 
-                                            <div class="col-xs-auto">
-                                                </br>
-                                                <label id="lblIdenRun0" style="visibility: hidden">Job Run details 
-                                                    <small>(*nC-nJC-nN-nT ~ #Cores-#JobNumCores-#Nodes-#Threads)</small>
-                                                </label>
-                                                <div id="identify_run_div" style="visibility: hidden;"></div> <!-- Job Run table chart -->
-                                            </div>
-                                        </div> <!-- row -->
-                                    </div>
-                                </div>
-                            </div>  <!-- col-md -->
-                        </div> <!-- row -->
-
                     </div>
 
                     <!-- footer content -->
@@ -551,43 +454,6 @@
         <!-- google/chart -->
         <script type="text/javascript" src="js/google/mostUsedModules.js"></script>
         <script type="text/javascript" src="js/google/compilerMostUsed.js"></script>
-        <script type="text/javascript" src="js/google/identifyUser.js"></script>
-
-        <!-- form validation STARTs-->
-        <script type="text/javascript" src="js/parsley/parsley.min.js"></script>
-
-        <script>
-            $(document).ready(function () {
-                $.listen('parsley:field:validate', function () {
-                    validateFront();
-                });
-                $('#demo-form .btn').on('click', function () {
-                    $('#demo-form').parsley().validate();
-                    validateFront();
-                });
-                var validateFront = function () {
-                    if (true === $('#demo-form').parsley().isValid()) {
-                        $('.bs-callout-info').removeClass('hidden');
-                        $('.bs-callout-warning').addClass('hidden');
-                        } else {
-                        $('.bs-callout-info').addClass('hidden');
-                        $('.bs-callout-warning').removeClass('hidden');
-                    }
-                };  
-                $('#demo-form .btn').on('click', function () {
-                    if (true === $('#demo-form').parsley().isValid()) {
-                        console.log("OBJPATH " + document.getElementById("objPath").value);
-                        identifyUser(document.getElementById("objPath").value);
-                    }
-
-                }); 
-
-            });
-            try {
-                hljs.initHighlightingOnLoad();
-            } catch (err) {} 
-        </script>
-        <!-- form validation  ENDs-->
 
         <!-- Include syshost Start++ -->
         <script>
@@ -611,7 +477,7 @@
         <!-- Include syshost Ends -->
 
 
-        <!-- datepicker -->
+        <!-- datepicker  + submit button -->
         <script type="text/javascript">
 
             var startDate;
@@ -690,18 +556,6 @@
             });
         </script>
         <!-- /datepicker -->
-        <!--
-        <script>
-            $('#startBtn').on('click', function () {
-            query = 1;              // top level query
-            mostUsedModules(sysHost, startDate, endDate);
-            compilerMostUsed(sysHost, startDate, endDate);
-            console.log(startDate + endDate + sysHost);
-            });
-
-        </script>
-        -->
-
 
     </body>
 
