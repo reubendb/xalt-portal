@@ -16,9 +16,13 @@ function compilerMostUsed(sysHost, startDate, endDate) {
          }).responseText;
 
 
+    // List ids to hide
+    var idsToHide = ['lblCompUser0', 'comp3_div', 'lblCompUser1', 'lblCompExec0', 'lblCompExec1', 
+        'comp4_div', 'lblCompExecRow', 'lblCompExecDetail0','comp5_div','lblCompRun0','comp6_div']; 
+    hideAllDivs(idsToHide);
+
     var count = checkJsonData(jsonChartData);             /* if no data is returned do Nothing!! */
     if (count != 0) {
-
 
         // Create our data table out of JSON data loaded from server.
         var ChartData = new google.visualization.DataTable(jsonChartData);
@@ -45,11 +49,6 @@ function compilerMostUsed(sysHost, startDate, endDate) {
         // Add our selection handler.
         google.visualization.events.addListener(chart, 'select', selectHandler);
         google.visualization.events.addListener(table, 'select', selectTable);
-
-        // List ids to hide
-        var idsToHide = ['lblCompUser0', 'comp3_div', 'lblCompUser1', 'lblCompExec0', 'lblCompExec1', 
-           'comp4_div', 'lblCompExecRow', 'lblCompExecDetail0','comp5_div','lblCompRun0','comp6_div']; 
-        hideAllDivs(idsToHide);
 
         function selectHandler() {
             // grab a few details before redirecting
@@ -88,6 +87,11 @@ function gTc1(sysHost, startDate, endDate, linkProgram) {         /* Get user li
 
     var div_id = 'comp3_div';
 
+    // List ids to hide
+    var idsToHide = ['lblCompExec0', 'comp4_div', 'lblCompExec1', 
+        'lblCompExecRow', 'lblCompExecDetail0','comp5_div','lblCompRun0','comp6_div']; 
+    hideAllDivs(idsToHide);
+
     var count = checkJsonData(jsonTableData);             /* if no data is returned do Nothing!! */
     if (count != 0) {
 
@@ -102,11 +106,6 @@ function gTc1(sysHost, startDate, endDate, linkProgram) {         /* Get user li
         // Add our Actions handler.
         google.visualization.events.addListener(table, 'select', selectHandler);
 
-        // List ids to hide
-        var idsToHide = ['lblCompExec0', 'comp4_div', 'lblCompExec1', 
-            'lblCompExecRow', 'lblCompExecDetail0','comp5_div','lblCompRun0','comp6_div']; 
-        hideAllDivs(idsToHide);
-
         function selectHandler() {
 
             // grab a few details before redirecting
@@ -120,7 +119,7 @@ function gTc1(sysHost, startDate, endDate, linkProgram) {         /* Get user li
     }
 }   
 
-function gTc2(sysHost, startDate, endDate, linkProgram,user) {
+function gTc2(sysHost, startDate, endDate, linkProgram,user) {     /* get exec list */
 
     console.log("User= " + user);
 
@@ -131,6 +130,10 @@ function gTc2(sysHost, startDate, endDate, linkProgram,user) {
          }).responseText;
 
     var div_id = 'comp4_div';
+
+    // List ids to hide
+    var idsToHide = ['lblCompExecRow', 'lblCompExecDetail0','comp5_div','lblCompRun0','comp6_div']; 
+    hideAllDivs(idsToHide);
 
     var count = checkJsonData(jsonTableData);             /* if no data is returned do Nothing!! */
     if (count != 0) {
@@ -146,10 +149,6 @@ function gTc2(sysHost, startDate, endDate, linkProgram,user) {
         // Add our Actions handler.
         google.visualization.events.addListener(table, 'select', selectHandler);
 
-        // List ids to hide
-        var idsToHide = ['lblCompExecRow', 'lblCompExecDetail0','comp5_div','lblCompRun0','comp6_div']; 
-        hideAllDivs(idsToHide);
-
         function selectHandler() {
 
             // grab a few details before redirecting
@@ -163,7 +162,7 @@ function gTc2(sysHost, startDate, endDate, linkProgram,user) {
     }
 }
 
-function gTc3(sysHost, startDate, endDate, linkProgram, user, exec) {
+function gTc3(sysHost, startDate, endDate, linkProgram, user, exec) {      /* get exec detail */
 
     console.log("Exec= " + exec);
 
@@ -174,6 +173,10 @@ function gTc3(sysHost, startDate, endDate, linkProgram, user, exec) {
          }).responseText;
 
     var div_id = 'comp5_div';
+
+    // List ids to hide
+    var idsToHide = ['lblCompRun0','comp6_div']; 
+    hideAllDivs(idsToHide);
 
     var count = checkJsonData(jsonTableData);             /* if no data is returned do Nothing!! */
     if (count != 0) {
@@ -189,10 +192,6 @@ function gTc3(sysHost, startDate, endDate, linkProgram, user, exec) {
         // Add our Actions handler.
         google.visualization.events.addListener(table, 'select', selectHandler);
 
-        // List ids to hide
-        var idsToHide = ['lblCompRun0','comp6_div']; 
-        hideAllDivs(idsToHide);
-
         function selectHandler() {
 
             // grab a few details before redirecting
@@ -207,7 +206,7 @@ function gTc3(sysHost, startDate, endDate, linkProgram, user, exec) {
     }
 }
 
-function gTc4(sysHost, uuid,user) {
+function gTc4(sysHost, uuid,user) {         /* get run details */
 
     console.log("UUId= " + uuid);
 
@@ -229,7 +228,7 @@ function gTc4(sysHost, uuid,user) {
         var TableData = new google.visualization.DataTable(jsonTableData);
         var table = makeTable(TableData, div_id);
 
-        // Add our Actions handler.
+        // Add our Actions handler.    *** REMOVE this event handler might not be required ***
         google.visualization.events.addListener(table, 'select', selectHandler);
 
         function selectHandler() {
@@ -240,10 +239,10 @@ function gTc4(sysHost, uuid,user) {
             var col = selection[0].column;
             var runid = TableData.getValue(row,0);
 
-            alert("gt4: RUNID Selected >> " + runid);
         }
     }
 }
+
 function makeTable(TableData, div_id) {
 
     var tab_options = {title: 'Table View',
@@ -266,7 +265,6 @@ function checkJsonData (jsonTableData) {
     var o = JSON.parse(jsonTableData);
     return (o.rows.length);
 }
-
 
 function hideAllDivs (idsToHide) {
 
