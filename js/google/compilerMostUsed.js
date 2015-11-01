@@ -46,6 +46,11 @@ function compilerMostUsed(sysHost, startDate, endDate) {
         google.visualization.events.addListener(chart, 'select', selectHandler);
         google.visualization.events.addListener(table, 'select', selectTable);
 
+        // List ids to hide
+        var idsToHide = ['lblCompUser0', 'comp3_div', 'lblCompUser1', 'lblCompExec0', 'lblCompExec1', 
+           'comp4_div', 'lblCompExecRow', 'lblCompExecDetail0','comp5_div','lblCompRun0','comp6_div']; 
+        hideAllDivs(idsToHide);
+
         function selectHandler() {
             // grab a few details before redirecting
             var selection = chart.getSelection();
@@ -87,6 +92,7 @@ function gTc1(sysHost, startDate, endDate, linkProgram) {         /* Get user li
     if (count != 0) {
 
         document.getElementById("lblCompUser0").style.visibility = 'visible';
+        document.getElementById("comp3_div").style.visibility = 'visible';
         document.getElementById("lblCompUser1").style.visibility = 'visible';
 
         // Create our datatable out of Json Data loaded from php call.
@@ -95,6 +101,11 @@ function gTc1(sysHost, startDate, endDate, linkProgram) {         /* Get user li
 
         // Add our Actions handler.
         google.visualization.events.addListener(table, 'select', selectHandler);
+
+        // List ids to hide
+        var idsToHide = ['lblCompExec0', 'comp4_div', 'lblCompExec1', 
+            'lblCompExecRow', 'lblCompExecDetail0','comp5_div','lblCompRun0','comp6_div']; 
+        hideAllDivs(idsToHide);
 
         function selectHandler() {
 
@@ -125,6 +136,7 @@ function gTc2(sysHost, startDate, endDate, linkProgram,user) {
     if (count != 0) {
 
         document.getElementById("lblCompExec0").style.visibility = 'visible';
+        document.getElementById("comp4_div").style.visibility = 'visible';
         document.getElementById("lblCompExec1").style.visibility = 'visible';
 
         // Create our datatable out of Json Data loaded from php call.
@@ -133,6 +145,10 @@ function gTc2(sysHost, startDate, endDate, linkProgram,user) {
 
         // Add our Actions handler.
         google.visualization.events.addListener(table, 'select', selectHandler);
+
+        // List ids to hide
+        var idsToHide = ['lblCompExecRow', 'lblCompExecDetail0','comp5_div','lblCompRun0','comp6_div']; 
+        hideAllDivs(idsToHide);
 
         function selectHandler() {
 
@@ -164,6 +180,7 @@ function gTc3(sysHost, startDate, endDate, linkProgram, user, exec) {
 
         document.getElementById("lblCompExecRow").style.visibility = 'visible';
         document.getElementById("lblCompExecDetail0").style.visibility = 'visible';
+        document.getElementById("comp5_div").style.visibility = 'visible';
 
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);
@@ -171,6 +188,10 @@ function gTc3(sysHost, startDate, endDate, linkProgram, user, exec) {
 
         // Add our Actions handler.
         google.visualization.events.addListener(table, 'select', selectHandler);
+
+        // List ids to hide
+        var idsToHide = ['lblCompRun0','comp6_div']; 
+        hideAllDivs(idsToHide);
 
         function selectHandler() {
 
@@ -202,6 +223,7 @@ function gTc4(sysHost, uuid,user) {
     if (count != 0) {
 
         document.getElementById("lblCompRun0").style.visibility = 'visible';
+        document.getElementById("comp6_div").style.visibility = 'visible';
 
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);
@@ -245,5 +267,15 @@ function checkJsonData (jsonTableData) {
     return (o.rows.length);
 }
 
-//alert(ChartData.getValue(row,0) + ChartData.getValue(row,1));
-//location.href = 'http://www.google.com?row=' + row + '&col=' + col;
+
+function hideAllDivs (idsToHide) {
+
+    var attrToHide = document.querySelectorAll("*[style]");
+    for(var i=0; i< attrToHide.length; i++) {
+        if ($.inArray(attrToHide[i].id, idsToHide) != -1){     // if ID is present in the list Hide it
+            attrToHide[i].style.visibility = "hidden";
+        }
+    }
+
+}
+
