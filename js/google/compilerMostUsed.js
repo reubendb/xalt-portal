@@ -200,19 +200,19 @@ function gTc3(sysHost, startDate, endDate, linkProgram, user, exec) {      /* ge
             var col = selection[0].column;
             var uuid = TableData.getValue(row,6);
 
-            // Not passing start/end date as user might run even after the date range.
-            gTc4(sysHost, uuid, user);
+            // get run details irrespective of who built the code 
+            gTc4(uuid);
         }
     }
 }
 
-function gTc4(sysHost, uuid,user) {         /* get run details */
+function gTc4(uuid) {         /* get run details */
 
     console.log("UUId= " + uuid);
 
     var jsonTableData = $.ajax
         ({url:"include/runDetail.php", 
-         data:  "sysHost=" + sysHost + "&uuid=" + uuid + "&user=" + user,
+         data:  "uuid=" + uuid,
          datatype: "json", async: false
          }).responseText;
 
