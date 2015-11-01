@@ -1,6 +1,8 @@
 <?php
-$objPath=$_GET["objPath"];
-// $o="fftw/3.3.0.4";
+$sysHost    = $_GET["sysHost"];
+$startDate  = $_GET["startDate"];
+$endDate    = $_GET["endDate"];
+$objPath    = $_GET["objPath"];
 
 try {
 
@@ -9,25 +11,24 @@ try {
     $conn = new PDO("mysql:host=$servername;dbname=$db", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-
-    $sql = "
-        SELECT xl.build_user as Users, count(*) as Count,
-        MIN(xl.date) AS fromdate, MAX(xl.date) AS todate
+    $sql= "SELECT xl.build_user as Users, count(*) as Count,
+        min(xl.date) as minDate, max(xl.date) as maxDate
         FROM xalt_link xl 
-        INNER JOIN 
-        (SELECT DISTINCT jlo.link_id 
-        FROM join_link_object jlo 
-        INNER JOIN xalt_object xo   ON (jlo.obj_id = xo.obj_id)
-        WHERE 
-        xo.object_path like CONCAT('%','$objPath', '%')
-    ) 
-    ka ON ka.link_id = xl.link_id 
-    group by Users
-    ORDER BY Count Desc
-    ;
+        INNER JOIN (
+            SELECT DISTINCT jlo.link_id 
+            FROM join_link_object jlo 
+            INNER JOIN xalt_object xo ON (jlo.obj_id = xo.obj_id)
+            WHERE xo.syshost='$sysHost' AND 
+            xo.object_path LIKE CONCAT('%', '$objPath','%')
+        ) 
+        ka ON ka.link_id = xl.link_id 
+        WHERE
+        xl.date BETWEEN '$startDate' AND '$endDate'
+        GROUP BY Users
+        ORDER BY Count Desc;
     ";
 
-#    print_r($sql);
+    #    print_r($sql);
 
     $query = $conn->prepare($sql);
     $query->execute();
@@ -51,15 +52,15 @@ foreach($result as $row){
     if ($row_num == $total_rows){
         echo "{\"c\":[
     {\"v\":\"" . $row['Users'] . "\",\"f\":null},
-    {\"v\":\"" . $row['fromdate'] . "\",\"f\":null},
-    {\"v\":\"" . $row['todate'] . "\",\"f\":null},
+    {\"v\":\"" . $row['minDate'] . "\",\"f\":null},
+    {\"v\":\"" . $row['maxDate'] . "\",\"f\":null},
     {\"v\":" . $row['Count'] . ",\"f\":null}
     ]}";
     } else {
         echo "{\"c\":[
     {\"v\":\"" . $row['Users'] . "\",\"f\":null},
-    {\"v\":\"" . $row['fromdate'] . "\",\"f\":null},
-    {\"v\":\"" . $row['todate'] . "\",\"f\":null},
+    {\"v\":\"" . $row['minDate'] . "\",\"f\":null},
+    {\"v\":\"" . $row['maxDate'] . "\",\"f\":null},
     {\"v\":" . $row['Count'] . ",\"f\":null}
     ]}, ";
     }
