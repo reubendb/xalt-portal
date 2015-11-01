@@ -280,6 +280,7 @@ function gT3(sysHost, startDate, endDate, module, version, user, exec) { /* Exec
             var col = selection[0].column;
             var uuid = TableData.getValue(row,6);
 
+            // Get run details irrespective of who built the code
             gT4(uuid);
             if (query == 3) {         /* Call from xalt_usp.html page */
                 gT5(uuid);            /* get objects at linktime */ 
