@@ -1,5 +1,5 @@
 /*!
- * Bar chart for Active Users on Darter
+ * Active Users 
  * History
  * 2015-Aug-10
  */
