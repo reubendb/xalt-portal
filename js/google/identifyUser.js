@@ -65,7 +65,7 @@ function gTi1(sysHost, startDate, endDate,objPath, user) {        /* Get Exec Li
 
     // Hide all tables which are not required.
     var idsToHide = [ 'lblIdentifyExec0', 'identify_exec_div', 'lblIdentifyExec1',
-        'lblIdenExecDetail0', 'identify_exDeatil_div', 
+        'lblIdenExecDetail0', 'identify_exDetail_div', 
         'lblIdenRun0', 'identify_run_div']; 
     hideAllDivs(idsToHide);
 
@@ -133,20 +133,58 @@ function gTi2(sysHost, startDate, endDate,objPath, user, exec) {        /* Get E
             var col = selection[0].column;
             var uuid = TableData.getValue(row,6);
 
-            gTi2(sysHost, startDate, endDate, objPath, user, exec);
+            // get run details irrespective of who built the code
+            gTi3(uuid);
+
         }
+    }
+}
+
+function gTi3(uuid) {         /* get run details */
+
+    console.log("UUId= " + uuid);
+
+    var jsonTableData = $.ajax
+        ({url:"include/runDetail.php",
+         data:  "uuid=" + uuid,
+         datatype: "json", async: false
+         }).responseText;
+
+    var div_id = 'identify_run_div';
+
+    // Hide all tables which are not required.
+    var idsToHide = ['lblIdenRun0', 'identify_run_div'];
+    hideAllDivs(idsToHide);
+
+    var count = checkJsonData(jsonTableData);             /* if no data is returned do Nothing!! */
+    if (count != 0) {
+
+        document.getElementById("lblIdenRun0").style.visibility = 'visible';
+        document.getElementById("identify_run_div").style.visibility = 'visible';
+
+        // Create our datatable out of Json Data loaded from php call.
+        var TableData = new google.visualization.DataTable(jsonTableData);
+
+        /* REMOVE ++  
+        // set the width of the column with the title "Name" to 100px
+        var title = "CurrentWorkingDir";
+        var width = "100px";
+        //$('.google-visualization-table-th:contains(' + title + ')').css('clientWidth', width);
+        $('.google-visualization-table-th:contains('+ title +')').css('width', width);
+          REMOVE -- */
+        var table = makeTable(TableData, div_id);
     }
 }
 
 function makeTable(TableData, div_id) {
 
-    var tab_options = {title: 'Table View',
+    var tab_options = {
         showRowNumber: true,
-        height: 200,
+        height: 300,
         width: '100%',
         allowHtml: true,
-        alternatingRowStyle: true,
-        height: 200}
+        alternatingRowStyle: true
+    }
 
     // Instantiate and Draw our Table
     var table = new google.visualization.Table(document.getElementById(div_id));
