@@ -66,9 +66,11 @@ $row_num = 0;
 foreach($result as $row){
     $row_num++;
 
+    $execPath = wordwrap($row['ExecPath'], 45, '\n', true);
+
     if ($row_num == $total_rows){
         echo "{\"c\":[
-    {\"v\":\"" . $row['ExecPath'] . "\",\"f\":null},
+    {\"v\":\"" . $execPath . "\",\"f\":null},
     {\"v\":\"" . $row['Date'] . "\",\"f\":null},
     {\"v\":\"" . $row['LinkProgram'] . "\",\"f\":null},
     {\"v\":\"" . $row['ExitCode'] . "\",\"f\":null},
@@ -78,7 +80,7 @@ foreach($result as $row){
     ]}";
     } else {
         echo "{\"c\":[
-    {\"v\":\"" . $row['ExecPath'] . "\",\"f\":null},
+    {\"v\":\"" . $execPath . "\",\"f\":null},
     {\"v\":\"" . $row['Date'] . "\",\"f\":null},
     {\"v\":\"" . $row['LinkProgram'] . "\",\"f\":null},
     {\"v\":\"" . $row['ExitCode'] . "\",\"f\":null},
