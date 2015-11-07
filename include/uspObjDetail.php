@@ -16,23 +16,12 @@ try {
         (SELECT distinct jlo.obj_id 
         FROM join_link_object jlo 
         INNER JOIN xalt_link xl ON (jlo.link_id = xl.link_id)
-        WHERE xl.uuid = '$uuid' 
-
+        WHERE xl.uuid = '$uuid' AND
+        xl.build_syshost = '$sysHost' 
     ) ka on ka.obj_id = xo.obj_id
     WHERE xo.object_path NOT LIKE '%usr%'; 
     ";
 
-    
-/*
-    $sql=" SELECT xo.object_path AS ObjPath, xo.module_name as ModuleName, 
-        xl.build_user AS BuildUser, xl.exit_code AS ExitCode, 
-        Date(xl.date) AS BuildDate, xl.link_program AS LinkProgram 
-        FROM xalt_object xo, join_link_object jlo, xalt_link xl 
-        WHERE xl.uuid = '$uuid' AND 
-        jlo.link_id = xl.link_id AND 
-        xo.obj_id = jlo.obj_id;
-    ";
- */
     # print_r($sql);
 
     $query = $conn->prepare($sql);
@@ -53,17 +42,18 @@ $row_num = 0;
 
 foreach($result as $row){
     $row_num++;
+    $objPath = wordwrap($row['ObjPath'], 45, '<br />', true);
 
     if ($row_num == $total_rows){
         echo "{\"c\":[
-    {\"v\":\"" . $row['ObjPath'] . "\",\"f\":null},
+    {\"v\":\"" . $objPath . "\",\"f\":null},
     {\"v\":\"" . $row['ModuleName'] . "\",\"f\":null},
     {\"v\":\"" . $row['ObjectDate'] . "\",\"f\":null},
     {\"v\":\"" . $row['LibType'] . "\",\"f\":null}
     ]}";
     } else {
         echo "{\"c\":[
-    {\"v\":\"" . $row['ObjPath'] . "\",\"f\":null},
+    {\"v\":\"" . $objPath . "\",\"f\":null},
     {\"v\":\"" . $row['ModuleName'] . "\",\"f\":null},
     {\"v\":\"" . $row['ObjectDate'] . "\",\"f\":null},
     {\"v\":\"" . $row['LibType'] . "\",\"f\":null}
