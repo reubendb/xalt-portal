@@ -55,6 +55,7 @@ foreach($result as $row){
     $row_num++;
 
     $execPath    = wordwrap($row['ExecPath'], 45, '\n', true);
+
     # **** REMOVE [NEED TO CHECK FOR 4-char NULL UUIDs in XALT_RUN] **** 
     $uuid        = isset($row['Uuid']) ? $row['Uuid'] : 'N/A';
     $buildUser   = isset($row['BuildUser']) ? $row['BuildUser'] : 'N/A';
