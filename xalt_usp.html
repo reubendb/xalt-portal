@@ -161,7 +161,7 @@
                                     <div class="x_title">
                                         <div class="clearfix"></div>
                                     </div> <!-- x_title -->
-                                    <p align="justify"> Results presented here are taken from XALT database at National Institute for Computational Sciences at Oak Ridge National Laboratory. </br> Here we present a unique way which would help users to know the history about their work. 
+                                    <p align="justify"> Results presented here are taken from XALT database at National Institute for Computational Sciences at Oak Ridge National Laboratory. XALT went live on November 2014 the data presented here is realtime.rmation that most computing centers need or want.
                                     </p>
                                 </div> <!-- x_panel -->
                             </div>
@@ -173,360 +173,266 @@
                                 <div class="dashboard_graph x_panel">
                                     <div class="x_title">
                                         <div class="clearfix"></div>
-                                        <p align="justify"> Select syshost and date range for your queries. </p>
+                                        <p align="justify"> <h4>User Software Provenance <small>Get run/link detials for given user</small></h4> </p>
                                     </div> <!-- x_title -->
 
-                                    <form id="demo-form1" class="form-inline" data-parsley-validate>
+                                    <form id="demo-form" class="form-inline" data-parsley-validate>
                                         <div class="form-group"> 
-                                            <label class="pull-left" for="sysHost">Select Syshost
-                                                <span class="required">*</span>
+                                            <label class="pull-left" for="sysHost">Select Syshost<span class="required">*</span>
                                                 <select id="select-sysHost" 
                                                     style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc"> </select>
                                             </label>
-                                        </div>
+                                        </div> 
                                         <div class="form-group">
                                             <label id="reportrange" class="pull-left" 
                                                 style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
+                                                <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
 
-                                                <i class="glyphicon glyphicon-calendar fa fa-calendar"></i> 
-                                                <span>December 30, 2014 - January 28, 2015</span><b class="caret"></b>
-                                           </label>
-                                       </div>
-                                       </br>
-                                       <div class="form-group">
-                                           <label class="pull-left" for="userID">Enter UserID
-                                               <span class="required">*</span>
-                                               <input type="text" id="userId" required="required" placeholder="Part or whole Id"></input> 
-                                           </label>
-                                           </div>
+                                                <span>December 30, 2014 - January 28, 2015</span> <b class="caret"></b>
+                                            </label>
+                                        </div></br>
+                                        <div class="form-group">
+                                            <label class="pull-left" for="userId">Enter User ID <span class="required">* </span>
+                                            <input type="text" id="userId" required="required" placeholder="Whole ID or part of it"
+                                                style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
+                                            </input>
+                                            </label>
+                                        </div> </br> 
+                                        <div class="form-group">
+                                            <span class="btn btn-default btn-xs" id="startBtn">Submit</span>
+                                        </div>
+                                    </form>
+                                </div> <!-- x_panel -->
 
-                                           </br>
-                                           <div class="form-group">
-                                               <span class="btn btn-default btn-xs" id="startBtn">Submit</span>
-                                           </div>
+                            </div> <!-- col-md -->
+                        </div> <!-- row -->
 
-                                       </form>
-                                   </div> <!-- x_panel -->
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="dashboard_graph x_panel">
+                                    <div class="row x_title">
+                                        <div class="col-md-20">
+                                            <h2>Further Details </h2>
+                                            <ul class="nav navbar-right panel_toolbox">
+                                                <li><a class="collapse-link"><i class="fa fa-chevron-down"></i></a></li>
+                                            </ul>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </div>
+                                    <div class="x_content">
+                                        <div class="row">
+                                            <div class="col-xs-5">
+                                                <label id="lblExec0" style="visibility: hidden;">List of Executable(s) 
+                                                </label>
+                                                <div id="usp_exec_div" style="visibility: hidden;"></div>
+                                                <label id="lblExec1" style="visibility: hidden;"> 
+                                                    <small>[Count = Number of times executable was run]</small>
+                                                </label>
+                                            </div>
+                                            <div class="col-xs-12">
+                                                <label id="lblExecDetail0" style="visibility: hidden;">Executable Details </label>
+                                                <div id="usp_exDetail_div" style="visibility: hidden;"></div> <!-- Exec Detail table chart -->
+                                            </div> 
+                                            <div class="col-xs-12">
+                                                </br>
+                                                <label id="lblUspRun0" style="visibility: hidden">Job Run details 
+                                                    <small>(*nC-nJC-nN-nT ~ #Cores-#JobNumCores-#Nodes-#Threads)</small>
+                                                </label>
+                                                <div id="usp_run_div" style="visibility: hidden;"></div> <!-- Job Run table chart -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>  <!-- col-md -->
+                        </div> <!-- row -->
 
-                               </div> <!-- col-md -->
-                           </div> <!-- row -->
+                    </div>
 
-                           <div class="row">
-                               <div class="col-md-12 col-sm-6 col-xs-12">
-                                   <div class="dashboard_graph x_panel">
-                                       <div class="row x_title">
-                                           <div class="col-md-20">
-                                               <h2>Dashboard </h2></br>
-                                               <ul class="nav navbar-right panel_toolbox">
-                                                   <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-                                               </ul>
-                                               <div class="clearfix"></div>
-                                           </div>
-                                       </div>
-                                       <div class="x_content">
-                                           <div class="row">
-                                               <div class="col-xs-12">
-                                                   <div class="col-xs-4">
-                                                       <label id="lblMod" style="visibility: hidden;">Module Usage</label> 
-                                                       <div id="mod1_div"></div>
-                                                       <div id="mod2_div"></div>
-                                                   </div>
-                                                   <div class="col-xs-4">
+                    <!-- footer content -->
+                    <footer>
+                    <div class="">
+                        <p class="pull-right">Thanks.  <a>Kapil Agrawal</a>. |
+                        <span class="lead"> <i class="fa fa-paw"></i> XALT!</span>
+                        </p>
+                    </div>
+                    <div class="clearfix"></div>
+                    </footer>
+                    <!-- /footer content -->
 
-                                                       <h4><small>Most Run Executable (CPU Hours)</small></h4>
-                                                       <label id="lblExec0" style="visibility: hidden;">Executable Usage</label> 
-                                                       <div id="usp3_div"></div>
-                                                   </div>
+                </div>
+                <!-- /page content -->
+            </div>
 
-                                                   <div class="col-xs-4">
-                                                       <label id="lblComp" style="visibility: hidden;">Link Program Usage</label> 
-                                                       <div id="comp1_div"></div>
-                                                       <div id="comp2_div"></div>
-                                                   </div>
+        </div>
 
-                                               </div>
-                                           </div>
-                                       </div>
+        <div id="custom_notifications" class="custom-notifications dsp_none">
+            <ul class="list-unstyled notifications clearfix" data-tabbed_notifications="notif-group">
+            </ul>
+            <div class="clearfix"></div>
+            <div id="notif-group" class="tabbed_notifications"></div>
+        </div>
 
-                                       <div class="x_content">
-                                           <div class="row">
-                                               <div class="col-xs-12">
-                                                   <div class="col-xs-6">
-                                                       <label id="lblModVer0" style="visibility: hidden;">List of Version(s) 
-                                                           <small>(for given Module)</small>
-                                                       </label>
-                                                       <div id="mod3_div" style="visibility: hidden;"></div> <!-- Version table chart --> 
-                                                       <label id="lblModVer1" style="visibility: hidden;"> 
-                                                           <small>[Count = Number of objects for given Module-Version]</small>
-                                                       </label>
-                                                   </div>
-                                               </div>
-                                           </div>
-                                       </div> <!--x_content -->
+        <script src="js/bootstrap.min.js"></script>
 
-                                   </div>
-                               </div>  <!-- col-md -->
-                           </div> <!-- row -->
+        <!-- chart js -->
+        <script src="js/chartjs/chart.min.js"></script>
+        <!-- bootstrap progress js -->
+        <script src="js/progressbar/bootstrap-progressbar.min.js"></script>
+        <script src="js/nicescroll/jquery.nicescroll.min.js"></script>
+        <!-- daterangepicker -->
+        <script type="text/javascript" src="js/moment.min2.js"></script>
+        <script type="text/javascript" src="js/datepicker/daterangepicker.js"></script>
+        <!-- icheck -->
+        <script src="js/icheck/icheck.min.js"></script>
 
-                           <div class="row">
-                               <div class="col-md-12 col-sm-6 col-xs-12">
-                                   <div class="dashboard_graph x_panel">
-                                       <div class="row x_title">
-                                           <div class="col-md-20">
-                                               <h2>Futher Details </h2></br>
-                                               <ul class="nav navbar-right panel_toolbox">
-                                                   <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-                                               </ul>
-                                               <div class="clearfix"></div>
-                                           </div>
-                                       </div>
-                                       <div class="x_content">
-                                           <div class="row">
-                                               <div class="col-xs-4">
-                                                   <label id="lblExecList0" style="visibility: hidden">List of Executable(s)
-                                                       <small>(for given user-module-version)</small>
-                                                   </label>
-                                                   <div id="exec_div" style="visibility: hidden;"></div> <!-- Exec table chart -->
-                                                   <label id="lblExecList1" style="visibility: hidden">
-                                                       <small>[Count = Number of Executable Linked Grouped by same ExecName]</small>
-                                                   </label>
-                                                   </br>
-                                               </div>
-                                               <div class="col-xs-8">
-                                                   <label id="lblExecDetailList" style="visibility: hidden">Executable details 
-                                                       <small>(*same executable name can be used for multiple linkages)</small>
-                                                   </label>
-                                                   <div id="exec_detail_div" style="visibility: hidden;" ></div> <!-- Exec Detail table chart -->
-                                                   <label id="lblExecDetailList1" style="visibility: hidden">
-                                                       <small>Click UUID to get Build and Runtime information(*if any)</small>
-                                                   </label>
-                                                   </br>
-                                               </div>
-                                           </div>
-                                           <div class="row">
-                                               </br>
-                                               <div class="col-xs-auto">
-                                                   <label id="lblRunDetail" style="visibility: hidden">Job Run details 
-                                                       <small>(*nC-nJC-nN-nT ~ #Cores-#JobNumCores-#Nodes-#Threads)</small>
-                                                   </label>
-                                                   <div id="run_detail_div" style="visibility: hidden;"></div> <!-- Job Run table chart -->
-                                                   <label id="lblRunDetail1" style="visibility: hidden">
-                                                       <small>Click RunId to get Runtime Environment Info</small>
-                                                   </label>
-                                               </div>
-                                               <div class="col-xs-auto">
-                                                   </br> </br>
-                                                   <label id="lblObj" style="visibility: hidden">Objects linked with UUID</label>
-                                                   <div id="obj_div" style="visibility: hidden;"></div> <!-- Obj table chart -->
-                                                   <label id="lblExecList1" style="visibility: hidden">
-                                                       <small>[Count = Number of Executable Linked Grouped by same ExecName]</small>
-                                                   </label>
-                                               </div>
-                                           </div>
-                                           <div class="row">
-                                               <div class="col-xs-auto">
-                                                   <label id="lblRunEnv" style="visibility: hidden">Run Environment details 
-                                                   </label>
-                                                   <div id="run_env_div" style="visibility: hidden;"></div> <!-- Run Env table chart -->
-                                               </div>
-                                           </div>
-                                       </div>
+        <script src="js/custom.js"></script>
 
-                                   </div>
-                               </div>  <!-- col-md -->
-                           </div> <!-- row -->
+        <!-- moris js
+        <script src="js/moris/raphael-min.js"></script>
+        <script src="js/moris/morris.js"></script>
+        <script src="js/moris/example.js"></script>
+        -->
 
+        <!-- google/chart -->
+        <script type="text/javascript" src="js/google/usp.js"></script>
 
+        <!-- form validation STARTs-->
+        <script type="text/javascript" src="js/parsley/parsley.min.js"></script>
 
-                       </div>
+        <script>
+            var userId;
 
-                       <!-- footer content -->
-                       <footer>
-                       <div class="">
-                           <p class="pull-right">Thanks.  <a>Kapil Agrawal</a>. |
-                           <span class="lead"> <i class="fa fa-paw"></i> XALT!</span>
-                           </p>
-                       </div>
-                       <div class="clearfix"></div>
-                       </footer>
-                       <!-- /footer content -->
+            $(document).ready(function () {
+                $.listen('parsley:field:validate', function () {
+                    validateFront();
+                });
+                $('#demo-form .btn').on('click', function () {
+                    $('#demo-form').parsley().validate();
+                    validateFront();
+                });
+                var validateFront = function () {
+                    if (true === $('#demo-form').parsley().isValid()) {
+                        $('.bs-callout-info').removeClass('hidden');
+                        $('.bs-callout-warning').addClass('hidden');
+                        } else {
+                        $('.bs-callout-info').addClass('hidden');
+                        $('.bs-callout-warning').removeClass('hidden');
+                    }
+                };  
+                $('#startBtn').on('click', function () {
+                    if (true === $('#demo-form').parsley().isValid()) {
+                        userId = document.getElementById("userId").value; 
+                        usp(sysHost, startDate, endDate, userId);
+                    }
 
-                   </div>
-                   <!-- /page content -->
-               </div>
+                }); 
 
-           </div>
+            });
+            try {
+                hljs.initHighlightingOnLoad();
+            } catch (err) {} 
+        </script>
+        <!-- form validation  ENDs-->
 
-           <div id="custom_notifications" class="custom-notifications dsp_none">
-               <ul class="list-unstyled notifications clearfix" data-tabbed_notifications="notif-group">
-               </ul>
-               <div class="clearfix"></div>
-               <div id="notif-group" class="tabbed_notifications"></div>
-           </div>
+        <!-- Include syshost Start++ -->
+        <script>
+            var sysHost;
+            $(document).ready(function () {
+                var request = $.ajax
+                ({url: "include/syshost.php",type: "POST",
+                    dataType: "html"});
 
-           <script src="js/bootstrap.min.js"></script>
+                request.done(function(data){
+                    $("#select-sysHost").html(data);
+                    sysHost = document.getElementById("select-sysHost").value;
+                });
+                $('#select-sysHost').change(function() {
+                    sysHost = document.getElementById("select-sysHost").value;
+                    console.log("Syshost Selected:  " + sysHost);
+                });
+            });
 
-           <!-- chart js -->
-           <script src="js/chartjs/chart.min.js"></script>
-           <!-- bootstrap progress js -->
-           <script src="js/progressbar/bootstrap-progressbar.min.js"></script>
-           <script src="js/nicescroll/jquery.nicescroll.min.js"></script>
-           <!-- daterangepicker -->
-           <script type="text/javascript" src="js/moment.min2.js"></script>
-           <script type="text/javascript" src="js/datepicker/daterangepicker.js"></script>
-           <!-- icheck -->
-           <script src="js/icheck/icheck.min.js"></script>
-           <!-- form validation -->
-           <script type="text/javascript" src="js/parsley/parsley.min.js"></script>
-
-           <script src="js/custom.js"></script>
-
-           <!-- moris js
-           <script src="js/moris/raphael-min.js"></script>
-           <script src="js/moris/morris.js"></script>
-           <script src="js/moris/example.js"></script>
-           -->
-
-           <!-- google/chart -->
-           <script type="text/javascript" src="js/google/uspUUidDetail.js"></script>
-           <script type="text/javascript" src="js/google/mostUsedModules.js"></script>
-           <script type="text/javascript" src="js/google/compilerMostUsed.js"></script>
+        </script>
+        <!-- Include syshost Ends -->
 
 
-           <!-- Include syshost Start++ -->
-           <script type="text/javascript">
-               var sysHost;
-               $(document).ready(function () {
-                       var request = $.ajax
-                       ({url: "include/syshost.php",
-                        type: "POST",
-                        dataType: "html"
-                        });
+        <!-- datepicker -->
+        <script type="text/javascript">
 
-                       request.done(function(data) {
-                           $("#select-sysHost").html(data);
-                           sysHost = document.getElementById("select-sysHost").value;
-                           });
-                       $('#select-sysHost').change(function() {
-                           sysHost = document.getElementById("select-sysHost").value;
-                           console.log("Syshost Selected:  " + sysHost);
-                           });
-                       });
-                   </script>
-                   <!-- Include syshost Ends -->
+            var startDate;
+            var endDate;
 
+            $(document).ready(function () {
 
-                   <!-- datepicker -->
-                   <script type="text/javascript">
+                    var cb = function (start, end, label) {
+                    console.log(start.toISOString(), end.toISOString(), label);
+                    $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+                    }
 
-                       var startDate;
-                       var endDate;
+                    var optionSet1 = {startDate: moment().subtract(29, 'days'),
+                    endDate: moment(),
+                    minDate: '01/11/2014',
+                    maxDate: moment(),
+                    dateLimit: {days: 365},
+                    showDropdowns: true,showWeekNumbers: true,timePicker: false,timePickerIncrement: 1,timePicker12Hour: true,ranges: 
+                    {'This Year': [moment().startOf('year'), moment().endOf('month')],
+                    'Today': [moment(), moment()],
+                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                    },opens: 'left',buttonClasses: ['btn btn-default'],applyClass: 
+            'btn-small btn-primary',
+                cancelClass: 'btn-small',format: 'MM/DD/YYYY',separator: ' to ',locale: {applyLabel: 'Submit',cancelLabel: 'Clear',
+                    fromLabel: 'From',
+                    toLabel: 'To',
+                    customRangeLabel: 'Custom',
+                    daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+                    monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                    firstDay: 1
+                }
+                    };
 
-                       $(document).ready(function () {
+                    $('#reportrange span').html(moment().subtract(29, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
 
-                               var cb = function (start, end, label) {
-                               console.log(start.toISOString(), end.toISOString(), label);
-                               $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-                               }
+                    $('#reportrange').daterangepicker(optionSet1, cb);
 
-                               var optionSet1 = {startDate: moment().subtract(29, 'days'),
-                               endDate: moment(),
-                               minDate: '01/11/2014',
-                               maxDate: moment(),
-                               dateLimit: {days: 365
-                               },showDropdowns: true,showWeekNumbers: true,timePicker: false,timePickerIncrement: 1,timePicker12Hour: true,ranges: {
-                               'This Year': [moment().startOf('year'), moment().endOf('month')],
-                               'Today': [moment(), moment()],
-                               'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                               'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                               'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                               'This Month': [moment().startOf('month'), moment().endOf('month')],
-                               'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-                               },opens: 'left',buttonClasses: ['btn btn-default'],applyClass: 'btn-small btn-primary',
-cancelClass: 'btn-small',format: 'MM/DD/YYYY',separator: ' to ',locale: {applyLabel: 'Submit',cancelLabel: 'Clear',
-                 fromLabel: 'From',
-                 toLabel: 'To',
-                 customRangeLabel: 'Custom',
-                 daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-                 monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-                 firstDay: 1
-             }
-                               };
+                    startDate = moment().subtract(29, 'days').format('YYYY-MM-DD');
+                    endDate = moment().format('YYYY-MM-DD'); 
+                    $('#reportrange').on('show.daterangepicker', function () {
+                            console.log("show event fired");
+                            });
+                    $('#reportrange').on('hide.daterangepicker', function () {
+                            console.log("hide event fired");
+                            });
+                    $('#reportrange').on('apply.daterangepicker', function (ev, picker) {
+                            startDate = picker.startDate.format('YYYY-MM-DD');
+                            endDate = picker.endDate.format('YYYY-MM-DD');
+                            sysHost = document.getElementById("select-sysHost").value;
 
-                               $('#reportrange span').html(moment().subtract(29, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
-                               $('#reportrange').daterangepicker(optionSet1, cb);
-                               startDate = moment().subtract(29, 'days').format('YYYY-MM-DD');
-                               endDate = moment().format('YYYY-MM-DD'); 
-                               $('#reportrange').on('show.daterangepicker', function () {
-                                       console.log("show event fired");
-                                       });
-                               $('#reportrange').on('hide.daterangepicker', function () {
-                                       console.log("hide event fired");
-                                       });
-                               $('#reportrange').on('apply.daterangepicker', function (ev, picker) {
-                                       startDate = picker.startDate.format('YYYY-MM-DD');
-                                       endDate = picker.endDate.format('YYYY-MM-DD');
-                                       sysHost = document.getElementById("select-sysHost").value;
+                            console.log("apply event fired, start/end dates are " + picker.startDate.format('MMMM D, YYYY') + " to " + picker.endDate.format('MMMM D, YYYY') + " to Syshost " + sysHost );
+                            });
+                    $('#reportrange').on('cancel.daterangepicker', function (ev, picker) {
+                            console.log("cancel event fired");
+                            });
+                    $('#options1').click(function () {
+                            $('#reportrange').data('daterangepicker').setOptions(optionSet1, cb);
+                            });
+                    $('#options2').click(function () {
+                            $('#reportrange').data('daterangepicker').setOptions(optionSet2, cb);
+                            });
+                    $('#destroy').click(function () {
+                            $('#reportrange').data('daterangepicker').remove();
+                            });
+                    $('#startBtn').on('click', function () {
+                            console.log("start/end dates are " + startDate + " to " + endDate + " to Syshost " + sysHost );
+                            });
+            });
+        </script>
+        <!-- /datepicker -->
 
-                                       console.log("apply event fired, start/end dates are " + picker.startDate.format('MMMM D, YYYY') + " to " + picker.endDate.format('MMMM D, YYYY') + " to Syshost " + sysHost );
-                                       });
-                               $('#reportrange').on('cancel.daterangepicker', function (ev, picker) {
-                                       console.log("cancel event fired");
-                                       });
-                               $('#options1').click(function () {
-                                       $('#reportrange').data('daterangepicker').setOptions(optionSet1, cb);
-                                       });
-                               $('#options2').click(function () {
-                                       $('#reportrange').data('daterangepicker').setOptions(optionSet2, cb);
-                                       });
-                               $('#destroy').click(function () {
-                                       $('#reportrange').data('daterangepicker').remove();
-                                       });
-                       });
-                   </script>
-                   <!-- /datepicker -->
-
-                   <!-- form validation STARTs-->
-                   <script>
-                       $(document).ready(function () {
-                           $.listen('parsley:field:validate', function () {
-                               validateFront();
-                           });
-
-                           $('#demo-form1 .btn').on('click', function () {
-                               $('#demo-form1').parsley().validate();
-                               validateFront();
-                           });
-                           var validateFront = function () {
-                               if (true === $('#demo-form1').parsley().isValid()) {
-                                   $('.bs-callout-info').removeClass('hidden');
-                                   $('.bs-callout-warning').addClass('hidden');
-                                   } else {
-                                   $('.bs-callout-info').addClass('hidden');
-                                   $('.bs-callout-warning').removeClass('hidden');
-                               }
-                           };  
-                           $('#demo-form1 .btn').on('click', function () {
-                               if (true === $('#demo-form1').parsley().isValid()) {
-
-                                   userId = document.getElementById('userId').value;
-                                   // uspUUidDetail(sysHost, startDate, endDate, userId);
-
-                                   query = 0;
-                                   mostUsedModules(sysHost, startDate, endDate);
-                                   // compilerMostUsed(sysHost, startDate, endDate, userId);
-                                   console.log(startDate + endDate + sysHost + userId);
-                               }
-                           }); 
-
-                       });
-                       try {
-                           hljs.initHighlightingOnLoad();
-                       } catch (err) {} 
+    </body>
 
 
-                   </script>
-               </body>
-
-
-           </html>
+</html>
