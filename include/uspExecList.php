@@ -16,7 +16,7 @@ try {
         MIN(date) AS MinDate, MAX(date) AS MaxDate, 
         count(1) AS No_Jobs
         FROM xalt_run xr 
-        WHERE xr.user = '$userId' AND
+        WHERE xr.user like concat('%', '$userId','%') AND
         xr.syshost = '$sysHost' AND
         xr.date BETWEEN '$startDate' AND '$endDate'
         GROUP BY Executable 
@@ -32,8 +32,6 @@ try {
 
     echo "{ \"cols\": [
 {\"id\":\"\",\"label\":\"Executable\",\"pattern\":\"\",\"type\":\"string\"},
-{\"id\":\"\",\"label\":\"MinDate\",\"pattern\":\"\",\"type\":\"string\"},
-{\"id\":\"\",\"label\":\"MaxDate\",\"pattern\":\"\",\"type\":\"string\"},
 {\"id\":\"\",\"label\":\"No_Jobs\",\"pattern\":\"\",\"type\":\"number\"}
 ], 
 \"rows\": [ ";
@@ -47,15 +45,11 @@ foreach($result as $row){
     if ($row_num == $total_rows){
         echo "{\"c\":[
     {\"v\":\"" . $row['Executable'] . "\",\"f\":null},
-    {\"v\":\"" . $row['MinDate'] . "\",\"f\":null},
-    {\"v\":\"" . $row['MaxDate'] . "\",\"f\":null},
     {\"v\":" . $row['No_Jobs'] . ",\"f\":null}
     ]}";
     } else {
         echo "{\"c\":[
     {\"v\":\"" . $row['Executable'] . "\",\"f\":null},
-    {\"v\":\"" . $row['MinDate'] . "\",\"f\":null},
-    {\"v\":\"" . $row['MaxDate'] . "\",\"f\":null},
     {\"v\":" . $row['No_Jobs'] . ",\"f\":null}
     ]}, ";
     } 
