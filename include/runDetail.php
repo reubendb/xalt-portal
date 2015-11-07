@@ -46,6 +46,7 @@ $row_num = 0;
 foreach($result as $row){
     $row_num++;
 
+    $cwd= wordwrap($row['Cwd'], 45, '<br />\n', true);
     if ($row_num == $total_rows){
         echo "{\"c\":[
     {\"v\":\"" . $row['RunId'] . "\",\"f\":null},
@@ -57,7 +58,7 @@ foreach($result as $row){
     {\"v\":\"" . $row['RunTime'] . "\",\"f\":null},
     {\"v\":\"" . $row['ExitCode'] . "\",\"f\":null},
     {\"v\":\"" . $row['RunUser'] . "\",\"f\":null},
-    {\"v\":\"" . $row['Cwd'] . "\",\"f\":null}
+    {\"v\":\"" . $cwd . "\",\"f\":null}
     ]}";
     } else {
         echo "{\"c\":[
@@ -70,7 +71,7 @@ foreach($result as $row){
     {\"v\":\"" . $row['RunTime'] . "\",\"f\":null},
     {\"v\":\"" . $row['ExitCode'] . "\",\"f\":null},
     {\"v\":\"" . $row['RunUser'] . "\",\"f\":null},
-    {\"v\":\"" . $row['Cwd'] . "\",\"f\":null}
+    {\"v\":\"" . $cwd . "\",\"f\":null}
     ]}, ";
     } 
 
