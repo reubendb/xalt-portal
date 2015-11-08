@@ -297,10 +297,24 @@
                                             </div> 
                                             <div class="col-xs-auto">
                                                 </br>
+                                                <label id="lblObj" style="visibility: hidden">Objects Linked 
+                                                    <small>(to the given Executable)</small>
+                                                </label>
+                                                <div id="obj_div" style="visibility: hidden;"></div> <!-- Object table -->
+                                            </div>
+                                            <div class="col-xs-auto">
+                                                </br>
                                                 <label id="lblRunDetail" style="visibility: hidden">Job Run details 
                                                     <small>(*nC-nJC-nN-nT ~ #Cores-#JobNumCores-#Nodes-#Threads)</small>
                                                 </label>
                                                 <div id="run_detail_div" style="visibility: hidden;"></div> <!-- Job Run table chart -->
+                                            </div>
+                                            <div class="col-xs-auto">
+                                                </br>
+                                                <label id="lblRunEnv" style="visibility: hidden">Run Environment Details 
+                                                    <small>(for the given Job)</small>
+                                                </label>
+                                                <div id="run_env_div" style="visibility: hidden;"></div> <!-- Job Run table chart -->
                                             </div>
                                         </div> <!-- row -->
                                     </div>
@@ -389,14 +403,14 @@
                                         <div class="row">
                                             <div class="col-xs-auto">
                                                 <label id="lblCompExecDetail0" style="visibility: hidden">Executable Details </label>
-                                                <div id="comp5_div" style="visibility: hidden;"></div> <!-- Exec Detail table chart -->
+                                                <div id="comp5_div" style="visibility: hidden;"></div> <!-- Exec Detail table -->
                                             </div> 
                                             <div class="col-xs-auto">
                                                 </br>
                                                 <label id="lblCompRun0" style="visibility: hidden">Job Run details 
                                                     <small>(*nC-nJC-nN-nT ~ #Cores-#JobNumCores-#Nodes-#Threads)</small>
                                                 </label>
-                                                <div id="comp6_div" style="visibility: hidden;"></div> <!-- Job Run table chart -->
+                                                <div id="comp6_div" style="visibility: hidden;"></div> <!-- Job Run table -->
                                             </div>
                                         </div> <!-- row -->
                                     </div>
@@ -548,7 +562,7 @@
                             });
                     $('#startBtn').on('click', function () {
                             console.log("start/end dates are " + startDate + " to " + endDate + " to Syshost " + sysHost );
-                            query = 1;              // top level query
+                            query = 1;
                             mostUsedModules(sysHost, startDate, endDate);
                             compilerMostUsed(sysHost, startDate, endDate);
                             console.log(startDate + endDate + sysHost);
