@@ -65,7 +65,6 @@ $row_num = 0;
 
 foreach($result as $row){
     $row_num++;
-
     $execPath = wordwrap($row['ExecPath'], 45, '\n', true);
 
     if ($row_num == $total_rows){
