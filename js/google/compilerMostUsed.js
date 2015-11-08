@@ -18,7 +18,8 @@ function compilerMostUsed(sysHost, startDate, endDate) {
 
     // List ids to hide
     var idsToHide = ['lblCompUser0', 'comp3_div', 'lblCompUser1', 'lblCompExec0', 'lblCompExec1', 
-        'comp4_div', 'lblCompExecRow', 'lblCompExecDetail0','comp5_div','lblCompRun0','comp6_div']; 
+        'comp4_div', 'lblCompExecRow', 'lblCompExecDetail0','comp5_div','lblCompRun0','comp6_div',
+        'lblObj1', 'obj_div1', 'lblRunEnv1', 'run_env_div1']; 
     hideAllDivs(idsToHide);
 
     var count = checkJsonData(jsonChartData);             /* if no data is returned do Nothing!! */
@@ -88,8 +89,10 @@ function gTc1(sysHost, startDate, endDate, linkProgram) {         /* Get user li
     var div_id = 'comp3_div';
 
     // List ids to hide
-    var idsToHide = ['lblCompExec0', 'comp4_div', 'lblCompExec1', 
-        'lblCompExecRow', 'lblCompExecDetail0','comp5_div','lblCompRun0','comp6_div']; 
+    var idsToHide = ['lblCompUser0', 'comp3_div', 'lblCompUser1',
+        'lblCompExec0', 'comp4_div', 'lblCompExec1', 
+        'lblCompExecRow', 'lblCompExecDetail0','comp5_div','lblCompRun0','comp6_div',
+        'lblObj1', 'obj_div1', 'lblRunEnv1', 'run_env_div1']; 
     hideAllDivs(idsToHide);
 
     var count = checkJsonData(jsonTableData);             /* if no data is returned do Nothing!! */
@@ -132,7 +135,9 @@ function gTc2(sysHost, startDate, endDate, linkProgram,user) {     /* get exec l
     var div_id = 'comp4_div';
 
     // List ids to hide
-    var idsToHide = ['lblCompExecRow', 'lblCompExecDetail0','comp5_div','lblCompRun0','comp6_div']; 
+    var idsToHide = ['lblCompExec0', 'lblCompExec1', 'comp4_div',
+        'lblCompExecRow', 'lblCompExecDetail0','comp5_div','lblCompRun0','comp6_div',
+        'lblObj1', 'obj_div1', 'lblRunEnv1', 'run_env_div1']; 
     hideAllDivs(idsToHide);
 
     var count = checkJsonData(jsonTableData);             /* if no data is returned do Nothing!! */
@@ -175,7 +180,9 @@ function gTc3(sysHost, startDate, endDate, linkProgram, user, exec) {      /* ge
     var div_id = 'comp5_div';
 
     // List ids to hide
-    var idsToHide = ['lblCompRun0','comp6_div']; 
+    var idsToHide = ['lblCompExecRow', 'lblCompExecDetail0','comp5_div',
+        'lblCompRun0','comp6_div',
+        'lblObj1', 'obj_div1', 'lblRunEnv1', 'run_env_div1']; 
     hideAllDivs(idsToHide);
 
     var count = checkJsonData(jsonTableData);             /* if no data is returned do Nothing!! */
@@ -202,6 +209,7 @@ function gTc3(sysHost, startDate, endDate, linkProgram, user, exec) {      /* ge
 
             // get run details irrespective of who built the code 
             gTc4(uuid);
+            gTc5(uuid);
         }
     }
 }
@@ -217,6 +225,11 @@ function gTc4(uuid) {         /* get run details */
          }).responseText;
 
     var div_id = 'comp6_div';
+
+    // List ids to hide
+    var idsToHide = ['lblCompRun0','comp6_div',
+        'lblRunEnv1', 'run_env_div1']; 
+    hideAllDivs(idsToHide);
 
     var count = checkJsonData(jsonTableData);             /* if no data is returned do Nothing!! */
     if (count != 0) {
@@ -239,7 +252,62 @@ function gTc4(uuid) {         /* get run details */
             var col = selection[0].column;
             var runid = TableData.getValue(row,0);
 
+            gTc6(runid);
         }
+    }
+}
+
+function gTc5(uuid) {               /* get object information*/
+
+    console.log("&uuid=" + uuid);
+
+    var jsonTableData = $.ajax
+        ({url:"include/getExecObj.php",
+         data: "uuid=" + uuid,
+         datatype: "json", async: false
+         }).responseText;
+
+    var div_id = 'obj_div1';
+
+    // List ids to hide
+    var idsToHide = ['lblObj1', 'obj_div1'];
+    hideAllDivs(idsToHide);
+
+    var count = checkJsonData(jsonTableData);         /* if no data is returned do Nothing!! */
+    if (count != 0) {
+        document.getElementById("lblObj1").style.visibility = 'visible';
+        document.getElementById("obj_div1").style.visibility = 'visible';
+
+        // Create our datatable out of Json Data loaded from php call.
+        var TableData = new google.visualization.DataTable(jsonTableData);
+        var table = makeTable(TableData, div_id);
+    }
+}
+
+function gTc6(runId) {               /* get runtime env information*/
+
+    console.log("&runId=" + runId);
+
+    var jsonTableData = $.ajax
+        ({url:"include/getRunEnv.php",
+         data: "runId=" + runId,
+         datatype: "json", async: false
+         }).responseText;
+
+    var div_id = 'run_env_div1';
+
+    // List ids to hide
+    var idsToHide = ['lblRunEnv1', 'run_env_div1'];
+    hideAllDivs(idsToHide);
+
+    var count = checkJsonData(jsonTableData);         /* if no data is returned do Nothing!! */
+    if (count != 0) {
+        document.getElementById("lblRunEnv1").style.visibility = 'visible';
+        document.getElementById("run_env_div1").style.visibility = 'visible';
+
+        // Create our datatable out of Json Data loaded from php call.
+        var TableData = new google.visualization.DataTable(jsonTableData);
+        var table = makeTable(TableData, div_id);
     }
 }
 
