@@ -22,7 +22,8 @@ function identifyUser(sysHost, startDate, endDate, objPath) {
     var idsToHide = ['lblIdentifyUser0', 'identify_user_div', 'lblIdentifyUser1', 
         'lblIdentifyExec0', 'identify_exec_div', 'lblIdentifyExec1', 
         'lblIdenExecDetail0', 'identify_exDeatil_div', 
-        'lblIdenRun0', 'identify_run_div']; 
+        'lblIdenRun0', 'identify_run_div','lblObj', 'obj_div',
+        'lblRunEnv', 'run_env_div']; 
     hideAllDivs(idsToHide);
 
     var count = checkJsonData(jsonTableData);             /* if no data is returned do Nothing!! */
@@ -66,7 +67,8 @@ function gTi1(sysHost, startDate, endDate,objPath, user) {        /* Get Exec Li
     // Hide all tables which are not required.
     var idsToHide = [ 'lblIdentifyExec0', 'identify_exec_div', 'lblIdentifyExec1',
         'lblIdenExecDetail0', 'identify_exDetail_div', 
-        'lblIdenRun0', 'identify_run_div']; 
+        'lblIdenRun0', 'identify_run_div','lblObj', 'obj_div',
+        'lblRunEnv', 'run_env_div']; 
     hideAllDivs(idsToHide);
 
     var count = checkJsonData(jsonTableData);             /* if no data is returned do Nothing!! */
@@ -109,7 +111,8 @@ function gTi2(sysHost, startDate, endDate,objPath, user, exec) {        /* Get E
 
     // Hide all tables which are not required.
     var idsToHide = ['lblIdenExecDetail0', 'identify_exDetail_div', 
-        'lblIdenRun0', 'identify_run_div']; 
+        'lblIdenRun0', 'identify_run_div','lblObj', 'obj_div',
+        'lblRunEnv', 'run_env_div']; 
     hideAllDivs(idsToHide);
 
     var count = checkJsonData(jsonTableData);             /* if no data is returned do Nothing!! */
@@ -135,7 +138,7 @@ function gTi2(sysHost, startDate, endDate,objPath, user, exec) {        /* Get E
 
             // get run details irrespective of who built the code
             gTi3(uuid);
-
+            gTi4(uuid);
         }
     }
 }
@@ -153,7 +156,7 @@ function gTi3(uuid) {         /* get run details */
     var div_id = 'identify_run_div';
 
     // Hide all tables which are not required.
-    var idsToHide = ['lblIdenRun0', 'identify_run_div'];
+    var idsToHide = ['lblIdenRun0', 'identify_run_div','lblRunEnv', 'run_env_div'];
     hideAllDivs(idsToHide);
 
     var count = checkJsonData(jsonTableData);             /* if no data is returned do Nothing!! */
@@ -164,31 +167,87 @@ function gTi3(uuid) {         /* get run details */
 
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);
+        var table = makeTable(TableData, div_id);
 
-        /* REMOVE ++  
-        // set the width of the column with the title "Name" to 100px
-        var title = "CurrentWorkingDir";
-        var width = "100px";
-        //$('.google-visualization-table-th:contains(' + title + ')').css('clientWidth', width);
-        $('.google-visualization-table-th:contains('+ title +')').css('width', width);
-          REMOVE -- */
+        // Add our Actions handler.
+        google.visualization.events.addListener(table, 'select', selectHandler);
+
+        function selectHandler() {
+            // grab a few details before redirecting
+            var selection = table.getSelection();
+            var row = selection[0].row;
+            var col = selection[0].column;
+            var runId = TableData.getValue(row,0);
+
+            // get run details irrespective of who built the code
+            gTi5(runId);
+        }
+    }
+}
+
+function gTi4(uuid) {               /* get object information*/
+
+    console.log("&uuid=" + uuid);
+
+    var jsonTableData = $.ajax
+        ({url:"include/getExecObj.php",
+         data: "uuid=" + uuid,
+         datatype: "json", async: false
+         }).responseText;
+
+    var div_id = 'obj_div';
+
+    // List ids to hide
+    var idsToHide = ['lblObj', 'obj_div'];
+    hideAllDivs(idsToHide);
+
+    var count = checkJsonData(jsonTableData);         /* if no data is returned do Nothing!! */
+    if (count != 0) {
+        document.getElementById("lblObj").style.visibility = 'visible';
+        document.getElementById("obj_div").style.visibility = 'visible';
+
+        // Create our datatable out of Json Data loaded from php call.
+        var TableData = new google.visualization.DataTable(jsonTableData);
+        var table = makeTable(TableData, div_id);
+    }
+}
+
+function gTi5(runId) {               /* get runtime env information*/
+
+    console.log("&runId=" + runId);
+    var jsonTableData = $.ajax
+        ({url:"include/getRunEnv.php",
+         data: "runId=" + runId,
+         datatype: "json", async: false
+         }).responseText;
+
+    var div_id = 'run_env_div';
+
+    // List ids to hide
+    var idsToHide = ['lblRunEnv', 'run_env_div'];
+    hideAllDivs(idsToHide);
+
+    var count = checkJsonData(jsonTableData);         /* if no data is returned do Nothing!! */
+    if (count != 0) {
+        document.getElementById("lblRunEnv").style.visibility = 'visible';
+        document.getElementById("run_env_div").style.visibility = 'visible';
+
+        // Create our datatable out of Json Data loaded from php call.
+        var TableData = new google.visualization.DataTable(jsonTableData);
         var table = makeTable(TableData, div_id);
     }
 }
 
 function makeTable(TableData, div_id) {
 
-    var tab_options = {
-        showRowNumber: true,
+    var tab_options = {showRowNumber: true,
         height: 300,
         width: '100%',
         allowHtml: true,
         alternatingRowStyle: true
     }
-
     // Instantiate and Draw our Table
     var table = new google.visualization.Table(document.getElementById(div_id));
-
     table.draw(TableData, tab_options);
 
     return (TableData,table);
