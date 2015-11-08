@@ -8,11 +8,11 @@ google.load('visualization', '1', {packages: ['corechart','table']});
 
 function usp(sysHost, startDate, endDate, userId) {        /* get exec list */
 
-    var jsonTableData = $.ajax(
-            {url: "include/uspExecList.php",
-            data: "sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate + "&userId=" + userId,
-            dataType:"json", async: false
-            }).responseText;
+    var jsonTableData = $.ajax
+        ({url: "include/uspExecList.php",
+         data: "sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate + "&userId=" + userId,
+         dataType:"json", async: false
+         }).responseText;
 
 
     // Create our datatable out of Json Data loaded from php call.
@@ -97,125 +97,124 @@ function gTu0(syshost, startDate, endDate, userId, exec) {         /* get exec d
  */
 function gTu1(sysHost, uuid) {  
 
-    var jsonTableData = $.ajax(
-            {
-url:"include/uspObjDetail.php", 
-data: "sysHost=" + sysHost + "&uuid=" + uuid,
-datatype: "json", async: false
-}).responseText;
+    var jsonTableData = $.ajax
+        ({url:"include/uspObjDetail.php", 
+         data: "sysHost=" + sysHost + "&uuid=" + uuid,
+         datatype: "json", async: false
+         }).responseText;
 
-var div_id = 'usp3_div';
+    var div_id = 'usp3_div';
 
-console.log(jsonTableData);
-// Create our datatable out of Json Data loaded from php call.
-var TableData = new google.visualization.DataTable(jsonTableData);
-var table = makeTable(TableData, div_id);
+    console.log(jsonTableData);
+    // Create our datatable out of Json Data loaded from php call.
+    var TableData = new google.visualization.DataTable(jsonTableData);
+    var table = makeTable(TableData, div_id);
 
-// Add our Actions handler.
-google.visualization.events.addListener(table, 'select', selectHandler);
+    // Add our Actions handler.
+    google.visualization.events.addListener(table, 'select', selectHandler);
 
-function selectHandler() {
+    function selectHandler() {
 
-    // grab a few details before redirecting
-    var selection = table.getSelection();
-    var row = selection[0].row;
-    var col = selection[0].column;
-    var user = TableData.getValue(row,0);
+        // grab a few details before redirecting
+        var selection = table.getSelection();
+        var row = selection[0].row;
+        var col = selection[0].column;
+        var user = TableData.getValue(row,0);
 
-    console.log("sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate);
-    //        gT2(module, user);
-}
+        console.log("sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate);
+        //        gT2(module, user);
+    }
 }   
 
 function gT2(module,user) {                              /* GenerateTable LIST EXECUTABLES   */
 
-    var jsonTableData = $.ajax(
-            {url:"include/execList.php", 
-data: "user=" +user + "&module=" + module,
-datatype: "json", async: false
-}).responseText;
+    var jsonTableData = $.ajax
+        ({url:"include/execList.php", 
+         data: "user=" +user + "&module=" + module,
+         datatype: "json", async: false
+         }).responseText;
 
-var div_id = 'exec_div';
+    var div_id = 'exec_div';
 
-// Create our datatable out of Json Data loaded from php call.
-var TableData = new google.visualization.DataTable(jsonTableData);
-var table = makeTable(TableData, div_id);
+    // Create our datatable out of Json Data loaded from php call.
+    var TableData = new google.visualization.DataTable(jsonTableData);
+    var table = makeTable(TableData, div_id);
 
-// Add our Actions handler.
-google.visualization.events.addListener(table, 'select', selectHandler);
+    // Add our Actions handler.
+    google.visualization.events.addListener(table, 'select', selectHandler);
 
-function selectHandler() {
+    function selectHandler() {
 
-    // grab a few details before redirecting
-    var selection = table.getSelection();
-    var row = selection[0].row;
-    var col = selection[0].column;
-    var exec = TableData.getValue(row,0);
+        // grab a few details before redirecting
+        var selection = table.getSelection();
+        var row = selection[0].row;
+        var col = selection[0].column;
+        var exec = TableData.getValue(row,0);
 
-    if(exec) {
-        gT3(module, user, exec);
+        if(exec) {
+            gT3(module, user, exec);
+        }
     }
-}
 }
 
 function gT3(module,user,exec) {
 
-    var jsonTableData = $.ajax(
-            {url:"include/execDetailList.php", 
-data: "user=" +user + "&exec=" + exec,
-datatype: "json", async: false
-}).responseText;
+    var jsonTableData = $.ajax
+        ({url:"include/execDetailList.php", 
+         data: "user=" +user + "&exec=" + exec,
+         datatype: "json", async: false
+         }).responseText;
 
-var div_id = 'exec_detail_div';
+    var div_id = 'exec_detail_div';
 
-// Create our datatable out of Json Data loaded from php call.
-var TableData = new google.visualization.DataTable(jsonTableData);
-var table = makeTable(TableData, div_id);
+    // Create our datatable out of Json Data loaded from php call.
+    var TableData = new google.visualization.DataTable(jsonTableData);
+    var table = makeTable(TableData, div_id);
 
-// Add our Actions handler.
-google.visualization.events.addListener(table, 'select', selectHandler);
+    // Add our Actions handler.
+    google.visualization.events.addListener(table, 'select', selectHandler);
 
-function selectHandler() {
+    function selectHandler() {
 
-    // grab a few details before redirecting
-    var selection = table.getSelection();
-    var row = selection[0].row;
-    var col = selection[0].column;
-    var uuid = TableData.getValue(row,0);
+        // grab a few details before redirecting
+        var selection = table.getSelection();
+        var row = selection[0].row;
+        var col = selection[0].column;
+        var uuid = TableData.getValue(row,0);
 
-    // alert("gt3: UUID Selected >> " + uuid);
-    if (uuid){
-        gT4(uuid, user);
+        // alert("gt3: UUID Selected >> " + uuid);
+        if (uuid){
+            gT4(uuid, user);
+        }
     }
-}
 }
 
 function gT4(uuid,user) {
 
-    var jsonTableData = $.ajax(
-            {url:"include/runDetail.php", 
-data: "uuid=" + uuid + "&user=" + user,
-datatype: "json", async: false
-}).responseText;
+    var jsonTableData = $.ajax
+        ({url:"include/runDetail.php", 
+         data: "uuid=" + uuid + "&user=" + user,
+         datatype: "json", async: false
+         }).responseText;
 
-var div_id = 'run_detail_div';
+    var div_id = 'run_detail_div';
 
-// Create our datatable out of Json Data loaded from php call.
-var TableData = new google.visualization.DataTable(jsonTableData);
-var table = makeTable(TableData, div_id);
+    // Create our datatable out of Json Data loaded from php call.
+    var TableData = new google.visualization.DataTable(jsonTableData);
+    var table = makeTable(TableData, div_id);
 
-// Add our Actions handler.
-google.visualization.events.addListener(table, 'select', selectHandler);
+    // Add our Actions handler.
+    google.visualization.events.addListener(table, 'select', selectHandler);
 
-function selectHandler() {
+    function selectHandler() {
 
-    // grab a few details before redirecting
-    var selection = table.getSelection();
-    var row = selection[0].row;
-    var col = selection[0].column;
-    var runid = TableData.getValue(row,0);
+        // grab a few details before redirecting
+        var selection = table.getSelection();
+        var row = selection[0].row;
+        var col = selection[0].column;
+        var runid = TableData.getValue(row,0);
 
-}
+    }
 }
 function makeTable(TableData, div_id) {
 
