@@ -9,27 +9,19 @@ google.load('visualization', '1', {packages: ['corechart','table']});
 
 function mostUsedModules(sysHost, startDate, endDate) {
 
-    console.log('query = ' + query);
+    console.log('query = ' + query);   /* query = 1 for first call */
 
-    if (query == 0) {                 /* Call from xalt_usp.html page */
-        var jsonChartData = $.ajax
-            ({url: "include/mostUsedModules.php",
-             data: "sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate + "&query=" + query + "&userId=" + userId ,
-             dataType:"json", async: false
-             }).responseText;
-    }
-    if (query == 1) {                 /* Call from xalt_usage.html page */
-        var jsonChartData = $.ajax
-            ({url: "include/mostUsedModules.php",
-             data: "sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate + "&query=" + query,
-             dataType:"json", async: false
-             }).responseText;
-    }
+    var jsonChartData = $.ajax
+        ({url: "include/mostUsedModules.php",
+         data: "sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate + "&query=" + query,
+         dataType:"json", async: false
+         }).responseText;
 
     // Hide all tables which are not required.
     var idsToHide = ['lblModVer0', 'mod3_div', 'lblModVer1', 'lblUserList0', 'mod4_div',
         'lblUserList1','lblExecList0','exec_div', 'lblExecList1', 'lblExecDetailRow', 
-        'lblExecDetailList','exec_detail_div','lblRunDetail','run_detail_div'];
+        'lblExecDetailList','exec_detail_div','lblRunDetail','run_detail_div',
+        'lblObj', 'obj_div', 'lblRunEnv', 'run_env_div'];
     hideAllDivs(idsToHide);
 
     var count = checkJsonData(jsonChartData);             /* if no data is returned do Nothing!! */
@@ -67,8 +59,7 @@ function mostUsedModules(sysHost, startDate, endDate) {
             var col = selection[0].column;
             var module = [ChartData.getValue(row,0)];
 
-
-            if (query == 0) { query = 3 } else if (query == 1) { query = 2 }
+            if (query == 1) { query = 2 }
             console.log('query = ' + query);
             gT0(sysHost, startDate, endDate, module);
 
@@ -81,7 +72,7 @@ function mostUsedModules(sysHost, startDate, endDate) {
             var col = selection[0].column;
             var module = [ChartData.getValue(row,0)];
 
-            if (query == 0) { query = 3 } else if (query == 1) { query = 2 }
+            if (query == 1) { query = 2 }
             console.log('query = ' + query);
             gT0(sysHost, startDate, endDate, module);
         }
@@ -92,28 +83,21 @@ function gT0(syshost, startDate, endDate, module) {         /* List version of g
 
     console.log('query = ' + query + "module= " + module);
 
-    if (query == 2) {         /* Call from xalt_usage.html page */
-        var jsonTableData = $.ajax
-            ({url: "include/mostUsedModules.php",
-             data: "sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate + "&query=" + query + "&module=" + module,
-             dataType:"json", async: false
-             }).responseText;
+    /* query = 2 Call from xalt_usage.html page */
+    var jsonTableData = $.ajax
+        ({url: "include/mostUsedModules.php",
+         data: "sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate + "&query=" + query + "&module=" + module,
+         dataType:"json", async: false
+         }).responseText;
 
-    } else if (query == 3) {       /* Call from xalt_usp.html page */
-
-        console.log("userid = " + userId);
-        var jsonTableData = $.ajax
-            ({url: "include/mostUsedModules.php",
-             data: "sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate + "&query=" + query + "&module=" + module + "&userId=" + userId,
-             dataType:"json", async: false
-             }).responseText;
-
-    }
     var div_id = 'mod3_div';
 
     // List ids to hide
-    var idsToHide = ['lblUserList0', 'mod4_div','lblUserList1','lblExecList0','exec_div', 'lblExecList1', 'lblExecDetailRow', 
-        'lblExecDetailList','exec_detail_div','lblRunDetail','run_detail_div'];
+    var idsToHide = ['lblModVer0', 'lblModVer1', 'mod3_div',
+        'lblUserList0', 'mod4_div','lblUserList1',
+        'lblExecList0','exec_div', 'lblExecList1', 'lblExecDetailRow', 
+        'lblExecDetailList','exec_detail_div','lblRunDetail','run_detail_div',
+        'lblObj', 'obj_div', 'lblRunEnv', 'run_env_div'];
     hideAllDivs(idsToHide);
 
     var count = checkJsonData(jsonTableData);             /* if no data is returned do Nothing!! */
@@ -139,12 +123,7 @@ function gT0(syshost, startDate, endDate, module) {         /* List version of g
             var module = TableData.getValue(row,0);
             var version = TableData.getValue(row,1);
 
-            if (query == 3){
-                gT2(sysHost, startDate, endDate, module, version, userId);
-            }
-            else {
                 gT1(sysHost, startDate, endDate, module, version);
-            }
         }
     }
 }   
@@ -162,8 +141,10 @@ function gT1(sysHost, startDate, endDate, module, version) {      /* List of Use
     var div_id = 'mod4_div';
 
     // List ids to hide
-    var idsToHide = ['lblExecList0','exec_div', 'lblExecList1', 'lblExecDetailRow', 
-        'lblExecDetailList','exec_detail_div','lblRunDetail','run_detail_div'];
+    var idsToHide = ['lblUserList0', 'lblUserList1','mod4_div',
+        'lblExecList0','exec_div', 'lblExecList1', 'lblExecDetailRow', 
+        'lblExecDetailList','exec_detail_div','lblRunDetail','run_detail_div',
+        'lblObj', 'obj_div', 'lblRunEnv', 'run_env_div'];
     hideAllDivs(idsToHide);
 
     var count = checkJsonData(jsonTableData);             /* if no data is returned do Nothing!! */
@@ -189,7 +170,6 @@ function gT1(sysHost, startDate, endDate, module, version) {      /* List of Use
             var col = selection[0].column;
             var user = TableData.getValue(row,0);
 
-
             gT2(sysHost, startDate, endDate, module, version, user);
         }
     }
@@ -208,7 +188,10 @@ function gT2(sysHost, startDate, endDate, module, version, user) {       /* List
     var div_id = 'exec_div';
 
     // List ids to hide
-    var idsToHide = ['lblExecDetailRow','lblExecDetailList','exec_detail_div','lblRunDetail','run_detail_div'];
+    var idsToHide = ['lblExecList0', 'lblExecList1', 'exec_div',
+        'lblExecDetailRow','lblExecDetailList',
+        'exec_detail_div','lblRunDetail','run_detail_div',
+        'lblObj', 'obj_div', 'lblRunEnv', 'run_env_div'];
     hideAllDivs(idsToHide);
 
     var count = checkJsonData(jsonTableData);             /* if no data is returned do Nothing!! */
@@ -233,7 +216,6 @@ function gT2(sysHost, startDate, endDate, module, version, user) {       /* List
             var col = selection[0].column;
             var exec = TableData.getValue(row,0);
 
-
             gT3(sysHost, startDate, endDate, module, version, user, exec);
         }
     }
@@ -253,7 +235,9 @@ function gT3(sysHost, startDate, endDate, module, version, user, exec) { /* Exec
     var div_id = 'exec_detail_div';
 
     // List ids to hide
-    var idsToHide = ['lblRunDetail','run_detail_div'];
+    var idsToHide = ['lblExecDetailRow', 'lblExecDetailList', 'exec_detail_div', 
+        'lblRunDetail','run_detail_div',
+        'lblObj', 'obj_div', 'lblRunEnv', 'run_env_div'];
     hideAllDivs(idsToHide);
 
     var count = checkJsonData(jsonTableData);             /* if no data is returned do Nothing!! */
@@ -262,9 +246,6 @@ function gT3(sysHost, startDate, endDate, module, version, user, exec) { /* Exec
         document.getElementById("lblExecDetailList").style.visibility = 'visible';
         document.getElementById("exec_detail_div").style.visibility = 'visible';
 
-        if (query == 3) {       /* Call from xalt_usp.html page */
-            document.getElementById("lblExecDetailList1").style.visibility = 'visible'; 
-        }
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);
         var table = makeTable(TableData, div_id);
@@ -282,9 +263,7 @@ function gT3(sysHost, startDate, endDate, module, version, user, exec) { /* Exec
 
             // Get run details irrespective of who built the code
             gT4(uuid);
-            if (query == 3) {         /* Call from xalt_usp.html page */
-                gT5(uuid);            /* get objects at linktime */ 
-            }
+            gT5(uuid);            /* get objects at linktime */ 
         }
     }
 }
@@ -293,23 +272,19 @@ function gT4(uuid) {               /* get job run details */
 
     console.log("&uuid=" + uuid);
 
-    if (query == 3) {             /* Call from xalt_usp.html page */
-        var jsonTableData = $.ajax
-            ({url:"include/uspRunDetail.php", 
-             data: "uuid=" + uuid,
-             datatype: "json", async: false
-             }).responseText;
-
-        document.getElementById("lblRunDetail1").style.visibility = 'visible';
-    } else {
-        var jsonTableData = $.ajax
-            ({url:"include/runDetail.php",
-             data: "uuid=" + uuid,
-             datatype: "json", async: false
-             }).responseText;
-    }
+    var jsonTableData = $.ajax
+        ({url:"include/runDetail.php",
+         data: "uuid=" + uuid,
+         datatype: "json", async: false
+         }).responseText;
 
     var div_id = 'run_detail_div';
+
+    // List ids to hide
+    var idsToHide = ['lblRunDetail','run_detail_div',
+        'lblRunEnv', 'run_env_div'];
+    hideAllDivs(idsToHide);
+
     var count = checkJsonData(jsonTableData);             /* if no data is returned do Nothing!! */
     if (count != 0) {
         document.getElementById("lblRunDetail").style.visibility = 'visible';
@@ -319,37 +294,38 @@ function gT4(uuid) {               /* get job run details */
         var TableData = new google.visualization.DataTable(jsonTableData);
         var table = makeTable(TableData, div_id);
 
-        if (query == 3) {           /* Call from xalt_usp.html page */
-            // Add our Actions handler.
-            google.visualization.events.addListener(table, 'select', selectHandler);
+        // Add our Actions handler.
+        google.visualization.events.addListener(table, 'select', selectHandler);
 
-            function selectHandler() {
+        function selectHandler() {
 
-                // grab a few details before redirecting
-                var selection = table.getSelection();
-                var row = selection[0].row;
-                var col = selection[0].column;
-                var runId = TableData.getValue(row,0);
+            // grab a few details before redirecting
+            var selection = table.getSelection();
+            var row = selection[0].row;
+            var col = selection[0].column;
+            var runId = TableData.getValue(row,0);
 
-                console.log(runId); 
-                gT6(runId);            /* get runtime env info */ 
-            }
+            gT6(runId);            /* get runtime env info */ 
         }
     }
 }
-
 
 function gT5(uuid) {               /* get object information*/
 
     console.log("&uuid=" + uuid);
 
     var jsonTableData = $.ajax
-        ({url:"include/uspObjDetail.php", 
+        ({url:"include/getExecObj.php", 
          data: "uuid=" + uuid,
          datatype: "json", async: false
          }).responseText;
 
     var div_id = 'obj_div';
+
+    // List ids to hide
+    var idsToHide = ['lblObj', 'obj_div'];
+    hideAllDivs(idsToHide);
+
     var count = checkJsonData(jsonTableData);         /* if no data is returned do Nothing!! */
     if (count != 0) {
         document.getElementById("lblObj").style.visibility = 'visible';
@@ -366,12 +342,17 @@ function gT6(runId) {               /* get runtime env information*/
     console.log("&runId=" + runId);
 
     var jsonTableData = $.ajax
-        ({url:"include/uspRunEnv.php", 
+        ({url:"include/getRunEnv.php", 
          data: "runId=" + runId,
          datatype: "json", async: false
          }).responseText;
 
     var div_id = 'run_env_div';
+
+    // List ids to hide
+    var idsToHide = ['lblRunEnv', 'run_env_div'];
+    hideAllDivs(idsToHide);
+
     var count = checkJsonData(jsonTableData);         /* if no data is returned do Nothing!! */
     if (count != 0) {
         document.getElementById("lblRunEnv").style.visibility = 'visible';
