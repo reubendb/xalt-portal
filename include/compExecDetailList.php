@@ -57,10 +57,11 @@ try {
 
     foreach($result as $row){
         $row_num++;
+        $execPath = wordwrap($row['ExecPath'], 45, '<br />', true);
 
         if ($row_num == $total_rows){
             echo "{\"c\":[
-        {\"v\":\"" . $row['ExecPath'] . "\",\"f\":null},
+        {\"v\":\"" . $execPath . "\",\"f\":null},
         {\"v\":\"" . $row['BuildDate'] . "\",\"f\":null},
         {\"v\":\"" . $row['LinkProgram'] . "\",\"f\":null},
         {\"v\":\"" . $row['ExitCode'] . "\",\"f\":null},
@@ -70,7 +71,7 @@ try {
         ]}";
         } else {
             echo "{\"c\":[
-        {\"v\":\"" . $row['ExecPath'] . "\",\"f\":null},
+        {\"v\":\"" . $execPath . "\",\"f\":null},
         {\"v\":\"" . $row['BuildDate'] . "\",\"f\":null},
         {\"v\":\"" . $row['LinkProgram'] . "\",\"f\":null},
         {\"v\":\"" . $row['ExitCode'] . "\",\"f\":null},
