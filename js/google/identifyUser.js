@@ -6,13 +6,14 @@
 
 google.load('visualization', '1', {packages: ['corechart','table']});
 
-function identifyUser(sysHost, startDate, endDate, objPath) {
+function identifyUser(sysHost, startDate, endDate, objPath, execName, query) {
 
-    console.log(objPath);
+    console.log(objPath + ":" + execName + ":" + query );
 
     var jsonTableData = $.ajax
         ({url: "include/identifyUser.php",
-         data: "sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate + "&objPath=" + objPath, 
+         data: "sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate + 
+         "&objPath=" + objPath + "&execName=" + execName + "&query=" + query, 
          dataType:"json",async: false
          }).responseText;
 
@@ -21,7 +22,7 @@ function identifyUser(sysHost, startDate, endDate, objPath) {
     // Hide all tables which are not required.
     var idsToHide = ['lblIdentifyUser0', 'identify_user_div', 'lblIdentifyUser1', 
         'lblIdentifyExec0', 'identify_exec_div', 'lblIdentifyExec1', 
-        'lblIdenExecDetail0', 'identify_exDeatil_div', 
+        'lblIdenExecDetail0','identify_exDetail_div', 
         'lblIdenRun0', 'identify_run_div','lblObj', 'obj_div',
         'lblRunEnv', 'run_env_div']; 
     hideAllDivs(idsToHide);
@@ -47,18 +48,19 @@ function identifyUser(sysHost, startDate, endDate, objPath) {
             var col = selection[0].column;
             var user = TableData.getValue(row,0);
 
-            gTi1(sysHost, startDate, endDate, objPath, user);
+            gTi1(sysHost, startDate, endDate, objPath, execName, user, query);
         }
     }
 }
 
-function gTi1(sysHost, startDate, endDate,objPath, user) {        /* Get Exec List */
+function gTi1(sysHost, startDate, endDate,objPath, execName, user, query) {        /* Get Exec List */
 
     console.log(objPath + user);
 
     var jsonTableData = $.ajax
         ({url:"include/identifyExecList.php",
-         data: "sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate + "&objPath=" + objPath + "&user=" + user,
+         data: "sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate + 
+         "&objPath=" + objPath + "&execName=" + execName + "&user=" + user + "&query=" + query,
          datatype: "json", async: false
          }).responseText;
 
@@ -71,6 +73,7 @@ function gTi1(sysHost, startDate, endDate,objPath, user) {        /* Get Exec Li
         'lblRunEnv', 'run_env_div']; 
     hideAllDivs(idsToHide);
 
+    console.log(jsonTableData);
     var count = checkJsonData(jsonTableData);             /* if no data is returned do Nothing!! */
     if (count != 0) {
 
