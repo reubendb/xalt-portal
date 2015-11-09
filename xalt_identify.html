@@ -197,6 +197,13 @@
                                                 style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
                                             </input>
                                             </label>
+                                        </div> 
+                                        <div class="form-group">
+                                            <label class="pull-left" for="execName">(OR)  Enter Executable Name <span class="required">* </span>
+                                            <input type="text" id="execName" required="required" placeholder="Full path or part of it"
+                                                style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
+                                            </input>
+                                            </label>
                                         </div> </br> 
                                         <div class="form-group">
                                             <span class="btn btn-default btn-xs" id="startBtn">Submit</span>
@@ -324,13 +331,24 @@
 
         <script>
             var objPath;
+            var execName;
 
             $(document).ready(function () {
                 $.listen('parsley:field:validate', function () {
                     validateFront();
                 });
                 $('#demo-form .btn').on('click', function () {
-                    $('#demo-form').parsley().validate();
+                    if (document.getElementById("objPath").value.length > 0) {
+                        $('#objPath').parsley().validate();
+                    }
+                    if (document.getElementById("execName").value.length > 0) {
+                        $('#execName').parsley().validate();
+                    }
+                    if ((document.getElementById("objPath").value.length == 0) &&
+                       (document.getElementById("execName").value.length == 0)) {
+                        $('#objPath').parsley().validate();
+                        $('#execName').parsley().validate();
+                    }
                     validateFront();
                 });
                 var validateFront = function () {
@@ -343,9 +361,18 @@
                     }
                 };  
                 $('#startBtn').on('click', function () {
-                    if (true === $('#demo-form').parsley().isValid()) {
-                        objPath = document.getElementById("objPath").value; 
-                        identifyUser(sysHost, startDate, endDate, objPath);
+                    var query;
+                    if (true === $('#objPath').parsley().isValid()) {
+                        query    = 1;
+                        execName = "";
+                        objPath  = document.getElementById("objPath").value; 
+                        identifyUser(sysHost, startDate, endDate, objPath, execName, query);
+                    }
+                    if (true === $('#execName').parsley().isValid()) {
+                        query    = 2;
+                        objPath  = "";
+                        execName = document.getElementById("execName").value; 
+                        identifyUser(sysHost, startDate, endDate, objPath, execName, query);
                     }
 
                 }); 
@@ -356,6 +383,33 @@
             } catch (err) {} 
         </script>
         <!-- form validation  ENDs-->
+
+        <!-- input text boxes protected-->
+        <script>
+            var dis1 = document.getElementById("objPath");
+            dis1.onchange = function () {
+                if (this.value != "" || this.value.length > 0) {
+                    document.getElementById("execName").disabled = true;
+                    document.getElementById("execName").placeholder = "Disabled";
+                }
+                if (this.value.length == 0) {
+                    document.getElementById("execName").disabled = false;
+                    document.getElementById("execName").placeholder = "Full name or part of it";
+                }
+            }
+            var dis2 = document.getElementById("execName");
+            dis2.onchange = function () {
+                if (this.value != "" || this.value.length > 0) {
+                    document.getElementById("objPath").disabled = true;
+                    document.getElementById("objPath").placeholder = "Disabled";
+                }
+                if (this.value.length == 0) {
+                    document.getElementById("objPath").disabled = false;
+                    document.getElementById("objPath").placeholder = "Full path or part of it";
+                }
+            } 
+        </script>
+        <!-- input text boxes protected ends-->
 
         <!-- Include syshost Start++ -->
         <script>
