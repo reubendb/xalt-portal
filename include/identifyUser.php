@@ -34,12 +34,6 @@ try {
         $sql= "SELECT xl.build_user as Users, count(*) as Count,
             min(xl.date) as minDate, max(xl.date) as maxDate
             FROM xalt_link xl 
-            INNER JOIN (
-                SELECT DISTINCT jlo.link_id 
-                FROM join_link_object jlo 
-                INNER JOIN xalt_object xo ON (jlo.obj_id = xo.obj_id)
-            ) 
-            ka ON ka.link_id = xl.link_id 
             WHERE
             xl.date BETWEEN '$startDate' AND '$endDate' AND
             xl.exec_path LIKE CONCAT('%', '$execName','%') AND
