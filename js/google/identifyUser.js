@@ -33,6 +33,13 @@ function identifyUser(sysHost, startDate, endDate, objPath, execName, query) {
         document.getElementById("lblIdentifyUser0").style.visibility = 'visible';
         document.getElementById("identify_user_div").style.visibility = 'visible';
         document.getElementById("lblIdentifyUser1").style.visibility = 'visible';
+        if (query == 1) { 
+            document.getElementById('lblIdentifyUser1').innerHTML = 
+                '<small> [Count = Number of times User linked to given Object Path] </small>';     
+        } else if (query == 2) {
+            document.getElementById('lblIdentifyUser1').innerHTML = 
+                '<small> [Count = Number of times User for given Executable Name] </small>';     
+        }
         // Create our data table out of JSON data loaded from server.
         var TableData = new google.visualization.DataTable(jsonTableData);
         var table = makeTable(TableData, div_id);
@@ -81,6 +88,18 @@ function gTi1(sysHost, startDate, endDate,objPath, execName, user, query) {     
         document.getElementById("identify_exec_div").style.visibility = 'visible';
         document.getElementById("lblIdentifyExec1").style.visibility = 'visible';
 
+        if (query == 1) {
+            document.getElementById('lblIdentifyExec0').innerHTML = 
+                'List of Executable(s) <small> (for given user-objectPath)</small>';     
+            document.getElementById('lblIdentifyExec1').innerHTML = 
+                '<small>[Count = Number of Executable linked to given user-objPath]</small>';
+        }else if (query == 2){
+            document.getElementById('lblIdentifyExec0').innerHTML = 
+                'List of Executable(s) <small> (for given user-execName)</small>';     
+            document.getElementById('lblIdentifyExec1').innerHTML = 
+                '<small>[Count = Number of Executable linked to given user-execName]</small>';
+        }
+
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);
         var table = makeTable(TableData, div_id);
@@ -96,17 +115,18 @@ function gTi1(sysHost, startDate, endDate,objPath, execName, user, query) {     
             var col = selection[0].column;
             var exec = TableData.getValue(row,0);
 
-            gTi2(sysHost, startDate, endDate, objPath, user, exec);
+            gTi2(sysHost, startDate, endDate, objPath, user, exec, query);
         }
     }
 }
 
-function gTi2(sysHost, startDate, endDate,objPath, user, exec) {        /* Get Exec Detail*/
+function gTi2(sysHost, startDate, endDate,objPath, user, exec, query) {        /* Get Exec Detail*/
 
     console.log(user + exec);
     var jsonTableData = $.ajax
         ({url:"include/identifyExecDetail.php",
-         data: "sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate + "&objPath=" + objPath + "&user=" + user + "&exec=" + exec,
+         data: "sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" 
+         + endDate + "&objPath=" + objPath + "&user=" + user + "&exec=" + exec + "&query=" + query,
          datatype: "json", async: false
          }).responseText;
 
