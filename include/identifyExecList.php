@@ -13,7 +13,7 @@ try {
     $conn = new PDO("mysql:host=$servername;dbname=$db", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    if ($query == 1) {
+    if ($query == 1) {        /* find exec for given objPath */
         $sql="
             SELECT SUBSTRING_INDEX(xl.exec_path, '/' ,-1) AS Executable, 
             min(xl.date) as MinDate,
@@ -35,20 +35,13 @@ try {
             xl.build_user = '$user'
             GROUP BY Executable 
             ORDER BY Count Desc;";
-    } else if ($query == 2) {
+    } else if ($query == 2) {     /* find given execName */
         $sql="
             SELECT SUBSTRING_INDEX(xl.exec_path, '/' ,-1) AS Executable, 
             min(xl.date) as MinDate,
             max(xl.date) as MaxDate,
             count(*) as Count
             FROM xalt_link xl 
-            INNER JOIN 
-            (
-                SELECT distinct jlo.link_id 
-                FROM join_link_object jlo 
-                INNER JOIN xalt_object xo   ON (jlo.obj_id = xo.obj_id)
-            ) 
-            ka ON ka.link_id = xl.link_id 
             WHERE     
             xl.date BETWEEN '$startDate' AND '$endDate' AND
             xl.build_user = '$user' AND
