@@ -5901,6 +5901,13 @@ login_content form input[type="submit"],#content form .submit{float: left; margi
 
 header{width:100%;}
 /********** end of sign in ********************/
+/* *********  start spinner  **************** */
+#spinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+}
+/********** end spinner * ********************/
 /* *********  start nprogress  **************************** */
 /* Make clicks pass-through */
 #nprogress {
