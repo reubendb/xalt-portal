@@ -20,7 +20,8 @@ function usp(sysHost, startDate, endDate, userId) {        /* get exec list */
 
     // Hide all tables which are not required.
     var idsToHide = ['lblExec0', 'usp_exec_div', 'lblExec1',
-        'lblExecDetail0', 'usp_exDetail_div', 'lblUspRun0', 'usp_run_div'];
+        'lblExecDetail0', 'usp_exDetail_div', 'lblObj', 'obj_div',
+        'lblUspRun0', 'usp_run_div', 'lblRunEnv', 'run_env_div'];
     hideAllDivs(idsToHide);
 
     var count = checkJsonData(jsonTableData);             /* if no data is returned do Nothing!! */
@@ -61,7 +62,8 @@ function gTu0(syshost, startDate, endDate, userId, exec) {         /* get exec d
     var div_id = 'usp_exDetail_div';
 
     // Hide all tables which are not required.
-    var idsToHide = ['lblExecDetail0', 'usp_exDetail_div', 'lblUspRun0', 'usp_run_div'];
+    var idsToHide = ['lblExecDetail0', 'usp_exDetail_div', 'lblObj', 'obj_div',
+        'lblUspRun0', 'usp_run_div', 'lblRunEnv', 'run_env_div'];
     hideAllDivs(idsToHide);
 
     var count = checkJsonData(jsonTableData);             /* if no data is returned do Nothing!! */
@@ -83,10 +85,10 @@ function gTu0(syshost, startDate, endDate, userId, exec) {         /* get exec d
             var selection = table.getSelection();
             var row = selection[0].row;
             var col = selection[0].column;
-            var uuid = TableData.getValue(row,0);
+            var uuid = TableData.getValue(row,6);
 
-            console.log(uuid);
-            // gT1(sysHost, startDate, endDate, module, version);
+            gTu1(uuid);       
+            gTu2(uuid);
         }
     }
 }   
@@ -95,127 +97,103 @@ function gTu0(syshost, startDate, endDate, userId, exec) {         /* get exec d
  * userId is not needed as User A might be using exec compiled by user B   
  * Date Range is also not required as we don't care if it was comipled by User xyz at xyz time
  */
-function gTu1(sysHost, uuid) {  
+
+function gTu1(uuid) {         /* get run details */
+
+    console.log("UUId= " + uuid);
 
     var jsonTableData = $.ajax
-        ({url:"include/uspObjDetail.php", 
-         data: "sysHost=" + sysHost + "&uuid=" + uuid,
+        ({url:"include/runDetail.php",
+         data:  "uuid=" + uuid,
          datatype: "json", async: false
          }).responseText;
 
-    var div_id = 'usp3_div';
+    var div_id = 'usp_run_div';
 
-    console.log(jsonTableData);
-    // Create our datatable out of Json Data loaded from php call.
-    var TableData = new google.visualization.DataTable(jsonTableData);
-    var table = makeTable(TableData, div_id);
+    // Hide all tables which are not required.
+    var idsToHide = ['lblUspRun0', 'usp_run_div', 
+        'lblObj', 'obj_div','lblRunEnv', 'run_env_div'];
+    hideAllDivs(idsToHide);
 
-    // Add our Actions handler.
-    google.visualization.events.addListener(table, 'select', selectHandler);
+    var count = checkJsonData(jsonTableData);             /* if no data is returned do Nothing!! */
+    if (count != 0) {
 
-    function selectHandler() {
+        document.getElementById("lblUspRun0").style.visibility = 'visible';
+        document.getElementById("usp_run_div").style.visibility = 'visible';
 
-        // grab a few details before redirecting
-        var selection = table.getSelection();
-        var row = selection[0].row;
-        var col = selection[0].column;
-        var user = TableData.getValue(row,0);
+        // Create our datatable out of Json Data loaded from php call.
+        var TableData = new google.visualization.DataTable(jsonTableData);
+        var table = makeTable(TableData, div_id);
 
-        console.log("sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate);
-        //        gT2(module, user);
-    }
-}   
+        // Add our Actions handler.
+        google.visualization.events.addListener(table, 'select', selectHandler);
 
-function gT2(module,user) {                              /* GenerateTable LIST EXECUTABLES   */
+        function selectHandler() {
+            // grab a few details before redirecting
+            var selection = table.getSelection();
+            var row = selection[0].row;
+            var col = selection[0].column;
+            var runId = TableData.getValue(row,0);
 
-    var jsonTableData = $.ajax
-        ({url:"include/execList.php", 
-         data: "user=" +user + "&module=" + module,
-         datatype: "json", async: false
-         }).responseText;
-
-    var div_id = 'exec_div';
-
-    // Create our datatable out of Json Data loaded from php call.
-    var TableData = new google.visualization.DataTable(jsonTableData);
-    var table = makeTable(TableData, div_id);
-
-    // Add our Actions handler.
-    google.visualization.events.addListener(table, 'select', selectHandler);
-
-    function selectHandler() {
-
-        // grab a few details before redirecting
-        var selection = table.getSelection();
-        var row = selection[0].row;
-        var col = selection[0].column;
-        var exec = TableData.getValue(row,0);
-
-        if(exec) {
-            gT3(module, user, exec);
+            // get run details irrespective of who built the code
+            gTu3(runId);
         }
     }
 }
 
-function gT3(module,user,exec) {
+function gTu2(uuid) {               /* get object information*/
+
+    console.log("&uuid=" + uuid);
 
     var jsonTableData = $.ajax
-        ({url:"include/execDetailList.php", 
-         data: "user=" +user + "&exec=" + exec,
+        ({url:"include/getExecObj.php",
+         data: "uuid=" + uuid,
          datatype: "json", async: false
          }).responseText;
 
-    var div_id = 'exec_detail_div';
+    var div_id = 'obj_div';
 
-    // Create our datatable out of Json Data loaded from php call.
-    var TableData = new google.visualization.DataTable(jsonTableData);
-    var table = makeTable(TableData, div_id);
+    // List ids to hide
+    var idsToHide = [ 'lblObj', 'obj_div'];
+    hideAllDivs(idsToHide);
 
-    // Add our Actions handler.
-    google.visualization.events.addListener(table, 'select', selectHandler);
+    var count = checkJsonData(jsonTableData);         /* if no data is returned do Nothing!! */
+    if (count != 0) {
+        document.getElementById("lblObj").style.visibility = 'visible';
+        document.getElementById("obj_div").style.visibility = 'visible';
 
-    function selectHandler() {
-
-        // grab a few details before redirecting
-        var selection = table.getSelection();
-        var row = selection[0].row;
-        var col = selection[0].column;
-        var uuid = TableData.getValue(row,0);
-
-        // alert("gt3: UUID Selected >> " + uuid);
-        if (uuid){
-            gT4(uuid, user);
-        }
+        // Create our datatable out of Json Data loaded from php call.
+        var TableData = new google.visualization.DataTable(jsonTableData);
+        var table = makeTable(TableData, div_id);
     }
 }
 
-function gT4(uuid,user) {
+function gTu3(runId) {               /* get runtime env information*/
 
+    console.log("&runId=" + runId);
     var jsonTableData = $.ajax
-        ({url:"include/runDetail.php", 
-         data: "uuid=" + uuid + "&user=" + user,
+        ({url:"include/getRunEnv.php",
+         data: "runId=" + runId,
          datatype: "json", async: false
          }).responseText;
 
-    var div_id = 'run_detail_div';
+    var div_id = 'run_env_div';
 
-    // Create our datatable out of Json Data loaded from php call.
-    var TableData = new google.visualization.DataTable(jsonTableData);
-    var table = makeTable(TableData, div_id);
+    // List ids to hide
+    var idsToHide = ['lblRunEnv', 'run_env_div'];
+    hideAllDivs(idsToHide);
 
-    // Add our Actions handler.
-    google.visualization.events.addListener(table, 'select', selectHandler);
+    var count = checkJsonData(jsonTableData);         /* if no data is returned do Nothing!! */
+    if (count != 0) {
+        document.getElementById("lblRunEnv").style.visibility = 'visible';
+        document.getElementById("run_env_div").style.visibility = 'visible';
 
-    function selectHandler() {
-
-        // grab a few details before redirecting
-        var selection = table.getSelection();
-        var row = selection[0].row;
-        var col = selection[0].column;
-        var runid = TableData.getValue(row,0);
-
+        // Create our datatable out of Json Data loaded from php call.
+        var TableData = new google.visualization.DataTable(jsonTableData);
+        var table = makeTable(TableData, div_id);
     }
 }
+
 function makeTable(TableData, div_id) {
 
     var tab_options = {title: 'Table View',
