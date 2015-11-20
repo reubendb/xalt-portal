@@ -8,6 +8,7 @@ $exec       = $_GET["exec"];
 
 try {
     include (__DIR__ ."/conn.php");
+    include (__DIR__ ."/wordwrap.php");
 
     $conn = new PDO("mysql:host=$servername;dbname=$db", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -30,7 +31,7 @@ try {
         xr.date BETWEEN '$startDate' AND '$endDate';
     ";
 
-    #    print_r($sql);
+#    print_r($sql);
 
     $query = $conn->prepare($sql);
     $query->execute();
@@ -54,9 +55,8 @@ $row_num = 0;
 foreach($result as $row){
     $row_num++;
 
-    $execPath    = wordwrap($row['ExecPath'], 45, '\n', true);
+    $execPath    = wrapper($row['ExecPath']);
 
-    # **** REMOVE [NEED TO CHECK FOR 4-char NULL UUIDs in XALT_RUN] **** 
     $uuid        = isset($row['Uuid']) ? $row['Uuid'] : 'N/A';
     $buildUser   = isset($row['BuildUser']) ? $row['BuildUser'] : 'N/A';
     $linkProgram = isset($row['LinkProgram']) ? $row['LinkProgram'] : 'N/A';
@@ -87,7 +87,6 @@ foreach($result as $row){
 }
 echo " ] }";
 }
-
 catch(PDOException $e) {
     echo "Error: " . $e->getMessage();
 }
