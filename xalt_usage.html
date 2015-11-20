@@ -264,6 +264,10 @@
                                         </div>
                                     </div>
 
+                                    <div id="spinner" style="display: none;"> <!-- loading spinner -->
+                                        <img id="img-spinner" src="images/hourglass.gif" alt="loading..."/>
+                                    </div>
+
                                 </div>
                             </div>  <!-- col-md -->
                         </div> <!-- row -->
@@ -294,7 +298,7 @@
                                                 </label>
                                                 <div id="obj_div" style="visibility: hidden;"></div> <!-- Object table -->
                                             </div>
-                                            <div class="col-xs-auto">
+                                           <div class="col-xs-auto">
                                                 </br>
                                                 <label id="lblRunDetail" style="visibility: hidden">Job Run details 
                                                     <small>(*nC-nJC-nN-nT ~ #Cores-#JobNumCores-#Nodes-#Threads)</small>
@@ -312,6 +316,7 @@
                                     </div>
                                 </div>
                             </div>  <!-- col-md -->
+
                         </div> <!-- row -->
 
                         <div class="row">
@@ -375,6 +380,7 @@
 
                                 </div>
                             </div>  <!-- col-md -->
+
                         </div> <!-- row -->
 
                         <div class="row" id="lblCompExecRow" style="visibility: hidden">
@@ -422,6 +428,7 @@
                                     </div>
                                 </div>
                             </div>  <!-- col-md -->
+
                         </div> <!-- row -->
 
                     </div>
@@ -496,8 +503,23 @@
         </script>
         <!-- Include syshost Ends -->
 
+        <!-- loading spinner starts -->
+        <script type="text/javascript">
+            var loading;
+            $(document).ajaxSend(function() {
+                    $('#spinner').show();
+                    loading = setTimeout("$('#spinner').show()", 300); 
+                    console.log("Triggered ajaxStart handler.");
+                    });
+            $(document).ajaxStop(function() {
+                    clearTimeout(loading);
+                    $('#spinner').hide();
+                    console.log("Triggered ajaxStop handler.");
+                    });
+        </script>
+        <!-- loading spinner ends -->
 
-        <!-- datepicker  + submit button -->
+        <!-- datepicker + submit button -->
         <script type="text/javascript">
 
             var startDate;
