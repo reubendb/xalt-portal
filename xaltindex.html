@@ -267,6 +267,10 @@
                             </div>
                         </div> <!-- col-md -->
 
+                        <div id="spinner" style="display: none;"> <!-- loading spinner -->
+                            <img id="img-spinner" src="images/hourglass.gif" alt="loading..."/>
+                        </div>
+<!--
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <div class="x_panel fixed_height_320">
                                 <div class="x_title">
@@ -281,7 +285,7 @@
                                     <div id="user_cpuHrs_div" style="visibility: hidden;"></div>
                                 </div> 
                             </div>
-                        </div> <!-- col-md -->
+                        </div> --> <!-- col-md -->
 
                     </div> <!-- row --> 
 
@@ -373,8 +377,21 @@
                     });
 
                 });
-</script>
+      </script>
 <!-- Include syshost Ends -->
+
+<!-- loading spinner starts --> 
+<script type="text/javascript">
+    $(document).ajaxStart(function() {
+            $('#spinner').show(); 
+            console.log("Triggered ajaxStart handler.");
+            });
+    $(document).ajaxStop(function() {
+            $('#spinner').hide();
+        console.log("Triggered ajaxStop handler.");
+      });
+  </script>
+<!-- loading spinner ends --> 
 
 <!-- datepicker -->
 <script type="text/javascript">
