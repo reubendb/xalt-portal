@@ -1,4 +1,7 @@
 <?php
+/*
+ * Get list of Executables for given userID, sysHost and date range. 
+ */
 
 $sysHost    = $_GET["sysHost"];
 $startDate  = $_GET["startDate"];

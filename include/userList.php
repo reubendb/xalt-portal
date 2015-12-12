@@ -1,4 +1,7 @@
 <?php
+/*
+ * Get List of users for given sysHost, ModuleName and date range. 
+ */
 
 $sysHost    = $_GET["sysHost"];
 $startDate  = $_GET["startDate"];

@@ -1,5 +1,7 @@
 <?php
-
+/*
+ * Get Executable Detail for given userID, sysHost and date range. 
+ */
 $sysHost    = $_GET["sysHost"];
 $startDate  = $_GET["startDate"];
 $endDate    = $_GET["endDate"];

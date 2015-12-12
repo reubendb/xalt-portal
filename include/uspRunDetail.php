@@ -1,4 +1,7 @@
 <?php
+/*
+ * Get Run Detail for given userID, sysHost and date range. 
+ * */
 
 $uuid=$_GET["uuid"];
 

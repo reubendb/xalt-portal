@@ -1,4 +1,7 @@
 <?php
+/*
+ * Get Run Env Detail for given userID, sysHost and date range. 
+ */
 
 $runId=$_GET["runId"];
 
