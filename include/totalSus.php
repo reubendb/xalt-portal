@@ -1,5 +1,7 @@
 <?php
-
+/* 
+ * Get totatSUs, though this query may not given the correct picture.
+ */ 
 $sysHost   = $_GET["sysHost"];
 $startDate = $_GET["startDate"];
 $endDate   = $_GET["endDate"];
