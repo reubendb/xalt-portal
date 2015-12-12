@@ -1,5 +1,9 @@
 <?php
-
+/*
+ * Get Executable Detail for: 
+ * Query 1 - Given Object/Library Path.
+ * Query 2 - Given ExecName.
+ */
 $sysHost    = $_GET["sysHost"];
 $startDate  = $_GET["startDate"];
 $endDate    = $_GET["endDate"];
