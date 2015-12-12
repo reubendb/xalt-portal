@@ -1,5 +1,7 @@
 <?php
-
+/*
+ * Get list of executables for given moduleName, sysHost and date range.
+ */
 $sysHost    = $_GET["sysHost"];
 $startDate  = $_GET["startDate"];
 $endDate    = $_GET["endDate"];
