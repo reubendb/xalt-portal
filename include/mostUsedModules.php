@@ -1,5 +1,9 @@
 <?php
-
+/*
+ * Get Modules for: 
+ * Query 1 - Given Syshost, date range.
+ * Query 2 - Given Module, sysHost, date Range.
+     */
 $sysHost   = $_GET["sysHost"];
 $startDate = $_GET["startDate"];
 $endDate   = $_GET["endDate"];
