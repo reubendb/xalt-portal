@@ -1,6 +1,7 @@
 <?php 
-
-/* -- This script returns list of syshost from xalt_link table -- */
+/* Return list of syshost from xalt_link table
+ *
+ * */
 try {
 
     include (__DIR__ ."/conn.php");
