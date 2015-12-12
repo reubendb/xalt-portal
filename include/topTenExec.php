@@ -1,4 +1,7 @@
 <?php
+/*
+ * Get Top Ten Executables for given sysHost and date range. 
+ */
 
 $sysHost    = $_GET["sysHost"];
 $startDate  = $_GET["startDate"];
