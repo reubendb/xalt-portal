@@ -1,4 +1,7 @@
 <?php
+/*
+ * Get compiler executable details for given user, sysHost , linkProgram and date range. 
+ * */
 
 $sysHost     = $_GET["sysHost"];
 $startDate   = $_GET["startDate"];
