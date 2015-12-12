@@ -1,5 +1,7 @@
 <?php
-
+/*
+ * Get Executable Details for given ModuleName, sysHost, executableName and date range.
+ */
 $sysHost    = $_GET["sysHost"];
 $startDate  = $_GET["startDate"];
 $endDate    = $_GET["endDate"];
