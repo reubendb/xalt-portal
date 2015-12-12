@@ -1,4 +1,8 @@
 <?php
+/* 
+ * Get active users based on sysHost and given date range.
+ * */
+
 
 $sysHost    = $_GET["sysHost"];
 $startDate  = $_GET["startDate"];
