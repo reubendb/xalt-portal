@@ -264,10 +264,6 @@
                                         </div>
                                     </div>
 
-                                    <div id="spinner" style="display: none;"> <!-- loading spinner -->
-                                        <img id="img-spinner" src="images/hourglass.gif" alt="loading..."/>
-                                    </div>
-
                                 </div>
                             </div>  <!-- col-md -->
                         </div> <!-- row -->
@@ -431,6 +427,9 @@
 
                         </div> <!-- row -->
 
+                        <div id="spinner" style="display: none;" alt="loading..."/>
+                        </div>
+
                     </div>
 
                     <!-- footer content -->
@@ -505,16 +504,12 @@
 
         <!-- loading spinner starts -->
         <script type="text/javascript">
-            var loading;
-            $(document).ajaxSend(function() {
+            var t;
+            $(document).ajaxStart(function() {
                     $('#spinner').show();
-                    loading = setTimeout("$('#spinner').show()", 300); 
-                    console.log("Triggered ajaxStart handler.");
                     });
             $(document).ajaxStop(function() {
-                    clearTimeout(loading);
-                    $('#spinner').hide();
-                    console.log("Triggered ajaxStop handler.");
+                    setTimeout("$('#spinner').hide()", 1000);
                     });
         </script>
         <!-- loading spinner ends -->
