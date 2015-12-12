@@ -1,5 +1,7 @@
 <?php
-
+/*
+ * Get Run Env Details for given runId.
+ */
 $runId=$_GET["runId"];
 
 try {
