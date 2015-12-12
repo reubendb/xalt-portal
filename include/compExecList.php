@@ -1,5 +1,7 @@
 <?php
-
+/* 
+ * Get list of all executables for given sysHost, linkProgra and date range. 
+ * */
 $sysHost     = $_GET["sysHost"];
 $startDate   = $_GET["startDate"];
 $endDate     = $_GET["endDate"];
