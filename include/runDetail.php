@@ -1,4 +1,7 @@
 <?php
+/*
+ * Get Run Detail for given UUID. 
+ */
 
 $uuid=$_GET["uuid"];
 
