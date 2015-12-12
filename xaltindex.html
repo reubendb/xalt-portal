@@ -267,8 +267,7 @@
                             </div>
                         </div> <!-- col-md -->
 
-                        <div id="spinner" style="display: none;"> <!-- loading spinner -->
-                            <img id="img-spinner" src="images/hourglass.gif" alt="loading..."/>
+                        <div id="spinner" style="display: none;" alt="loading..."> 
                         </div>
 <!--
                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -380,17 +379,12 @@
       </script>
 <!-- Include syshost Ends -->
 
-<!-- loading spinner starts --> 
+<!-- loading spinner starts -->
 <script type="text/javascript">
-    $(document).ajaxStart(function() {
-            $('#spinner').show(); 
-            console.log("Triggered ajaxStart handler.");
-            });
     $(document).ajaxStop(function() {
-            $('#spinner').hide();
-        console.log("Triggered ajaxStop handler.");
-      });
-  </script>
+            setTimeout("$('#spinner').hide()", 1500);
+            });
+</script>
 <!-- loading spinner ends --> 
 
 <!-- datepicker -->
@@ -467,6 +461,7 @@ cancelClass: 'btn-small',format: 'MM/DD/YYYY',separator: ' to ',locale: {applyLa
 
 <script type="text/javascript">
     $('#startBtn').on('click', function () {
+            $('#spinner').show();
             callActiveUsers(sysHost, startDate, endDate);
             jobSubmitted(sysHost, startDate, endDate);
             totalSus(sysHost, startDate, endDate);
