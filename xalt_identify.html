@@ -262,6 +262,9 @@
                             </div>  <!-- col-md -->
                         </div> <!-- row -->
 
+                        <div id="spinner" style="display: none;" alt="loading..."/>
+                        </div>
+
                     </div>
 
                     <!-- footer content -->
@@ -369,6 +372,16 @@
             } catch (err) {} 
         </script>
         <!-- form validation  ENDs-->
+
+        <!-- loading spinner starts -->
+        <script type="text/javascript">
+            $(document).ajaxStart(function() {
+                    $('#spinner').show();
+            $(document).ajaxStop(function() {
+                setTimeout("$('#spinner').hide()", 1500);
+                });
+        </script>
+        <!-- loading spinner ends -->
 
         <!-- input text boxes protected-->
         <script>
