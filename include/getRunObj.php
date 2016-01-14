@@ -2,9 +2,10 @@
 /*
  * Get Object/Library details for given runID at runtime.
  */
-$runId       = $_GET["runId"];
-
+//$runId       = $_GET["runId"];
+$runId       = 569897;
 try {
+    include (__DIR__ ."/wrapper.php");
     include (__DIR__ ."/conn.php");
 
     $conn = new PDO("mysql:host=$servername;dbname=$db", $username, $password);
@@ -43,7 +44,7 @@ $row_num = 0;
 
 foreach($result as $row){
     $row_num++;
-    $objPath    = wordwrap($row['ObjPath'], 45, '<br />', true);
+    $objPath    = wrapper($row['ObjPath']);
     $moduleName = isset($row['ModuleName']) ? $row['ModuleName'] : 'N/A';
 
     if ($row_num == $total_rows){
