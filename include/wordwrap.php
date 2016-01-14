@@ -15,7 +15,7 @@ function wrapper($content) {
         if (substr_count($content, '/') > 0) {
             $pos = (strpos($content, '/', 45) ? strpos($content, '/', 45) : 0);
             if ($pos == 0) { break;} else{
-                array_push($array, substr($content, 0, $pos) , "<br />");
+                array_push($array, substr($content, 0, $pos) , "<br />/");
                 // change $content to remaining string
                 $content = substr($content, $pos + 1);    
             }
@@ -24,6 +24,7 @@ function wrapper($content) {
         }
     }
     array_push($array, $content);
+    print_r($array);
     return(implode("",$array));
 }
 
