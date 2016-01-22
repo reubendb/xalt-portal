@@ -13,6 +13,7 @@ $exec       = $_GET["exec"];
 $query      = $_GET["query"];
 
 try {
+    include (__DIR__ ."/wrapper.php");
     include (__DIR__ ."/conn.php");
 
     $conn = new PDO("mysql:host=$servername;dbname=$db", $username, $password);
@@ -92,7 +93,7 @@ try {
 
     foreach($result as $row){
         $row_num++;
-        $execPath = wordwrap($row['ExecPath'], 45, '\n', true);
+        $execPath = wrapper($row['ExecPath']);
 
         if ($row_num == $total_rows){
             echo "{\"c\":[
