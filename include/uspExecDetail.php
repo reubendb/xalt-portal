@@ -10,7 +10,7 @@ $exec       = $_GET["exec"];
 
 try {
     include (__DIR__ ."/conn.php");
-    include (__DIR__ ."/wordwrap.php");
+    include (__DIR__ ."/wrapper.php");
 
     $conn = new PDO("mysql:host=$servername;dbname=$db", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
