@@ -6,6 +6,7 @@
 $uuid=$_GET["uuid"];
 
 try {
+    include (__DIR__ ."/wrapper.php");
     include (__DIR__ ."/conn.php");
 
     $conn = new PDO("mysql:host=$servername;dbname=$db", $username, $password);
@@ -49,7 +50,7 @@ $row_num = 0;
 foreach($result as $row){
     $row_num++;
 
-    $cwd= wordwrap($row['Cwd'], 45, '<br />\n', true);
+    $cwd= wrapper($row['Cwd']);
     if ($row_num == $total_rows){
         echo "{\"c\":[
     {\"v\":\"" . $row['RunId'] . "\",\"f\":null},
