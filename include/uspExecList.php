@@ -17,7 +17,7 @@ try {
     $sql="SELECT 
         SUBSTRING_INDEX(xr.exec_path , '/', -1) AS Executable, 
         MIN(date) AS MinDate, MAX(date) AS MaxDate, 
-        count(1) AS No_Jobs
+        count(1) AS No_Jobs, xr.user AS User
         FROM xalt_run xr 
         WHERE xr.user like concat('%', '$userId','%') AND
         xr.syshost = '$sysHost' AND
@@ -35,7 +35,8 @@ try {
 
     echo "{ \"cols\": [
 {\"id\":\"\",\"label\":\"Executable\",\"pattern\":\"\",\"type\":\"string\"},
-{\"id\":\"\",\"label\":\"No_Jobs\",\"pattern\":\"\",\"type\":\"number\"}
+{\"id\":\"\",\"label\":\"No_Jobs\",\"pattern\":\"\",\"type\":\"number\"},
+{\"id\":\"\",\"label\":\"User\",\"pattern\":\"\",\"type\":\"string\"}
 ], 
 \"rows\": [ ";
 
@@ -48,12 +49,14 @@ foreach($result as $row){
     if ($row_num == $total_rows){
         echo "{\"c\":[
     {\"v\":\"" . $row['Executable'] . "\",\"f\":null},
-    {\"v\":" . $row['No_Jobs'] . ",\"f\":null}
+    {\"v\":" . $row['No_Jobs'] . ",\"f\":null},
+    {\"v\":\"" . $row['User'] . "\",\"f\":null}
     ]}";
     } else {
         echo "{\"c\":[
     {\"v\":\"" . $row['Executable'] . "\",\"f\":null},
-    {\"v\":" . $row['No_Jobs'] . ",\"f\":null}
+    {\"v\":" . $row['No_Jobs'] . ",\"f\":null},
+    {\"v\":\"" . $row['User'] . "\",\"f\":null}
     ]}, ";
     } 
 

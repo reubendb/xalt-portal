@@ -1,5 +1,5 @@
 <?php
-# 
+
 # PAY ATTENTION TO A SILLY SYNTAX 
 # $array = []; DOESN'T WORKS :@#$@$#$ instead try 
 # $array = array();
@@ -8,7 +8,6 @@
 #  wasted 1 hour of my life on this!
 #
 #
-
 function wrapper($content) {
     $array = array();
     while(strlen($content) > 45){
@@ -24,8 +23,9 @@ function wrapper($content) {
         }
     }
     array_push($array, $content);
-    print_r($array);
-    return(implode("",$array));
-}
+    $objPath = implode("", $array);
 
+    return($objPath);
+}
 ?>
+

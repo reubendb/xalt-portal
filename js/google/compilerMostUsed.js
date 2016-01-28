@@ -19,7 +19,7 @@ function compilerMostUsed(sysHost, startDate, endDate) {
     // List ids to hide
     var idsToHide = ['lblCompUser0', 'comp3_div', 'lblCompUser1', 'lblCompExec0', 'lblCompExec1', 
         'comp4_div', 'lblCompExecRow', 'lblCompExecDetail0','comp5_div','lblCompRun0','comp6_div',
-        'lblObj1', 'obj_div1', 'lblRunEnv1', 'run_env_div1']; 
+        'lblObj1', 'obj_div1', 'lblRunObj1', 'runObj_div1','lblRunEnv1', 'run_env_div1']; 
     hideAllDivs(idsToHide);
 
     var count = checkJsonData(jsonChartData);             /* if no data is returned do Nothing!! */
@@ -92,7 +92,7 @@ function gTc1(sysHost, startDate, endDate, linkProgram) {         /* Get user li
     var idsToHide = ['lblCompUser0', 'comp3_div', 'lblCompUser1',
         'lblCompExec0', 'comp4_div', 'lblCompExec1', 
         'lblCompExecRow', 'lblCompExecDetail0','comp5_div','lblCompRun0','comp6_div',
-        'lblObj1', 'obj_div1', 'lblRunEnv1', 'run_env_div1']; 
+        'lblObj1', 'obj_div1', 'lblRunObj1', 'runObj_div1', 'lblRunEnv1', 'run_env_div1']; 
     hideAllDivs(idsToHide);
 
     var count = checkJsonData(jsonTableData);             /* if no data is returned do Nothing!! */
@@ -137,7 +137,7 @@ function gTc2(sysHost, startDate, endDate, linkProgram,user) {     /* get exec l
     // List ids to hide
     var idsToHide = ['lblCompExec0', 'lblCompExec1', 'comp4_div',
         'lblCompExecRow', 'lblCompExecDetail0','comp5_div','lblCompRun0','comp6_div',
-        'lblObj1', 'obj_div1', 'lblRunEnv1', 'run_env_div1']; 
+        'lblObj1', 'obj_div1', 'lblRunObj1', 'runObj_div1', 'lblRunEnv1', 'run_env_div1']; 
     hideAllDivs(idsToHide);
 
     var count = checkJsonData(jsonTableData);             /* if no data is returned do Nothing!! */
@@ -181,8 +181,8 @@ function gTc3(sysHost, startDate, endDate, linkProgram, user, exec) {      /* ge
 
     // List ids to hide
     var idsToHide = ['lblCompExecRow', 'lblCompExecDetail0','comp5_div',
-        'lblCompRun0','comp6_div',
-        'lblObj1', 'obj_div1', 'lblRunEnv1', 'run_env_div1']; 
+        'lblCompRun0','comp6_div', 'lblObj1', 'obj_div1',
+        'lblRunObj1', 'runObj_div1', 'lblRunEnv1', 'run_env_div1']; 
     hideAllDivs(idsToHide);
 
     var count = checkJsonData(jsonTableData);             /* if no data is returned do Nothing!! */
@@ -228,7 +228,7 @@ function gTc4(uuid) {         /* get run details */
 
     // List ids to hide
     var idsToHide = ['lblCompRun0','comp6_div',
-        'lblRunEnv1', 'run_env_div1']; 
+       'lblRunObj1', 'runObj_div1', 'lblRunEnv1', 'run_env_div1']; 
     hideAllDivs(idsToHide);
 
     var count = checkJsonData(jsonTableData);             /* if no data is returned do Nothing!! */
@@ -253,6 +253,7 @@ function gTc4(uuid) {         /* get run details */
             var runid = TableData.getValue(row,0);
 
             gTc6(runid);
+            gTc7(runid);
         }
     }
 }
@@ -304,6 +305,33 @@ function gTc6(runId) {               /* get runtime env information*/
     if (count != 0) {
         document.getElementById("lblRunEnv1").style.visibility = 'visible';
         document.getElementById("run_env_div1").style.visibility = 'visible';
+
+        // Create our datatable out of Json Data loaded from php call.
+        var TableData = new google.visualization.DataTable(jsonTableData);
+        var table = makeTable(TableData, div_id);
+    }
+}
+
+function gTc7(runId) {               /* get objects at runtime */
+
+    console.log("&runId=" + runId);
+
+    var jsonTableData = $.ajax
+        ({url:"include/getRunObj.php",
+         data: "runId=" + runId,
+         datatype: "json", async: false
+         }).responseText;
+
+    var div_id = 'runObj_div1';
+
+    // List ids to hide
+    var idsToHide = ['lblRunObj1', 'runObj_div1'];
+    hideAllDivs(idsToHide);
+
+    var count = checkJsonData(jsonTableData);         /* if no data is returned do Nothing!! */
+    if (count != 0) {
+        document.getElementById("lblRunObj1").style.visibility = 'visible';
+        document.getElementById("runObj_div1").style.visibility = 'visible';
 
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);

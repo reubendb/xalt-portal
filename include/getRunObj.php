@@ -1,9 +1,9 @@
 <?php
 /*
- * Get Object/Library details for given UUID.
+ * Get Object/Library details for given runID at runtime.
  */
-$uuid       = $_GET["uuid"];
-
+//$runId       = $_GET["runId"];
+$runId       = 569897;
 try {
     include (__DIR__ ."/wrapper.php");
     include (__DIR__ ."/conn.php");
@@ -11,17 +11,17 @@ try {
     $conn = new PDO("mysql:host=$servername;dbname=$db", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $sql=" SELECT xo.object_path AS ObjPath, xo.module_name as ModuleName, 
+    $sql= "SELECT xo.object_path AS ObjPath, xo.module_name as ModuleName, 
         xo.timestamp AS ObjectDate, xo.lib_type AS LibType 
         FROM xalt_object xo
         INNER JOIN 
-        (SELECT distinct jlo.obj_id 
-        FROM join_link_object jlo 
-        INNER JOIN xalt_link xl ON (jlo.link_id = xl.link_id)
-        WHERE xl.uuid = '$uuid' 
+        (SELECT distinct jro.obj_id 
+        FROM join_run_object jro 
+        INNER JOIN xalt_run xr ON (jro.run_id = xr.run_id)
+        WHERE xr.run_id = '$runId' 
     ) ka on ka.obj_id = xo.obj_id
     WHERE xo.object_path NOT LIKE '%usr%'
-   ORDER BY xo.module_name desc; 
+    ORDER BY xo.module_name desc;
     ";
 
     # print_r($sql);

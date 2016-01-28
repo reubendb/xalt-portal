@@ -246,12 +246,21 @@
                                                 </label>
                                                 <div id="run_env_div" style="visibility: hidden;"></div> <!-- Job Run table chart -->
                                             </div>
+                                            <div class="col-xs-12">
+                                                </br>
+                                                <label id="lblRunObj" style="visibility: hidden">Objects Linked at Runtime
+                                                    <small>(to the given executable)</small>
+                                                </label>
+                                                <div id="runObj_div" style="visibility: hidden;"></div> <!-- Object at runtime chart -->
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>  <!-- col-md -->
                         </div> <!-- row -->
 
+                        <div id="spinner" style="display: none;" alt="loading..."/>
+                        </div>
                     </div>
 
                     <!-- footer content -->
@@ -305,6 +314,7 @@
         <!-- form validation STARTs-->
         <script type="text/javascript" src="js/parsley/parsley.min.js"></script>
 
+        <!-- startBtn and Validate Form -->
         <script>
             var userId;
 
@@ -327,6 +337,7 @@
                 };  
                 $('#startBtn').on('click', function () {
                     if (true === $('#demo-form').parsley().isValid()) {
+                        $('#spinner').show();
                         userId = document.getElementById("userId").value; 
                         usp(sysHost, startDate, endDate, userId);
                     }
@@ -338,6 +349,7 @@
                 hljs.initHighlightingOnLoad();
             } catch (err) {} 
         </script>
+        <!-- startBtn and form validation  ENDs-->
         <!-- form validation  ENDs-->
 
         <!-- Include syshost Start++ -->
@@ -360,7 +372,17 @@
 
         </script>
         <!-- Include syshost Ends -->
-
+        <!-- loading spinner starts -->
+        <script type="text/javascript">
+            var t;
+            $(document).ajaxStart(function() {
+                    $('#spinner').show();
+                    });
+            $(document).ajaxStop(function() {
+                    setTimeout("$('#spinner').hide()", 1000);
+                    });
+        </script>
+        <!-- loading spinner ends -->
 
         <!-- datepicker -->
         <script type="text/javascript">

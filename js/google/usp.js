@@ -21,7 +21,7 @@ function usp(sysHost, startDate, endDate, userId) {        /* get exec list */
     // Hide all tables which are not required.
     var idsToHide = ['lblExec0', 'usp_exec_div', 'lblExec1',
         'lblExecDetail0', 'usp_exDetail_div', 'lblObj', 'obj_div',
-        'lblUspRun0', 'usp_run_div', 'lblRunEnv', 'run_env_div'];
+        'lblUspRun0', 'usp_run_div', 'lblRunObj', 'runObj_div', 'lblRunEnv', 'run_env_div'];
     hideAllDivs(idsToHide);
 
     var count = checkJsonData(jsonTableData);             /* if no data is returned do Nothing!! */
@@ -63,7 +63,7 @@ function gTu0(syshost, startDate, endDate, userId, exec) {         /* get exec d
 
     // Hide all tables which are not required.
     var idsToHide = ['lblExecDetail0', 'usp_exDetail_div', 'lblObj', 'obj_div',
-        'lblUspRun0', 'usp_run_div', 'lblRunEnv', 'run_env_div'];
+        'lblUspRun0', 'usp_run_div', 'lblRunObj', 'runObj_div', 'lblRunEnv', 'run_env_div'];
     hideAllDivs(idsToHide);
 
     var count = checkJsonData(jsonTableData);             /* if no data is returned do Nothing!! */
@@ -112,7 +112,7 @@ function gTu1(uuid) {         /* get run details */
 
     // Hide all tables which are not required.
     var idsToHide = ['lblUspRun0', 'usp_run_div', 
-        'lblObj', 'obj_div','lblRunEnv', 'run_env_div'];
+        'lblObj', 'obj_div','lblRunObj', 'runObj_div', 'lblRunEnv', 'run_env_div'];
     hideAllDivs(idsToHide);
 
     var count = checkJsonData(jsonTableData);             /* if no data is returned do Nothing!! */
@@ -136,7 +136,8 @@ function gTu1(uuid) {         /* get run details */
             var runId = TableData.getValue(row,0);
 
             // get run details irrespective of who built the code
-            gTu3(runId);
+            gTu3(runId);            /* get runtime env detail */
+            gTu4(runId);            /* get objects at runtime */
         }
     }
 }
@@ -187,6 +188,32 @@ function gTu3(runId) {               /* get runtime env information*/
     if (count != 0) {
         document.getElementById("lblRunEnv").style.visibility = 'visible';
         document.getElementById("run_env_div").style.visibility = 'visible';
+
+        // Create our datatable out of Json Data loaded from php call.
+        var TableData = new google.visualization.DataTable(jsonTableData);
+        var table = makeTable(TableData, div_id);
+    }
+}
+
+function gTu4(runId) {               /* get objects at runtime */
+
+    console.log("&runId=" + runId);
+    var jsonTableData = $.ajax
+        ({url:"include/getRunObj.php",
+         data: "runId=" + runId,
+         datatype: "json", async: false
+         }).responseText;
+
+    var div_id = 'runObj_div';
+
+    // List ids to hide
+    var idsToHide = ['lblRunObj', 'runObj_div'];
+    hideAllDivs(idsToHide);
+
+    var count = checkJsonData(jsonTableData);         /* if no data is returned do Nothing!! */
+    if (count != 0) {
+        document.getElementById("lblRunObj").style.visibility = 'visible';
+        document.getElementById("runObj_div").style.visibility = 'visible';
 
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);

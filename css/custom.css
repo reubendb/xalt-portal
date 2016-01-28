@@ -5906,7 +5906,7 @@ header{width:100%;}
     position: fixed;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.5) url(../images/hourglass.gif) center center no-repeat;
+    background: rgba(0,0,0,0.2) url(../images/loading.gif) center center no-repeat;
     background-size: 50px, 50px;
     top: 0;
     left: 0;

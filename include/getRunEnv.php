@@ -5,6 +5,7 @@
 $runId=$_GET["runId"];
 
 try {
+    include (__DIR__ ."/wrapper.php");
     include (__DIR__ ."/conn.php");
 
     $conn = new PDO("mysql:host=$servername;dbname=$db", $username, $password);
@@ -36,7 +37,7 @@ $row_num = 0;
 
 foreach($result as $row){
     $row_num++;
-    $envValue = wordwrap($row['EnvValue'], 80, '<br />', true);
+    $envValue = wrapper($row['EnvValue']);
 
     if ($row_num == $total_rows){
         echo "{\"c\":[

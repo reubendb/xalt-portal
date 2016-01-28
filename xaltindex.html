@@ -381,11 +381,15 @@
 
 <!-- loading spinner starts -->
 <script type="text/javascript">
-    $(document).ajaxStop(function() {
-            setTimeout("$('#spinner').hide()", 1500);
+    $(document).ajaxStart(function() {
+            $('#spinner').show();
             });
-</script>
-<!-- loading spinner ends --> 
+
+$(document).ajaxStop(function() {
+        setTimeout("$('#spinner').hide()", 1000);
+        });
+    </script>
+    <!-- loading spinner ends --> 
 
 <!-- datepicker -->
 <script type="text/javascript">
