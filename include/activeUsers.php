@@ -21,7 +21,7 @@ try {
         COUNT(DISTINCT xr.user) as Users
         FROM xalt_run xr 
         WHERE xr.syshost = '$sysHost' AND 
-        xr.date BETWEEN '$startDate' AND '$endDate'
+        xr.date BETWEEN '$startDate 00:00:00' AND '$endDate 23:59:59'
         GROUP BY Month 
         HAVING Year = YEAR(curdate())
         ORDER BY Year desc, Mon_numeric desc 

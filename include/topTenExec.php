@@ -40,7 +40,7 @@ try {
         COUNT(date) as n_jobs, COUNT(DISTINCT(user)) as n_users 
         FROM xalt_run 
         WHERE syshost = '$sysHost' 
-        AND date BETWEEN '$startDate' AND '$endDate' 
+        AND date BETWEEN '$startDate 00:00:00' AND '$endDate 23:59:59' 
         GROUP BY execName ORDER BY totalcput DESC 
         limit 10;
     ";

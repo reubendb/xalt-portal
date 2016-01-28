@@ -21,7 +21,7 @@ try {
             FROM xalt_link xl 
             WHERE xl.link_program = '$linkProgram' AND 
             xl.build_syshost = '$sysHost' AND
-            xl.date BETWEEN '$startDate' AND '$endDate'
+            xl.date BETWEEN '$startDate 00:00:00' AND '$endDate 23:59:59'
             GROUP BY Users 
             ORDER BY Count desc 
             ;";

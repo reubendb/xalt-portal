@@ -32,7 +32,7 @@ try {
                 INNER JOIN xalt_link xl   ON (jlo.link_id = xl.link_id)
                 WHERE 
                 xl.build_syshost='$sysHost' AND
-                xl.date BETWEEN  '$startDate' AND '$endDate'
+                xl.date BETWEEN  '$startDate 00:00:00' AND '$endDate 23:59:59'
             ) 
             ka ON ka.obj_id = xo.obj_id
             WHERE xo.syshost='$sysHost' AND                             
@@ -58,7 +58,7 @@ try {
                 INNER JOIN xalt_link xl   ON (jlo.link_id = xl.link_id)
                 WHERE 
                 xl.build_syshost='$sysHost' AND
-                xl.date BETWEEN  '$startDate' AND '$endDate'
+                xl.date BETWEEN  '$startDate 00:00:00' AND '$endDate 23:59:59'
             ) 
             ka ON ka.obj_id = xo.obj_id
             WHERE xo.syshost='$sysHost' AND                             

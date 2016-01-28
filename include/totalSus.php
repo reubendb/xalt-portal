@@ -18,7 +18,7 @@ try {
         TotalSUs, MONTH(xr.date) AS mon, 
         MONTHNAME(xr.date) AS Month 
         FROM xalt_run xr WHERE xr.syshost='$sysHost' AND 
-        xr.date BETWEEN '$startDate' AND '$endDate'
+        xr.date BETWEEN '$startDate 00:00:00' AND '$endDate 23:59:59'
         GROUP BY  mon 
         ORDER BY mon desc, TotalSUs desc;
     ";

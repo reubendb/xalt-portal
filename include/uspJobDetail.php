@@ -26,7 +26,7 @@ try {
         WHERE xr.uuid = '$uuid' AND
         xr.user = '$userId' AND
         xr.syshost = '$sysHost' AND
-        xr.date BETWEEN '$startDate' AND '$endDate'
+        xr.date BETWEEN '$startDate 00:00:00' AND '$endDate 23:59:59'
         GROUP BY Job_ID
         ORDER BY Date DESC;
     ";

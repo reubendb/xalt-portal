@@ -43,7 +43,7 @@ try {
         ka ON ka.link_id = xl.link_id 
         WHERE
         xl.build_user like CONCAT('%', '$user', '%') AND
-        xl.date BETWEEN '$startDate' AND '$endDate'
+        xl.date BETWEEN '$startDate 00:00:00' AND '$endDate 23:59:59'
         GROUP BY Executable
         ORDER BY Count Desc";
 

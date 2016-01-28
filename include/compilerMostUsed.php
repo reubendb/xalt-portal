@@ -20,7 +20,7 @@ try {
         FROM xalt_link xl
         WHERE xl.build_syshost='$sysHost' AND 
         xl.link_program IS NOT NULL AND 
-        xl.date BETWEEN '$startDate' AND '$endDate' 
+        xl.date BETWEEN '$startDate 00:00:00' AND '$endDate 23:59:59' 
         GROUP BY xl.link_program 
         ORDER BY Count DESC 
         ;";
