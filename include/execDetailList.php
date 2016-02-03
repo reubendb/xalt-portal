@@ -82,7 +82,7 @@ try {
 
     foreach($result as $row){
         $row_num++;
-        $execPath = wrapper($row['ExecPath']);
+        $execPath = wrapper($row['ExecPath'],45);
 
         if ($row_num == $total_rows){
             echo "{\"c\":[
