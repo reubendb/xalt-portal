@@ -31,11 +31,11 @@ function mostUsedModules(sysHost, startDate, endDate) {
         var ChartData = new google.visualization.DataTable(jsonChartData);
 
         // Define Chart Options .
-        var options =
-        {title: 'Modules Usage',chartArea:
-            {width: '80%'},hAxis:
-            {title: 'Modules'},vAxis:
-            {title: 'Count', format: 'short', minValue: 0}
+        var options = {title: 'Modules Usage',
+            chartArea:{width: '90%'},
+            legend: 'none',
+            hAxis:{title: 'Modules'},
+            vAxis:{title: 'Count', format: 'short', minValue: 0}
         };
 
         // Instantiate and draw chart.
@@ -44,13 +44,12 @@ function mostUsedModules(sysHost, startDate, endDate) {
 
         // Create our datatable out of Json Data loaded from php call.
         var div_id = 'mod2_div';
-        var table = makeTable(ChartData, div_id);
+        var table = drawTable(ChartData, div_id);
         document.getElementById("lblMod").style.visibility = 'visible';
 
         // Add listener (Get Version Details).
         google.visualization.events.addListener(chart, 'select', selectChart);
         google.visualization.events.addListener(table, 'select', selectTable);
-
 
         function selectChart() {
             // grab a few details before redirecting
@@ -109,13 +108,12 @@ function gT0(syshost, startDate, endDate, module) {         /* List version of g
 
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);
-        var table = makeTable(TableData, div_id);
+        var table = drawTable(TableData, div_id);
 
         // Add our Actions handler.
         google.visualization.events.addListener(table, 'select', selectHandler);
 
         function selectHandler() {
-
             // grab a few details before redirecting
             var selection = table.getSelection();
             var row = selection[0].row;
@@ -123,12 +121,12 @@ function gT0(syshost, startDate, endDate, module) {         /* List version of g
             var module = TableData.getValue(row,0);
             var version = TableData.getValue(row,1);
 
-                gT1(sysHost, startDate, endDate, module, version);
+            gT1(sysHost, startDate, endDate, module, version);   /* get list of Users */ 
         }
     }
 }   
 
-function gT1(sysHost, startDate, endDate, module, version) {      /* List of Users  */
+function gT1(sysHost, startDate, endDate, module, version) {      /* get list of Users  */
 
     console.log("&module=" + module + "&version=" + version);
 
@@ -157,25 +155,24 @@ function gT1(sysHost, startDate, endDate, module, version) {      /* List of Use
         console.log("sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate + "&module=" + module + "&version=" + version);
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);
-        var table = makeTable(TableData, div_id);
+        var table = drawTable(TableData, div_id);
 
         // Add our Actions handler.
         google.visualization.events.addListener(table, 'select', selectHandler);
 
         function selectHandler() {
-
             // grab a few details before redirecting
             var selection = table.getSelection();
             var row = selection[0].row;
             var col = selection[0].column;
             var user = TableData.getValue(row,0);
 
-            gT2(sysHost, startDate, endDate, module, version, user);
+            gT2(sysHost, startDate, endDate, module, version, user);    /* get list of executables */ 
         }
     }
 }   
 
-function gT2(sysHost, startDate, endDate, module, version, user) {       /* List of executables */
+function gT2(sysHost, startDate, endDate, module, version, user) {       /* get list of executables */
 
     console.log("&module=" + module + "&version=" + version + "&user=" + user);
 
@@ -203,25 +200,24 @@ function gT2(sysHost, startDate, endDate, module, version, user) {       /* List
 
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);
-        var table = makeTable(TableData, div_id);
+        var table = drawTable(TableData, div_id);
 
         // Add our Actions handler.
         google.visualization.events.addListener(table, 'select', selectHandler);
 
         function selectHandler() {
-
             // grab a few details before redirecting
             var selection = table.getSelection();
             var row = selection[0].row;
             var col = selection[0].column;
             var exec = TableData.getValue(row,0);
 
-            gT3(sysHost, startDate, endDate, module, version, user, exec);
+            gT3(sysHost, startDate, endDate, module, version, user, exec);    /* get executable details */
         }
     }
 }
 
-function gT3(sysHost, startDate, endDate, module, version, user, exec) { /* Executable detail */
+function gT3(sysHost, startDate, endDate, module, version, user, exec) {      /* get executable details */
 
     console.log("&user= " + user + "&exec=" + exec + query);
 
@@ -248,13 +244,12 @@ function gT3(sysHost, startDate, endDate, module, version, user, exec) { /* Exec
 
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);
-        var table = makeTable(TableData, div_id);
+        var table = drawTable(TableData, div_id);
 
         // Add our Actions handler.
         google.visualization.events.addListener(table, 'select', selectHandler);
 
         function selectHandler() {
-
             // grab a few details before redirecting
             var selection = table.getSelection();
             var row = selection[0].row;
@@ -262,7 +257,7 @@ function gT3(sysHost, startDate, endDate, module, version, user, exec) { /* Exec
             var uuid = TableData.getValue(row,6);
 
             // Get run details irrespective of who built the code
-            gT4(uuid);
+            gT4(uuid);            /* get job run details */
             gT5(uuid);            /* get objects at linktime */ 
         }
     }
@@ -292,13 +287,12 @@ function gT4(uuid) {               /* get job run details */
 
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);
-        var table = makeTable(TableData, div_id);
+        var table = drawTable(TableData, div_id);
 
         // Add our Actions handler.
         google.visualization.events.addListener(table, 'select', selectHandler);
 
         function selectHandler() {
-
             // grab a few details before redirecting
             var selection = table.getSelection();
             var row = selection[0].row;
@@ -334,7 +328,8 @@ function gT5(uuid) {               /* get object information*/
 
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);
-        var table = makeTable(TableData, div_id);
+        var table = drawTable(TableData, div_id);
+
     }
 }
 
@@ -361,7 +356,7 @@ function gT6(runId) {               /* get runtime env information*/
 
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);
-        var table = makeTable(TableData, div_id);
+        var table = drawTable(TableData, div_id);
     }
 }
 
@@ -388,28 +383,28 @@ function gT7(runId) {               /* get objects at runtime */
 
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);
-        var table = makeTable(TableData, div_id);
+        var table = drawTable(TableData, div_id);
     }
 }
 
-function makeTable(TableData, div_id) {
+function drawTable(TableData, div_id) {
 
     var tab_options = {title: 'Table View',
         showRowNumber: true,
-        height: '100%',
         width: '100%',
+        hieght: '50%',
+        page: 'enable',
+        pageSize: '10',
         allowHtml: true,
         alternatingRowStyle: true}
 
     // Instantiate and Draw our Table
     var table = new google.visualization.Table(document.getElementById(div_id));
 
-    visualization.setSelection([]);
     table.clearChart();
-
     table.draw(TableData, tab_options);
+    return(table);
 
-    return (TableData,table);
 }
 
 function checkJsonData (jsonTableData) {
