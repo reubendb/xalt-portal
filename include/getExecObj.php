@@ -44,7 +44,7 @@ $row_num = 0;
 
 foreach($result as $row){
     $row_num++;
-    $objPath    = wrapper($row['ObjPath']);
+    $objPath    = wrapper($row['ObjPath'], 80);
     $moduleName = isset($row['ModuleName']) ? $row['ModuleName'] : 'N/A';
 
     if ($row_num == $total_rows){
