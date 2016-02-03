@@ -37,7 +37,7 @@ $row_num = 0;
 
 foreach($result as $row){
     $row_num++;
-    $envValue = wrapper($row['EnvValue']);
+    $envValue = wrapper($row['EnvValue'], 80);
 
     if ($row_num == $total_rows){
         echo "{\"c\":[
