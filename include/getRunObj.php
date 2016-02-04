@@ -2,8 +2,8 @@
 /*
  * Get Object/Library details for given runID at runtime.
  */
-//$runId       = $_GET["runId"];
-$runId       = 569897;
+$runId       = $_GET["runId"];
+
 try {
     include (__DIR__ ."/wrapper.php");
     include (__DIR__ ."/conn.php");
@@ -44,7 +44,7 @@ $row_num = 0;
 
 foreach($result as $row){
     $row_num++;
-    $objPath    = wrapper($row['ObjPath']);
+    $objPath    = wrapper($row['ObjPath'], 60);
     $moduleName = isset($row['ModuleName']) ? $row['ModuleName'] : 'N/A';
 
     if ($row_num == $total_rows){
