@@ -35,7 +35,7 @@ try {
         WHERE xl.build_user = '$user' AND
         xl.build_syshost = '$sysHost' AND
         xl.link_program = '$linkProgram' AND
-        xl.date BETWEEN '$startDate' AND '$endDate' AND
+        xl.date BETWEEN '$startDate 00:00:00' AND '$endDate 23:59:59' AND
         SUBSTRING_INDEX(xl.exec_path, '/', -1) = '$exec'
         ORDER BY Date desc ;";
 

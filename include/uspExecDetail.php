@@ -30,7 +30,7 @@ try {
         substring_index(xr.exec_path, '/', '-1') = '$exec' AND
         xr.syshost = '$sysHost' AND
         xr.user like CONCAT ('%','$userId', '%') AND
-        xr.date BETWEEN '$startDate' AND '$endDate';
+        xr.date BETWEEN '$startDate 00:00:00' AND '$endDate 23:59:59';
     ";
 
 #    print_r($sql);

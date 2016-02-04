@@ -21,7 +21,7 @@ try {
         FROM xalt_run xr 
         WHERE xr.user like concat('%', '$userId','%') AND
         xr.syshost = '$sysHost' AND
-        xr.date BETWEEN '$startDate' AND '$endDate'
+        xr.date BETWEEN '$startDate 00:00:00' AND '$endDate 23:59:59'
         GROUP BY Executable 
         ORDER BY No_Jobs DESC;
     ";

@@ -43,7 +43,7 @@ try {
             ) 
             ka ON ka.link_id = xl.link_id
             WHERE 
-            xl.date BETWEEN '$startDate' AND '$endDate' AND
+            xl.date BETWEEN '$startDate 00:00:00' AND '$endDate 23:59:59' AND
             xl.build_user = '$user' AND
             SUBSTRING_INDEX(xl.exec_path, '/', -1) = '$exec' 
             ORDER BY Date desc
@@ -63,7 +63,7 @@ try {
             ) AS JobRun 
             FROM xalt_link xl 
             WHERE 
-            xl.date BETWEEN '$startDate' AND '$endDate' AND
+            xl.date BETWEEN '$startDate 00:00:00' AND '$endDate 23:59:59' AND
             xl.build_user = '$user' AND
             xl.build_syshost = '$sysHost' AND
             SUBSTRING_INDEX(xl.exec_path, '/', -1) = '$exec' 
