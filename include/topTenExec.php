@@ -36,8 +36,8 @@ try {
         WHEN LOWER(SUBSTRING_INDEX(xalt_run.exec_path,'/',-1)) REGEXP 'gene_d' then 'GENE*'
         WHEN LOWER(SUBSTRING_INDEX(xalt_run.exec_path,'/',-1)) REGEXP 'abinit' then 'ABINIT*'
         ELSE SUBSTRING_INDEX(xalt_run.exec_path,'/',-1) END 
-        AS execName, ROUND(SUM(run_time*num_cores/3600)) as totalcput, 
-        COUNT(date) as n_jobs, COUNT(DISTINCT(user)) as n_users 
+        AS execName, LOG10(ROUND(SUM(run_time*num_cores/3600))) as totalcput, 
+        LOG10(COUNT(date)) as n_jobs, COUNT(DISTINCT(user)) as n_users
         FROM xalt_run 
         WHERE syshost = '$sysHost' 
         AND date BETWEEN '$startDate' AND '$endDate' 
@@ -51,9 +51,11 @@ try {
     $result = $query->fetchAll(PDO:: FETCH_ASSOC);
 
     echo "{\"cols\":[
-{\"id\":\"\",\"label\":\"execName\",\"pattern\":\"\",\"type\":\"string\"},
-{\"id\":\"\",\"label\":\"n_jobs\",\"pattern\":\"\",\"type\":\"number\"},
-{\"id\":\"\",\"label\":\"totalcput\",\"pattern\":\"\",\"type\":\"number\"}
+{\"id\":\"\",\"label\":\"Executable\",\"pattern\":\"\",\"type\":\"string\"},
+{\"id\":\"\",\"label\":\"#Jobs\",\"pattern\":\"\",\"type\":\"number\"},
+{\"id\":\"\",\"label\":\"TotalCPUT\",\"pattern\":\"\",\"type\":\"number\"},
+{\"id\":\"\",\"label\":\"Executable\",\"pattern\":\"\",\"type\":\"string\"},
+{\"id\":\"\",\"label\":\"#Users\",\"pattern\":\"\",\"type\":\"number\"}
 ],
 \"rows\": [ ";
 
@@ -66,13 +68,17 @@ try {
                 echo "{\"c\":[
             {\"v\":\"" . $row['execName'] . "\",\"f\":null},
             {\"v\":" . $row['n_jobs'] . ",\"f\":null},
-            {\"v\":" . $row['totalcput'] . ",\"f\":null}
+            {\"v\":" . $row['totalcput'] . ",\"f\":null},
+            {\"v\":\"" . $row['execName'] . "\",\"f\":null},
+            {\"v\":" . $row['n_users'] . ",\"f\":null}
             ]}";
             } else {
                 echo "{\"c\":[
             {\"v\":\"" . $row['execName'] . "\",\"f\":null},
             {\"v\":" . $row['n_jobs'] . ",\"f\":null},
-            {\"v\":" . $row['totalcput'] . ",\"f\":null}
+            {\"v\":" . $row['totalcput'] . ",\"f\":null},
+            {\"v\":\"" . $row['execName'] . "\",\"f\":null},
+            {\"v\":" . $row['n_users'] . ",\"f\":null}
             ]}, ";
             } 
         }
