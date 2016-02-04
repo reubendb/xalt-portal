@@ -8,11 +8,11 @@
 #  wasted 1 hour of my life on this!
 #
 #
-function wrapper($content) {
+function wrapper($content, $length) {
     $array = array();
-    while(strlen($content) > 45){
+    while(strlen($content) > $length){
         if (substr_count($content, '/') > 0) {
-            $pos = (strpos($content, '/', 45) ? strpos($content, '/', 45) : 0);
+            $pos = (strpos($content, '/', $length) ? strpos($content, '/', $length) : 0);
             if ($pos == 0) { break;} else{
                 array_push($array, substr($content, 0, $pos) , "<br />/");
                 // change $content to remaining string
