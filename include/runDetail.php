@@ -50,7 +50,7 @@ $row_num = 0;
 foreach($result as $row){
     $row_num++;
 
-    $cwd= wrapper($row['Cwd']);
+    $cwd= wrapper($row['Cwd'], 45);
     if ($row_num == $total_rows){
         echo "{\"c\":[
     {\"v\":\"" . $row['RunId'] . "\",\"f\":null},
