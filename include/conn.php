@@ -1,7 +1,7 @@
 <?php
-$servername = "your.server.name";
-$username = "username";
-$password = "password";
-$db = "databaseName";
+$servername = "orange.nics.utk.edu";
+$username = "xaltselect";
+$password = "MtHTfV%7oUM2";
+$db = "xalt";
 ?>
 
