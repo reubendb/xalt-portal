@@ -29,16 +29,15 @@ function compilerMostUsed(sysHost, startDate, endDate) {
         var ChartData = new google.visualization.DataTable(jsonChartData);
 
         // Define Chart Options .
-        var options = 
-        {title: 'Most Used Compiler',chartArea: 
-            {width: '80%'},hAxis:
-            {title: 'Compilers'},vAxis: 
-            {title: 'Count', format: 'short', minValue: 0}
+        var options = {title: 'Most Used Compiler',
+            chartArea: {width: '80%'},
+            legend: 'none',
+            hAxis:{title: 'Compilers'},
+            vAxis: {title: 'Count', format: 'short', minValue: 0}
         };
 
         // Instantiate and draw chart.
-        var chart = new google.visualization.ColumnChart(
-                document.getElementById('comp1_div'));
+        var chart = new google.visualization.ColumnChart(document.getElementById('comp1_div'));
 
         chart.draw(ChartData, options);
 
@@ -68,7 +67,7 @@ function compilerMostUsed(sysHost, startDate, endDate) {
             var col = selection[0].column;
             var linkProgram = [ChartData.getValue(row,0)];
 
-            gTc1(sysHost, startDate, endDate, linkProgram); 
+            gTc1(sysHost, startDate, endDate, linkProgram);       /* Get user list  */ 
         }
     }
 }
@@ -117,7 +116,7 @@ function gTc1(sysHost, startDate, endDate, linkProgram) {         /* Get user li
             var col = selection[0].column;
             var user = TableData.getValue(row,0);
 
-            gTc2(sysHost, startDate, endDate, linkProgram, user);
+            gTc2(sysHost, startDate, endDate, linkProgram, user);  /* get exec list  */    
         }
     }
 }   
@@ -162,7 +161,7 @@ function gTc2(sysHost, startDate, endDate, linkProgram,user) {     /* get exec l
             var col = selection[0].column;
             var exec = TableData.getValue(row,0);
 
-            gTc3(sysHost ,startDate , endDate, linkProgram, user, exec);
+            gTc3(sysHost ,startDate , endDate, linkProgram, user, exec);   /* get exec detail  */
         }
     }
 }
@@ -208,8 +207,8 @@ function gTc3(sysHost, startDate, endDate, linkProgram, user, exec) {      /* ge
             var uuid = TableData.getValue(row,6);
 
             // get run details irrespective of who built the code 
-            gTc4(uuid);
-            gTc5(uuid);
+            gTc4(uuid);       /* get run details */
+            gTc5(uuid);       /* get object information */
         }
     }
 }
@@ -252,13 +251,13 @@ function gTc4(uuid) {         /* get run details */
             var col = selection[0].column;
             var runid = TableData.getValue(row,0);
 
-            gTc6(runid);
-            gTc7(runid);
+            gTc6(runid);          /* get runtime env information */
+            gTc7(runid);          /* get objects at runtime */
         }
     }
 }
 
-function gTc5(uuid) {               /* get object information*/
+function gTc5(uuid) {               /* get object information */
 
     console.log("&uuid=" + uuid);
 
@@ -285,7 +284,7 @@ function gTc5(uuid) {               /* get object information*/
     }
 }
 
-function gTc6(runId) {               /* get runtime env information*/
+function gTc6(runId) {               /* get runtime env information */
 
     console.log("&runId=" + runId);
 
@@ -343,18 +342,18 @@ function makeTable(TableData, div_id) {
 
     var tab_options = {title: 'Table View',
         showRowNumber: true,
-        height: 200,
+        height: '50%',
         width: '100%',
         allowHtml: true,
         alternatingRowStyle: true,
-        height: 200}
+        page: 'enable',
+        pageSize: '10'
+        }
 
     // Instantiate and Draw our Table
     var table = new google.visualization.Table(document.getElementById(div_id));
-
     table.draw(TableData, tab_options);
-
-    return (TableData,table);
+    return (table);
 }
 
 function checkJsonData (jsonTableData) {
@@ -370,6 +369,5 @@ function hideAllDivs (idsToHide) {
             attrToHide[i].style.visibility = "hidden";
         }
     }
-
 }
 
