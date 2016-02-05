@@ -404,13 +404,11 @@ function drawTable(TableData, div_id) {
     table.clearChart();
     table.draw(TableData, tab_options);
     return(table);
-
 }
 
 function checkJsonData (jsonTableData) {
     var o = JSON.parse(jsonTableData);
     return (o.rows.length);
-
 }
 
 function hideAllDivs (idsToHide) {
@@ -422,6 +420,5 @@ function hideAllDivs (idsToHide) {
             attrToHide[i].style.visibility = "hidden";
         }
     }
-
 }
 
