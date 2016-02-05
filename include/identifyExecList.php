@@ -63,8 +63,8 @@ try {
 
     echo "{ \"cols\": [
     {\"id\":\"\",\"label\":\"Executable\",\"pattern\":\"\",\"type\":\"string\"}, 
-    {\"id\":\"\",\"label\":\"LinkDate_Oldest\",\"pattern\":\"\",\"type\":\"string\"}, 
-    {\"id\":\"\",\"label\":\"LinkDate_Latest\",\"pattern\":\"\",\"type\":\"string\"}, 
+    {\"id\":\"\",\"label\":\"LinkDate Oldest\",\"pattern\":\"\",\"type\":\"string\"}, 
+    {\"id\":\"\",\"label\":\"LinkDate Latest\",\"pattern\":\"\",\"type\":\"string\"}, 
     {\"id\":\"\",\"label\":\"Count\",\"pattern\":\"\",\"type\":\"number\"} 
     ], 
     \"rows\": [ ";
