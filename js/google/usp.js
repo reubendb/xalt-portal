@@ -35,7 +35,6 @@ function usp(sysHost, startDate, endDate, userId) {        /* get exec list */
         var TableData = new google.visualization.DataTable(jsonTableData);
         var table = makeTable(TableData, div_id);
 
-
         // Add our selection handler.
         google.visualization.events.addListener(table, 'select', selectTable);
 
@@ -46,7 +45,7 @@ function usp(sysHost, startDate, endDate, userId) {        /* get exec list */
             var col = selection[0].column;
             var exec = [TableData.getValue(row,0)];
 
-            gTu0(sysHost, startDate, endDate, userId, exec);
+            gTu0(sysHost, startDate, endDate, userId, exec);      /* get exec detail list  */
         }
     }
 }
@@ -87,8 +86,8 @@ function gTu0(syshost, startDate, endDate, userId, exec) {         /* get exec d
             var col = selection[0].column;
             var uuid = TableData.getValue(row,6);
 
-            gTu1(uuid);       
-            gTu2(uuid);
+            gTu1(uuid);       /* get run details */      
+            gTu2(uuid);       /* get object information */
         }
     }
 }   
@@ -142,7 +141,7 @@ function gTu1(uuid) {         /* get run details */
     }
 }
 
-function gTu2(uuid) {               /* get object information*/
+function gTu2(uuid) {               /* get object information */
 
     console.log("&uuid=" + uuid);
 
@@ -169,7 +168,7 @@ function gTu2(uuid) {               /* get object information*/
     }
 }
 
-function gTu3(runId) {               /* get runtime env information*/
+function gTu3(runId) {               /* get runtime env information */
 
     console.log("&runId=" + runId);
     var jsonTableData = $.ajax
@@ -225,17 +224,18 @@ function makeTable(TableData, div_id) {
 
     var tab_options = {title: 'Table View',
         showRowNumber: true,
-        height: 200,
+        height: '50%',
         width: '100%',
+        page: 'enable',
+        pageSize: '10',
         allowHtml: true,
-        alternatingRowStyle: true,
-        height: 200}
+        alternatingRowStyle: true
+        }
 
     // Instantiate and Draw our Table
     var table = new google.visualization.Table(document.getElementById(div_id));
 
     table.draw(TableData, tab_options);
-
     return (TableData,table);
 }
 
