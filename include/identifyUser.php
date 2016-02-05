@@ -56,9 +56,9 @@ try {
 
     echo "{ \"cols\": 
         [
-    {\"id\":\"\",\"label\":\"User\",\"pattern\":\"\",\"type\":\"string\"}, 
-    {\"id\":\"\",\"label\":\"Earliest_LinkDate\",\"pattern\":\"\",\"type\":\"string\"}, 
-    {\"id\":\"\",\"label\":\"Latest_LinkDate\",\"pattern\":\"\",\"type\":\"string\"}, 
+    {\"id\":\"\",\"label\":\"Build User\",\"pattern\":\"\",\"type\":\"string\"}, 
+    {\"id\":\"\",\"label\":\"Earliest LinkDate\",\"pattern\":\"\",\"type\":\"string\"}, 
+    {\"id\":\"\",\"label\":\"Latest LinkDate\",\"pattern\":\"\",\"type\":\"string\"}, 
     {\"id\":\"\",\"label\":\"Count\",\"pattern\":\"\",\"type\":\"number\"}
     ], 
     \"rows\": [ ";
