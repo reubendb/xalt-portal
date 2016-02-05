@@ -236,7 +236,7 @@ function makeTable(TableData, div_id) {
     var table = new google.visualization.Table(document.getElementById(div_id));
 
     table.draw(TableData, tab_options);
-    return (TableData,table);
+    return (table);
 }
 
 function checkJsonData (jsonTableData) {
