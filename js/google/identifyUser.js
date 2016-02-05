@@ -55,7 +55,7 @@ function identifyUser(sysHost, startDate, endDate, objPath, execName, query) {
             var col = selection[0].column;
             var user = TableData.getValue(row,0);
 
-            gTi1(sysHost, startDate, endDate, objPath, execName, user, query);
+            gTi1(sysHost, startDate, endDate, objPath, execName, user, query);    /* Get Exec List */
         }
     }
 }
@@ -114,7 +114,7 @@ function gTi1(sysHost, startDate, endDate,objPath, execName, user, query) {     
             var col = selection[0].column;
             var exec = TableData.getValue(row,0);
 
-            gTi2(sysHost, startDate, endDate, objPath, user, exec, query);
+            gTi2(sysHost, startDate, endDate, objPath, user, exec, query);    /* Get Exec Detail*/
         }
     }
 }
@@ -159,8 +159,8 @@ function gTi2(sysHost, startDate, endDate,objPath, user, exec, query) {        /
             var uuid = TableData.getValue(row,6);
 
             // get run details irrespective of who built the code
-            gTi3(uuid);
-            gTi4(uuid);
+            gTi3(uuid);       /* get run details */
+            gTi4(uuid);       /* get object information */
         }
     }
 }
@@ -209,7 +209,7 @@ function gTi3(uuid) {         /* get run details */
     }
 }
 
-function gTi4(uuid) {               /* get object information*/
+function gTi4(uuid) {               /* get object information */
 
     console.log("&uuid=" + uuid);
 
@@ -292,16 +292,17 @@ function gTi6(runId) {               /* get object at runtime */
 function makeTable(TableData, div_id) {
 
     var tab_options = {showRowNumber: true,
-        height: 300,
+        height: '50%',
         width: '100%',
+        page: 'enable',
+        pageSize: '10',
         allowHtml: true,
         alternatingRowStyle: true
     }
     // Instantiate and Draw our Table
     var table = new google.visualization.Table(document.getElementById(div_id));
     table.draw(TableData, tab_options);
-
-    return (TableData,table);
+    return (table);
 }
 
 function checkJsonData (jsonTableData) {
