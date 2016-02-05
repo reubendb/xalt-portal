@@ -35,8 +35,8 @@ try {
 
     echo "{ \"cols\": [
 {\"id\":\"\",\"label\":\"Executable\",\"pattern\":\"\",\"type\":\"string\"},
-{\"id\":\"\",\"label\":\"No_Jobs\",\"pattern\":\"\",\"type\":\"number\"},
-{\"id\":\"\",\"label\":\"User\",\"pattern\":\"\",\"type\":\"string\"}
+{\"id\":\"\",\"label\":\"Count\",\"pattern\":\"\",\"type\":\"number\"},
+{\"id\":\"\",\"label\":\"Run User\",\"pattern\":\"\",\"type\":\"string\"}
 ], 
 \"rows\": [ ";
 
