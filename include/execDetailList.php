@@ -31,39 +31,48 @@ try {
         break;
     }
 
+    /* get Executable details (run/compile both) irrespective of build user) */
+    
     $sql= "
-        SELECT DISTINCT xl.uuid as Uuid,                                
+        SELECT DISTINCT jlo.link_id as link_id 
+        FROM join_link_object jlo , xalt_object xo 
+        WHERE jlo.obj_id = xo.obj_id AND 
+        xo.syshost='$sysHost' AND 
+        xo.module_name LIKE '$moduleName' 
+        ";
+
+    $query = $conn->prepare($sql);
+    $query->execute();
+    $result = $query->fetchAll(PDO:: FETCH_ASSOC);
+
+    $link_id = '';
+    $total_linkId = $query->rowCount();
+    $row_num = 0;
+
+    foreach($result as $row){
+        $row_num++;
+        if ($row_num <= $total_linkId - 1){
+            $link_id = $link_id . $row['link_id'] . ",";
+        } else {
+            $link_id = $link_id . $row['link_id'];
+        }
+    }
+
+    $sql = "SELECT DISTINCT xl.uuid as Uuid,                                
         xl.date as Date,                                        
         xl.link_program as LinkProgram,                         
         xl.exit_code as ExitCode,
         xl.build_user as BuildUser,
-        xl.exec_path as ExecPath,
-        IF (
-            (SELECT count(*) 
-            from xalt_run xr1 
-            where xr1.uuid = xl.uuid) >= 1, 'true', 'false'
-        ) AS JobRun 
+        xl.exec_path as ExecPath
         FROM xalt_link xl 
-        INNER JOIN (
-            SELECT DISTINCT jlo.link_id 
-            FROM join_link_object jlo 
-            INNER JOIN xalt_object xo ON (jlo.obj_id = xo.obj_id)
-            WHERE 
-            xo.syshost='$sysHost' AND 
-            xo.module_name LIKE '$moduleName' 
-        ) 
-        ka ON ka.link_id = xl.link_id 
-        WHERE 
+        WHERE xl.link_id IN ($link_id) AND
         xl.date BETWEEN '$startDate 00:00:00' AND '$endDate 23:59:59' AND
         SUBSTRING_INDEX(xl.exec_path, '/', -1) = '$exec' 
         ORDER BY Date desc
-        ;";
-
-    #    print_r($sql);
+        ";
 
     $query = $conn->prepare($sql);
     $query->execute();
-
     $result = $query->fetchAll(PDO:: FETCH_ASSOC);
 
     echo "{ \"cols\": [
@@ -84,6 +93,20 @@ try {
         $row_num++;
         $execPath = wrapper($row['ExecPath'],45);
 
+        /* start ++ check if exec used in a job */
+        $uuid = '';
+        $uuid = $row['Uuid'];
+        $sql = "SELECT IF (
+            (SELECT COUNT(*) FROM 
+            test_xalt_run WHERE uuid = '$uuid' >= 1), 'true', 'false') 
+            AS JobRun ";
+
+        $q = $conn->prepare($sql);
+        $q->execute();
+        $r = $q->fetchAll(PDO:: FETCH_ASSOC);
+
+        /* ends -- */ 
+
         if ($row_num == $total_rows){
             echo "{\"c\":[
         {\"v\":\"" . $execPath . "\",\"f\":null},
@@ -91,7 +114,7 @@ try {
         {\"v\":\"" . $row['LinkProgram'] . "\",\"f\":null},
         {\"v\":\"" . $row['ExitCode'] . "\",\"f\":null},
         {\"v\":\"" . $row['BuildUser'] . "\",\"f\":null},
-        {\"v\":" . $row['JobRun'] . ",\"f\":null},
+        {\"v\":" . $r[0]['JobRun'] . ",\"f\":null},
         {\"v\":\"" . $row['Uuid'] . "\",\"f\":null}
         ]}";
         } else {
@@ -101,7 +124,7 @@ try {
         {\"v\":\"" . $row['LinkProgram'] . "\",\"f\":null},
         {\"v\":\"" . $row['ExitCode'] . "\",\"f\":null},
         {\"v\":\"" . $row['BuildUser'] . "\",\"f\":null},
-        {\"v\":" . $row['JobRun'] . ",\"f\":null},
+        {\"v\":" . $r[0]['JobRun'] . ",\"f\":null},
         {\"v\":\"" . $row['Uuid'] . "\",\"f\":null}
         ]}, ";
         } 
