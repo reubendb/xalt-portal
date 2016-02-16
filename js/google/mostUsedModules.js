@@ -5,7 +5,7 @@
  * List of Parameters passed to generateTable function
  */
 
-google.load('visualization', '1', {packages: ['corechart','table']});
+google.load('visualization', '1.0', {packages: ['corechart','table']});
 
 function mostUsedModules(sysHost, startDate, endDate) {
 
@@ -80,7 +80,7 @@ function mostUsedModules(sysHost, startDate, endDate) {
 
 function gT0(syshost, startDate, endDate, module) {         /* List version of given modules   */
 
-    console.log('query = ' + query + "module= " + module);
+    console.log("module= " + module);
 
     /* query = 2 Call from xalt_usage.html page */
     var jsonTableData = $.ajax
@@ -208,23 +208,26 @@ function gT2(sysHost, startDate, endDate, module, version, user) {       /* get 
         function selectHandler() {
             // grab a few details before redirecting
             var selection = table.getSelection();
-            var row = selection[0].row;
-            var col = selection[0].column;
+            var row  = selection[0].row;
+            var col  = selection[0].column;
             var exec = TableData.getValue(row,0);
+            var page = 0;
 
-            gT3(sysHost, startDate, endDate, module, version, user, exec);    /* get executable details */
+            gT3(sysHost, startDate, endDate, module, version, user, exec, page);    /* get executable details */
         }
     }
 }
 
-function gT3(sysHost, startDate, endDate, module, version, user, exec) {      /* get executable details */
+function gT3(sysHost, startDate, endDate, module, version, user, exec, page) {      /* get executable details */
 
-    console.log("&user= " + user + "&exec=" + exec + query);
+    console.log("&user= " + user + "&exec=" + exec + "&page=" + page);
 
     var jsonTableData = $.ajax
         ({url:"include/execDetailList.php", 
+        //({url:"include/ed.php", 
          data: "sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate + 
-         "&module=" + module + "&version=" + version + "&user=" + user + "&exec=" + exec,
+         "&module=" + module + "&version=" + version + "&user=" + user + "&exec=" + exec + 
+         "&page=" + page,
          datatype: "json", async: false
          }).responseText;
 
@@ -244,11 +247,17 @@ function gT3(sysHost, startDate, endDate, module, version, user, exec) {      /*
 
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);
-        var table = drawTable(TableData, div_id);
+        var table = drawExecDetail(TableData, div_id ,page);
 
         // Add our Actions handler.
         google.visualization.events.addListener(table, 'select', selectHandler);
 
+        // google.visualization.table exposes a 'page' event.
+        google.visualization.events.addListener(table, 'page', myPageEventHandler);
+        function myPageEventHandler(e) {
+            page = e['page'];
+            gT3(sysHost, startDate, endDate, module, version, user, exec, page);    /* get executable details */
+        }
         function selectHandler() {
             // grab a few details before redirecting
             var selection = table.getSelection();
@@ -387,6 +396,30 @@ function gT7(runId) {               /* get objects at runtime */
     }
 }
 
+function drawExecDetail(TableData, div_id, page) {
+
+    console.log('PAGE : ' + page + parseInt(page));
+
+    var tab_options = {title: 'Table View',
+        showRowNumber: true,
+        width: '100%',
+        hieght: '50%',
+        page: 'enable',
+        pageSize: '10',
+        firstRowNumber: parseInt(page * 10) + 1,
+        pagingSymbols: {prev: ['< prev'],next: ['next >']},
+        startPage: parseInt(page),
+        allowHtml: true,
+        alternatingRowStyle: true}
+
+    // Instantiate and Draw our Table
+    var table = new google.visualization.Table(document.getElementById(div_id));
+
+    table.clearChart();
+    table.draw(TableData, tab_options);
+    return(table);
+}
+
 function drawTable(TableData, div_id) {
 
     var tab_options = {title: 'Table View',
@@ -395,6 +428,7 @@ function drawTable(TableData, div_id) {
         hieght: '50%',
         page: 'enable',
         pageSize: '10',
+        // pagingSymbols: {prev: ['< prev'],next: ['next >']},
         allowHtml: true,
         alternatingRowStyle: true}
 
@@ -422,3 +456,34 @@ function hideAllDivs (idsToHide) {
     }
 }
 
+function mergeDeep (o1, o2) {
+    var tempNewObj = o1;
+
+    //if o1 is an object - {}
+    if (o1.length === undefined && typeof o1 !== "number") {
+        $.each(o2, function(key, value) {
+                if (o1[key] === undefined) {
+                tempNewObj[key] = value;
+                } else {
+                tempNewObj[key] = mergeDeep(o1[key], o2[key]);
+                }
+                });
+    }
+
+    //else if o1 is an array - []
+    else if (o1.length > 0 && typeof o1 !== "string") {
+        $.each(o2, function(index) {
+                if (JSON.stringify(o1).indexOf(JSON.stringify(o2[index])) === -1) {
+                tempNewObj.push(o2[index]);
+                }
+                });
+    }
+
+    //handling other types like string or number
+    else {
+        //taking value from the second object o2
+        //could be modified to keep o1 value with tempNewObj = o1;
+        tempNewObj = o2;
+    }
+    return tempNewObj;
+};
