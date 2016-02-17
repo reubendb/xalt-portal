@@ -13,7 +13,8 @@ function mostUsedModules(sysHost, startDate, endDate) {
 
     var jsonChartData = $.ajax
         ({url: "include/mostUsedModules.php",
-         data: "sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate + "&query=" + query,
+         data: "sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate + 
+         "&query=" + query,
          dataType:"json", async: false
          }).responseText;
 
@@ -85,7 +86,8 @@ function gT0(syshost, startDate, endDate, module) {         /* List version of g
     /* query = 2 Call from xalt_usage.html page */
     var jsonTableData = $.ajax
         ({url: "include/mostUsedModules.php",
-         data: "sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate + "&query=" + query + "&module=" + module,
+         data: "sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate + 
+         "&query=" + query + "&module=" + module,
          dataType:"json", async: false
          }).responseText;
 
@@ -132,7 +134,8 @@ function gT1(sysHost, startDate, endDate, module, version) {      /* get list of
 
     var jsonTableData = $.ajax
         ({url:"include/userList.php", 
-         data: "sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate + "&module=" + module + "&version=" + version,
+         data: "sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate + 
+         "&module=" + module + "&version=" + version,
          datatype: "json", async: false
          }).responseText;
 
@@ -152,7 +155,8 @@ function gT1(sysHost, startDate, endDate, module, version) {      /* get list of
         document.getElementById("lblUserList1").style.visibility = 'visible';
         document.getElementById("mod4_div").style.visibility = 'visible';
 
-        console.log("sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate + "&module=" + module + "&version=" + version);
+        console.log("&module=" + module + "&version=" + version);
+        
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);
         var table = drawTable(TableData, div_id);
@@ -178,7 +182,8 @@ function gT2(sysHost, startDate, endDate, module, version, user) {       /* get 
 
     var jsonTableData = $.ajax
         ({url:"include/execList.php", 
-         data: "sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate + "&module=" + module + "&version=" + version + "&user=" + user,
+         data: "sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate + 
+         "&module=" + module + "&version=" + version + "&user=" + user,
          datatype: "json", async: false
          }).responseText;
 
@@ -186,9 +191,9 @@ function gT2(sysHost, startDate, endDate, module, version, user) {       /* get 
 
     // List ids to hide
     var idsToHide = ['lblExecList0', 'lblExecList1', 'exec_div',
-        'lblExecDetailRow','lblExecDetailList',
-        'exec_detail_div','lblRunDetail','run_detail_div',
-        'lblObj', 'obj_div', 'lblRunObj', 'runObj_div', 'lblRunEnv', 'run_env_div'];
+        'lblExecDetailRow','lblExecDetailList','exec_detail_div',
+        'lblRunDetail','run_detail_div','lblObj', 'obj_div', 
+        'lblRunObj', 'runObj_div', 'lblRunEnv', 'run_env_div'];
     hideAllDivs(idsToHide);
 
     var count = checkJsonData(jsonTableData);             /* if no data is returned do Nothing!! */
@@ -211,7 +216,7 @@ function gT2(sysHost, startDate, endDate, module, version, user) {       /* get 
             var row  = selection[0].row;
             var col  = selection[0].column;
             var exec = TableData.getValue(row,0);
-            var page = 0;
+            var page = 0;                         /* pagination changes */
 
             gT3(sysHost, startDate, endDate, module, version, user, exec, page);    /* get executable details */
         }
@@ -226,25 +231,28 @@ function gT3(sysHost, startDate, endDate, module, version, user, exec, page) {  
         ({url:"include/execDetailList.php", 
         //({url:"include/ed.php", 
          data: "sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate + 
-         "&module=" + module + "&version=" + version + "&user=" + user + "&exec=" + exec + 
-         "&page=" + page,
+             "&module=" + module + "&version=" + version + "&user=" + user + "&exec=" + exec + 
+             "&page=" + page,
          datatype: "json", async: false
          }).responseText;
 
     var div_id = 'exec_detail_div';
 
+    /* No matter what you do LIFE gets in the way !! there is no option in google visualization 
+     * to give total number pages commenting out total pages logic for future reference. 
+     * */
     /* Get total number of records for pagination- JSON LastRow > LastArray Element Value */
-    var jTd = JSON.parse(jsonTableData);           /* jTd ~ jsonTableData */
-    var lRa = jTd.rows[jTd.rows.length - 1]['c'];  /* lRa ~ lastRowArray */ 
-    var totalRec = lRa[lRa.length - 1]['v'];      /* Last Element Value */
+    // var jTd = JSON.parse(jsonTableData);           /* jTd ~ jsonTableData */
+    // var lRa = jTd.rows[jTd.rows.length - 1]['c'];  /* lRa ~ lastRowArray */ 
+    // var totalRec = lRa[lRa.length - 1]['v'];       /* Last Element Value */
 
     // List ids to hide
     var idsToHide = ['lblExecDetailRow', 'lblExecDetailList', 'exec_detail_div', 
-        'lblRunDetail','run_detail_div',
-        'lblObj', 'obj_div', 'lblRunObj', 'runObj_div', 'lblRunEnv', 'run_env_div'];
+        'lblRunDetail','run_detail_div', 'lblObj', 'obj_div', 
+        'lblRunObj', 'runObj_div', 'lblRunEnv', 'run_env_div'];
     hideAllDivs(idsToHide);
 
-    var count = checkJsonData(jsonTableData);             /* if no data is returned do Nothing!! */
+    var count = checkJsonData(jsonTableData);        /* if no data is returned do Nothing!! */
     if (count != 0) {
         document.getElementById("lblExecDetailRow").style.visibility = 'visible';
         document.getElementById("lblExecDetailList").style.visibility = 'visible';
@@ -252,7 +260,7 @@ function gT3(sysHost, startDate, endDate, module, version, user, exec, page) {  
 
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);
-        var table = drawExecDetail(TableData, div_id ,page, totalRec);
+        var table = drawExecDetail(TableData, div_id ,page);
 
         // Add our Actions handler.
         google.visualization.events.addListener(table, 'select', selectHandler);
@@ -261,8 +269,10 @@ function gT3(sysHost, startDate, endDate, module, version, user, exec, page) {  
         google.visualization.events.addListener(table, 'page', myPageEventHandler);
         function myPageEventHandler(e) {
             page = e['page'];
-            gT3(sysHost, startDate, endDate, module, version, user, exec, page);    /* get executable details */
+                                    /* get executable details */
+            gT3(sysHost, startDate, endDate, module, version, user, exec, page);    
         }
+
         function selectHandler() {
             // grab a few details before redirecting
             var selection = table.getSelection();
@@ -322,7 +332,6 @@ function gT4(uuid) {               /* get job run details */
 function gT5(uuid) {               /* get object information*/
 
     console.log("&uuid=" + uuid);
-
     var jsonTableData = $.ajax
         ({url:"include/getExecObj.php", 
          data: "uuid=" + uuid,
@@ -350,7 +359,6 @@ function gT5(uuid) {               /* get object information*/
 function gT6(runId) {               /* get runtime env information*/
 
     console.log("&runId=" + runId);
-
     var jsonTableData = $.ajax
         ({url:"include/getRunEnv.php", 
          data: "runId=" + runId,
@@ -377,7 +385,6 @@ function gT6(runId) {               /* get runtime env information*/
 function gT7(runId) {               /* get objects at runtime */
 
     console.log("&runId=" + runId);
-
     var jsonTableData = $.ajax
         ({url:"include/getRunObj.php", 
          data: "runId=" + runId,
@@ -401,22 +408,17 @@ function gT7(runId) {               /* get objects at runtime */
     }
 }
 
-function drawExecDetail(TableData, div_id, page, totalRec) {
+function drawExecDetail(TableData, div_id, page) {
 
-    var tab_options = {title: 'Table View',
-        showRowNumber: true,
-        width: '100%',
-        hieght: '50%',
-        page: 'enable',
-        pageSize: '10',
+    var tab_options = {title: 'Table View', showRowNumber: true,
+        width: '100%', hieght: '50%', page: 'enable',
+        pageSize: '10', startPage: parseInt(page), 
         pagingSymbols: {prev: ['< prev'],next: ['next >']},
-        startPage: parseInt(page),
-        allowHtml: true,
-        alternatingRowStyle: true}
+        allowHtml: true, alternatingRowStyle: true
+    }
 
     // Instantiate and Draw our Table
     var table = new google.visualization.Table(document.getElementById(div_id));
-
     table.clearChart();
     table.draw(TableData, tab_options);
     return(table);
@@ -424,15 +426,11 @@ function drawExecDetail(TableData, div_id, page, totalRec) {
 
 function drawTable(TableData, div_id) {
 
-    var tab_options = {title: 'Table View',
-        showRowNumber: true,
-        width: '100%',
-        hieght: '50%',
-        page: 'enable',
+    var tab_options = {title: 'Table View', showRowNumber: true,
+        width: '100%', hieght: '50%',page: 'enable',
         pageSize: '10',
         pagingSymbols: {prev: ['< prev'],next: ['next >']},
-        allowHtml: true,
-        alternatingRowStyle: true}
+        allowHtml: true, alternatingRowStyle: true}
 
     // Instantiate and Draw our Table
     var table = new google.visualization.Table(document.getElementById(div_id));
@@ -450,7 +448,6 @@ function checkJsonData (jsonTableData) {
 function hideAllDivs (idsToHide) {
 
     var attrToHide = document.querySelectorAll("*[style]");
-
     for(var i=0; i< attrToHide.length; i++) {
         if ($.inArray(attrToHide[i].id, idsToHide) != -1){     // if ID is present in the list Hide it
             attrToHide[i].style.visibility = "hidden";
