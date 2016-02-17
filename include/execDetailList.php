@@ -44,9 +44,11 @@ try {
         //                                */
         $rec_limit = 11 * ($page + 1); 
     }
-    /* get total number of records fetched by sql for pagination */
+    /* get total number of records fetched by sql for pagination 
+     * sadly google visualization has no support for total number of pages. 
+     * */
 
-    $sql= "
+    /* $sql= "
         SELECT count(*) as count
         FROM xalt_link xl 
         INNER JOIN (
@@ -67,6 +69,7 @@ try {
     $query = $conn->prepare($sql);
     $query->execute();
     $count = $query->fetchAll(PDO:: FETCH_ASSOC);
+     */
 
     /* get Executable details (run/compile both) irrespective of build user) */
 
@@ -132,9 +135,9 @@ try {
         {\"v\":\"" . $row['ExitCode'] . "\",\"f\":null},
         {\"v\":\"" . $row['BuildUser'] . "\",\"f\":null},
         {\"v\":" . $r[0]['JobRun'] . ",\"f\":null},
-        {\"v\":\"" . $row['Uuid'] . "\",\"f\":null},
-        {\"v\":\"" . $count[0]['count'] . "\",\"f\":null}
-        ]}";                                              /* count for pagination */
+        {\"v\":\"" . $row['Uuid'] . "\",\"f\":null}
+        ]}";
+            /* {\"v\":\"" . $count[0]['count'] . "\",\"f\":null}     /* count for pagination */
         } else {
             echo "{\"c\":[
         {\"v\":\"" . $execPath . "\",\"f\":null},
