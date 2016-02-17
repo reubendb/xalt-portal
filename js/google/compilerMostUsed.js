@@ -81,7 +81,8 @@ function gTc1(sysHost, startDate, endDate, linkProgram) {         /* Get user li
     }
     var jsonTableData = $.ajax
         ({url:"include/compUserList.php",
-         data: "sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate + "&linkProgram=" + linkProgram,
+         data: "sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate + 
+         "&linkProgram=" + linkProgram,
          datatype: "json", async: false
          }).responseText;
 
@@ -127,7 +128,8 @@ function gTc2(sysHost, startDate, endDate, linkProgram,user) {     /* get exec l
 
     var jsonTableData = $.ajax
         ({url:"include/compExecList.php", 
-         data:  "sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate + "&user=" +user + "&linkProgram=" + linkProgram,
+         data:  "sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate + 
+         "&user=" +user + "&linkProgram=" + linkProgram,
          datatype: "json", async: false
          }).responseText;
 
@@ -160,19 +162,21 @@ function gTc2(sysHost, startDate, endDate, linkProgram,user) {     /* get exec l
             var row = selection[0].row;
             var col = selection[0].column;
             var exec = TableData.getValue(row,0);
+            var page = 0;                         /* pagination changes */
 
-            gTc3(sysHost ,startDate , endDate, linkProgram, user, exec);   /* get exec detail  */
+            gTc3(sysHost ,startDate , endDate, linkProgram, user, exec, page); /* get exec detail  */
         }
     }
 }
 
-function gTc3(sysHost, startDate, endDate, linkProgram, user, exec) {      /* get exec detail */
+function gTc3(sysHost, startDate, endDate, linkProgram, user, exec, page) {      /* get exec detail */
 
     console.log("Exec= " + exec);
 
     var jsonTableData = $.ajax
         ({url:"include/compExecDetailList.php", 
-         data:  "sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate + "&linkProgram=" + linkProgram + "&user=" +user + "&exec=" + exec,
+         data:  "sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate + 
+         "&linkProgram=" + linkProgram + "&user=" +user + "&exec=" + exec + "&page=" + page,
          datatype: "json", async: false
          }).responseText;
 
@@ -193,13 +197,20 @@ function gTc3(sysHost, startDate, endDate, linkProgram, user, exec) {      /* ge
 
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);
-        var table = makeTable(TableData, div_id);
+        var table = makeExecDetail(TableData, div_id, page);
 
         // Add our Actions handler.
         google.visualization.events.addListener(table, 'select', selectHandler);
 
-        function selectHandler() {
+        // google.visualization.table exposes a 'page' event.
+        google.visualization.events.addListener(table, 'page', myPageEventHandler);
+        function myPageEventHandler(e) {
+            page = e['page'];
+            /* get executable details */
+            gTc3(sysHost ,startDate , endDate, linkProgram, user, exec, page); /* get exec detail  */
+        }
 
+        function selectHandler() {
             // grab a few details before redirecting
             var selection = table.getSelection();
             var row = selection[0].row;
@@ -338,16 +349,28 @@ function gTc7(runId) {               /* get objects at runtime */
     }
 }
 
+function makeExecDetail(TableData, div_id, page) {
+
+    var tab_options = {title: 'Table View',showRowNumber: true,
+        height: '100%', width: '100%',
+        page: 'enable', pageSize: '10', startPage: parseInt(page),
+        pagingSymbols: {prev: ['< prev'], next: ['next >']},
+        allowHtml: true, alternatingRowStyle: true
+        }
+
+    // Instantiate and Draw our Table
+    var table = new google.visualization.Table(document.getElementById(div_id));
+    table.clearChart();
+    table.draw(TableData, tab_options);
+    return (table);
+}
+
 function makeTable(TableData, div_id) {
 
-    var tab_options = {title: 'Table View',
-        showRowNumber: true,
-        height: '50%',
-        width: '100%',
-        allowHtml: true,
-        alternatingRowStyle: true,
-        page: 'enable',
-        pageSize: '10'
+    var tab_options = {title: 'Table View',showRowNumber: true,
+        height: '100%', width: '100%',
+        allowHtml: true, alternatingRowStyle: true,
+        page: 'enable', pageSize: '10'
         }
 
     // Instantiate and Draw our Table
