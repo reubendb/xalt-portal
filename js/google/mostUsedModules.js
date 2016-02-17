@@ -269,7 +269,7 @@ function gT3(sysHost, startDate, endDate, module, version, user, exec, page) {  
         google.visualization.events.addListener(table, 'page', myPageEventHandler);
         function myPageEventHandler(e) {
             page = e['page'];
-                                    /* get executable details */
+            /* get executable details */
             gT3(sysHost, startDate, endDate, module, version, user, exec, page);    
         }
 
