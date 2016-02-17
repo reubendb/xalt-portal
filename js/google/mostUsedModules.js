@@ -233,6 +233,11 @@ function gT3(sysHost, startDate, endDate, module, version, user, exec, page) {  
 
     var div_id = 'exec_detail_div';
 
+    /* Get total number of records for pagination- JSON LastRow > LastArray Element Value */
+    var jTd = JSON.parse(jsonTableData);           /* jTd ~ jsonTableData */
+    var lRa = jTd.rows[jTd.rows.length - 1]['c'];  /* lRa ~ lastRowArray */ 
+    var totalRec = lRa[lRa.length - 1]['v'];      /* Last Element Value */
+
     // List ids to hide
     var idsToHide = ['lblExecDetailRow', 'lblExecDetailList', 'exec_detail_div', 
         'lblRunDetail','run_detail_div',
@@ -247,7 +252,7 @@ function gT3(sysHost, startDate, endDate, module, version, user, exec, page) {  
 
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);
-        var table = drawExecDetail(TableData, div_id ,page);
+        var table = drawExecDetail(TableData, div_id ,page, totalRec);
 
         // Add our Actions handler.
         google.visualization.events.addListener(table, 'select', selectHandler);
@@ -396,9 +401,7 @@ function gT7(runId) {               /* get objects at runtime */
     }
 }
 
-function drawExecDetail(TableData, div_id, page) {
-
-    console.log('PAGE : ' + page + parseInt(page));
+function drawExecDetail(TableData, div_id, page, totalRec) {
 
     var tab_options = {title: 'Table View',
         showRowNumber: true,
@@ -406,7 +409,6 @@ function drawExecDetail(TableData, div_id, page) {
         hieght: '50%',
         page: 'enable',
         pageSize: '10',
-        firstRowNumber: parseInt(page * 10) + 1,
         pagingSymbols: {prev: ['< prev'],next: ['next >']},
         startPage: parseInt(page),
         allowHtml: true,
@@ -428,7 +430,7 @@ function drawTable(TableData, div_id) {
         hieght: '50%',
         page: 'enable',
         pageSize: '10',
-        // pagingSymbols: {prev: ['< prev'],next: ['next >']},
+        pagingSymbols: {prev: ['< prev'],next: ['next >']},
         allowHtml: true,
         alternatingRowStyle: true}
 
@@ -456,34 +458,3 @@ function hideAllDivs (idsToHide) {
     }
 }
 
-function mergeDeep (o1, o2) {
-    var tempNewObj = o1;
-
-    //if o1 is an object - {}
-    if (o1.length === undefined && typeof o1 !== "number") {
-        $.each(o2, function(key, value) {
-                if (o1[key] === undefined) {
-                tempNewObj[key] = value;
-                } else {
-                tempNewObj[key] = mergeDeep(o1[key], o2[key]);
-                }
-                });
-    }
-
-    //else if o1 is an array - []
-    else if (o1.length > 0 && typeof o1 !== "string") {
-        $.each(o2, function(index) {
-                if (JSON.stringify(o1).indexOf(JSON.stringify(o2[index])) === -1) {
-                tempNewObj.push(o2[index]);
-                }
-                });
-    }
-
-    //handling other types like string or number
-    else {
-        //taking value from the second object o2
-        //could be modified to keep o1 value with tempNewObj = o1;
-        tempNewObj = o2;
-    }
-    return tempNewObj;
-};
