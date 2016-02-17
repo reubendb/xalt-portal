@@ -34,14 +34,13 @@ try {
         break;
     }
 
-    /* check page number for offset */
+    /* instead of using offset we need to use rec_limit there is no other way 
+     * to do this with google visualization
+     * */
+
     if ($page == 0){
         $offset = 0;
     } else {
-        //$offset = 10 * $page + 1;       /* instead of using offset we need to use rec_limit
-        //                                   there is no other way to do this with google 
-        //                                   visualization (believe me!!)
-        //                                */
         $rec_limit = 11 * ($page + 1); 
     }
     /* get total number of records fetched by sql for pagination 
@@ -118,7 +117,7 @@ try {
         $uuid = $row['Uuid'];
         $sql = "SELECT IF (
             (SELECT COUNT(*) FROM 
-            test_xalt_run WHERE uuid = '$uuid' >= 1), 'true', 'false') 
+            xalt_run WHERE uuid = '$uuid' >= 1), 'true', 'false') 
             AS JobRun ";
 
         $q = $conn->prepare($sql);
