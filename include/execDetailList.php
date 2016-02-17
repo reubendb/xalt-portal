@@ -9,7 +9,10 @@ $module     = $_GET["module"];
 $version    = $_GET["version"];
 $user       = $_GET["user"];
 $exec       = $_GET["exec"];
+$page       = $_GET["page"];
 $moduleName = '';
+$rec_limit  = 11;
+$offset     = 0; 
 
 try {
     include (__DIR__ ."/wrapper.php");
@@ -31,45 +34,59 @@ try {
         break;
     }
 
-    /* get Executable details (run/compile both) irrespective of build user) */
-    
+    /* check page number for offset */
+    if ($page == 0){
+        $offset = 0;
+    } else {
+        //$offset = 10 * $page + 1;       /* instead of using offset we need to use rec_limit
+        //                                   there is no other way to do this with google 
+        //                                   visualization (believe me!!)
+        //                                */
+        $rec_limit = 11 * ($page + 1); 
+    }
+    /* get total number of records fetched by sql for pagination */
+
     $sql= "
-        SELECT DISTINCT jlo.link_id as link_id 
-        FROM join_link_object jlo , xalt_object xo 
-        WHERE jlo.obj_id = xo.obj_id AND 
-        xo.syshost='$sysHost' AND 
-        xo.module_name LIKE '$moduleName' 
-        ";
+        SELECT count(*) as count
+        FROM xalt_link xl 
+        INNER JOIN (
+            SELECT DISTINCT jlo.link_id 
+            FROM join_link_object jlo 
+            INNER JOIN xalt_object xo ON (jlo.obj_id = xo.obj_id)
+            WHERE 
+            xo.syshost='$sysHost' AND 
+            xo.module_name LIKE '$moduleName'
+        ) 
+        ka ON ka.link_id = xl.link_id 
+        WHERE 
+        xl.date BETWEEN '$startDate 00:00:00' AND '$endDate 23:59:59' AND
+        SUBSTRING_INDEX(xl.exec_path, '/', -1) = '$exec' 
+        ORDER BY Date desc
+        ;";
 
     $query = $conn->prepare($sql);
     $query->execute();
-    $result = $query->fetchAll(PDO:: FETCH_ASSOC);
+    $count = $query->fetchAll(PDO:: FETCH_ASSOC);
 
-    $link_id = '';
-    $total_linkId = $query->rowCount();
-    $row_num = 0;
+    /* get Executable details (run/compile both) irrespective of build user) */
 
-    foreach($result as $row){
-        $row_num++;
-        if ($row_num <= $total_linkId - 1){
-            $link_id = $link_id . $row['link_id'] . ",";
-        } else {
-            $link_id = $link_id . $row['link_id'];
-        }
-    }
-
-    $sql = "SELECT DISTINCT xl.uuid as Uuid,                                
+    $sql= "
+        SELECT DISTINCT xl.uuid as Uuid,                                
         xl.date as Date,                                        
         xl.link_program as LinkProgram,                         
         xl.exit_code as ExitCode,
         xl.build_user as BuildUser,
         xl.exec_path as ExecPath
-        FROM xalt_link xl 
-        WHERE xl.link_id IN ($link_id) AND
+        FROM xalt_link xl ,  join_link_object jlo , xalt_object xo 
+        WHERE jlo.obj_id = xo.obj_id AND
+        xl.link_id = jlo.link_id AND
+        xo.syshost='$sysHost' AND 
+        xo.module_name LIKE '$moduleName' AND
         xl.date BETWEEN '$startDate 00:00:00' AND '$endDate 23:59:59' AND
         SUBSTRING_INDEX(xl.exec_path, '/', -1) = '$exec' 
         ORDER BY Date desc
-        ";
+        LIMIT $offset, $rec_limit
+        ;";
 
     $query = $conn->prepare($sql);
     $query->execute();
@@ -115,8 +132,9 @@ try {
         {\"v\":\"" . $row['ExitCode'] . "\",\"f\":null},
         {\"v\":\"" . $row['BuildUser'] . "\",\"f\":null},
         {\"v\":" . $r[0]['JobRun'] . ",\"f\":null},
-        {\"v\":\"" . $row['Uuid'] . "\",\"f\":null}
-        ]}";
+        {\"v\":\"" . $row['Uuid'] . "\",\"f\":null},
+        {\"v\":\"" . $count[0]['count'] . "\",\"f\":null}
+        ]}";                                              /* count for pagination */
         } else {
             echo "{\"c\":[
         {\"v\":\"" . $execPath . "\",\"f\":null},
