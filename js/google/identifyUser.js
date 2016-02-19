@@ -113,19 +113,22 @@ function gTi1(sysHost, startDate, endDate,objPath, execName, user, query) {     
             var row = selection[0].row;
             var col = selection[0].column;
             var exec = TableData.getValue(row,0);
+            var page = 0;                         /* pagination changes */
 
-            gTi2(sysHost, startDate, endDate, objPath, user, exec, query);    /* Get Exec Detail*/
+            gTi2(sysHost, startDate, endDate, objPath, user, exec, query, page); /* Get Exec Detail*/
         }
     }
 }
 
-function gTi2(sysHost, startDate, endDate,objPath, user, exec, query) {        /* Get Exec Detail*/
+function gTi2(sysHost, startDate, endDate,objPath, user, exec, query, page) {   /* Get Exec Detail*/
 
-    console.log(user + exec);
+    console.log(user + exec + page);
+
     var jsonTableData = $.ajax
         ({url:"include/identifyExecDetail.php",
-         data: "sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" 
-         + endDate + "&objPath=" + objPath + "&user=" + user + "&exec=" + exec + "&query=" + query,
+         data: "sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate + 
+         "&objPath=" + objPath + "&user=" + user + "&exec=" + exec + "&query=" + query + 
+         "&page=" + page,
          datatype: "json", async: false
          }).responseText;
 
@@ -145,10 +148,19 @@ function gTi2(sysHost, startDate, endDate,objPath, user, exec, query) {        /
 
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);
-        var table = makeTable(TableData, div_id);
+        var table = makeExecDetail(TableData, div_id, page);
 
         // Add our Actions handler.
         google.visualization.events.addListener(table, 'select', selectHandler);
+
+        // google.visualization.table exposes a 'page' event.
+        google.visualization.events.addListener(table, 'page', myPageEventHandler);
+
+        function myPageEventHandler(e) {
+            page = e['page'];
+            /* get executable details */
+            gTi2(sysHost, startDate, endDate, objPath, user, exec, query, page);
+        }
 
         function selectHandler() {
 
@@ -289,18 +301,34 @@ function gTi6(runId) {               /* get object at runtime */
     }
 }
 
-function makeTable(TableData, div_id) {
+function makeExecDetail(TableData, div_id, page) {
 
     var tab_options = {showRowNumber: true,
-        height: '50%',
-        width: '100%',
-        page: 'enable',
-        pageSize: '10',
-        allowHtml: true,
-        alternatingRowStyle: true
+        height: '100%', width: '100%',
+        page: 'enable', pageSize: '10', startPage: parseInt(page),
+        pagingSymbols: {prev: ['< prev'],next: ['next >']},
+        allowHtml: true, alternatingRowStyle: true
     }
     // Instantiate and Draw our Table
     var table = new google.visualization.Table(document.getElementById(div_id));
+
+    table.clearChart();
+    table.draw(TableData, tab_options);
+    return (table);
+}
+
+function makeTable(TableData, div_id) {
+
+    var tab_options = {showRowNumber: true,
+        height: '100%', width: '100%',
+        page: 'enable', pageSize: '10',
+        pagingSymbols: {prev: ['< prev'],next: ['next >']},
+        allowHtml: true, alternatingRowStyle: true
+    }
+    // Instantiate and Draw our Table
+    var table = new google.visualization.Table(document.getElementById(div_id));
+
+    table.clearChart();
     table.draw(TableData, tab_options);
     return (table);
 }
