@@ -35,40 +35,13 @@ try {
     }
 
     /* instead of using offset we need to use rec_limit there is no other way 
-     * to do this with google visualization
-     * */
+     * to do this with google visualization */
 
     if ($page == 0){
         $offset = 0;
     } else {
         $rec_limit = 11 * ($page + 1); 
     }
-    /* get total number of records fetched by sql for pagination 
-     * sadly google visualization has no support for total number of pages. 
-     * */
-
-    /* $sql= "
-        SELECT count(*) as count
-        FROM xalt_link xl 
-        INNER JOIN (
-            SELECT DISTINCT jlo.link_id 
-            FROM join_link_object jlo 
-            INNER JOIN xalt_object xo ON (jlo.obj_id = xo.obj_id)
-            WHERE 
-            xo.syshost='$sysHost' AND 
-            xo.module_name LIKE '$moduleName'
-        ) 
-        ka ON ka.link_id = xl.link_id 
-        WHERE 
-        xl.date BETWEEN '$startDate 00:00:00' AND '$endDate 23:59:59' AND
-        SUBSTRING_INDEX(xl.exec_path, '/', -1) = '$exec' 
-        ORDER BY Date desc
-        ;";
-
-    $query = $conn->prepare($sql);
-    $query->execute();
-    $count = $query->fetchAll(PDO:: FETCH_ASSOC);
-     */
 
     /* get Executable details (run/compile both) irrespective of build user) */
 
@@ -136,7 +109,6 @@ try {
         {\"v\":" . $r[0]['JobRun'] . ",\"f\":null},
         {\"v\":\"" . $row['Uuid'] . "\",\"f\":null}
         ]}";
-            /* {\"v\":\"" . $count[0]['count'] . "\",\"f\":null}     /* count for pagination */
         } else {
             echo "{\"c\":[
         {\"v\":\"" . $execPath . "\",\"f\":null},
