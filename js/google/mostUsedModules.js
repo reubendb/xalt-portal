@@ -259,6 +259,7 @@ function gT3(sysHost, startDate, endDate, module, version, user, exec, page) {  
 
         // google.visualization.table exposes a 'page' event.
         google.visualization.events.addListener(table, 'page', myPageEventHandler);
+
         function myPageEventHandler(e) {
             page = e['page'];
             /* get executable details */
