@@ -238,14 +238,6 @@ function gT3(sysHost, startDate, endDate, module, version, user, exec, page) {  
 
     var div_id = 'exec_detail_div';
 
-    /* No matter what you do LIFE gets in the way !! there is no option in google visualization 
-     * to give total number pages commenting out total pages logic for future reference. 
-     * */
-    /* Get total number of records for pagination- JSON LastRow > LastArray Element Value */
-    // var jTd = JSON.parse(jsonTableData);           /* jTd ~ jsonTableData */
-    // var lRa = jTd.rows[jTd.rows.length - 1]['c'];  /* lRa ~ lastRowArray */ 
-    // var totalRec = lRa[lRa.length - 1]['v'];       /* Last Element Value */
-
     // List ids to hide
     var idsToHide = ['lblExecDetailRow', 'lblExecDetailList', 'exec_detail_div', 
         'lblRunDetail','run_detail_div', 'lblObj', 'obj_div', 
@@ -411,7 +403,7 @@ function gT7(runId) {               /* get objects at runtime */
 function drawExecDetail(TableData, div_id, page) {
 
     var tab_options = {title: 'Table View', showRowNumber: true,
-        width: '100%', hieght: '50%', page: 'enable',
+        width: '100%', hieght: '100%', page: 'enable',
         pageSize: '10', startPage: parseInt(page), 
         pagingSymbols: {prev: ['< prev'],next: ['next >']},
         allowHtml: true, alternatingRowStyle: true
@@ -427,7 +419,7 @@ function drawExecDetail(TableData, div_id, page) {
 function drawTable(TableData, div_id) {
 
     var tab_options = {title: 'Table View', showRowNumber: true,
-        width: '100%', hieght: '50%',page: 'enable',
+        width: '100%', hieght: '100%',page: 'enable',
         pageSize: '10',
         pagingSymbols: {prev: ['< prev'],next: ['next >']},
         allowHtml: true, alternatingRowStyle: true}
