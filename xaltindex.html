@@ -48,34 +48,20 @@
 
                 <div class="col-md-3 left_col">
                     <div class="left_col scroll-view">
-
-                        <div class="navbar nav_title" style="border: 0;">
-                         <a href="xaltindex.html" class="site_title"><i class="fa fa-space-shuttle"></i> <span>XALT-Portal</span></a>
-                     </div>
-                     <div class="clearfix"></div>
-
-
-                     <!-- menu prile quick info -->
-                     <div class="profile">
-                        <div class="profile_pic">
-                            <img src="images/xalt-image.png" alt="..." class="img-thumbnail profile_img">
+                        <div class="profile">
+                            <div class="profile_pic">
+                                <a href="xaltindex.html" class="site_title"><img src="images/xalt-image.png" alt="..." class="img-thumbnail profile_img"></a>
+                            </div>
+                            <div class="clearfix"></div>
                         </div>
-                        <div class="profile_info">
-                            </br>
-                            <h2>XALT! Metrics on Demand</h2>
-                        </div>
-                    </div>
-                    <!-- /menu prile quick info -->
 
-                    <br />
-
-                    <!-- sidebar menu -->
-                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-
-                        <div class="menu_section">
-                            <h3>General</h3>
-                            <ul class="nav side-menu">
-                                <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+                        <!-- sidebar menu -->
+                        <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                            <br />
+                            <div class="menu_section">
+                                <h3>General</h3>
+                                <ul class="nav side-menu">
+                                    <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu" style="display: none">
                                         <li><a href="xaltindex.html">Dashboard</a>
                                         </li>
@@ -86,24 +72,24 @@
                                         <li><a href="xalt_identify.html">Identify User</a>
                                         </li>
                                     </ul>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="menu_section">
-                            <ul class="nav side-menu">
-                                <li><a><i class="fa fa-bug"></i> Additional Pages <span class="fa fa-chevron-down"></span></a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="menu_section">
+                                <ul class="nav side-menu">
+                                    <li><a><i class="fa fa-bug"></i> Additional Pages <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu" style="display: none">
                                         <li><a href="https://github.com/Fahey-McLay/xalt" target="_blank">Download from Github</a>
                                         </li>
                                         <li><a href="https://sourceforge.net/projects/xalt" target="_blank">Download form Sourceforge</a>
                                         </li>
                                     </ul>
-                                </li>
-                                
-                            </ul>
-                        </div>
+                                    </li>
 
-                    </div>
+                                </ul>
+                            </div>
+
+                        </div>
                     <!-- /sidebar menu -->
 
                     <!-- /menu footer buttons -->
@@ -153,12 +139,6 @@
                                     </div>
                                     <div class="col-md-6">
                                     </div>
-                                </div>
-                                <div class="x_content">
-                                    <p align="justify"> Developed through a collaborative effort of the National Institute for Computational Sciences (NICS) and Texas Advanced Computing Center (TACC), XALT is a mechanism for following users' jobs and environments on a computer cluster. It provides a census of libraries and applications and automatically filters user issues, yielding exactly the type of job tracking information that most computing centers need or want.
-                                    </p>
-                                    <p align="justify"> XALT reveals information such as the number of users and projects associated with a particular library or execuatable; whether a library maintained by a center is applied (and how often); and whether center-provided packages are used more, or less, than user-installed packages. XALT enables computing centers to notify users, after the fact, that a library was buggy; provide information on how an execuatable was build; catch compile time/run time differences; and indentify applications that are using deprecated libraries or just identify old binaries. After an alpha release in summer 2014 with many aplha testers, as well as a beta release on November 10, 2014, XALT is now in production use on Stampede, Darter, and Keeneland supercomputers. It has been ported to the Nautilus supercomputer but it is not yet in production. XALT is a new generation of user environment tracking and problem detection based on the Automatic Library Tracking Database (NICS) and Lariat (TACC) prototypes.
-                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -395,6 +375,7 @@ $(document).ajaxStop(function() {
             dateLimit: {days: 365
             },showDropdowns: true,showWeekNumbers: true,timePicker: false,timePickerIncrement: 1,timePicker12Hour: true,ranges: {
             'This Year': [moment().startOf('year'), moment().endOf('month')],
+            'Last Year': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')],
             'Today': [moment(), moment()],
             'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
             'Last 7 Days': [moment().subtract(6, 'days'), moment()],
