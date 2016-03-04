@@ -47,30 +47,17 @@
 
                 <div class="col-md-3 left_col">
                     <div class="left_col scroll-view">
-
-                        <div class="navbar nav_title" style="border: 0;">
-                            <a href="xaltindex.html" class="site_title"><i class="fa fa-space-shuttle"></i> <span>XALT-Portal</span></a>
-                        </div>
-                        <div class="clearfix"></div>
-
-                        <!-- menu prile quick info -->
                         <div class="profile">
                             <div class="profile_pic">
-                                <img src="images/xalt-image.png" alt="..." class="img-thumbnail profile_img">
+                                <a href="xaltindex.html" class="site_title"> <img src="images/xalt-image.png" alt="..." class="img-thumbnail profile_img"></a>
                             </div>
-                            <div class="profile_info">
-                                </br>
-                                <h2>XALT! Metrics on Demand</h2>
-                            </div>
+                            <div class="clearfix"></div>
                         </div>
-                        <!-- /menu prile quick info -->
-
-                        <br />
 
                         <!-- sidebar menu -->
                         <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-
                             <div class="menu_section">
+                                <br />
                                 <h3>General</h3>
                                 <ul class="nav side-menu">
                                     <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
@@ -141,31 +128,17 @@
                     <div class="">
                         <div class="page-title">
                             <div class="title_left">
-                                <h3>Identify User</h3>
+                                <h3>Identify User<small> Get User History </small></h3>
                             </div>
                         </div>
                         <div class="clearfix"></div>
 
                         <div class="row">
-
-                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                <div class="x_panel" style="height:80px;">
-                                    <div class="x_title">
-                                        <div class="clearfix"></div>
-                                    </div> <!-- x_title -->
-                                    <p align="justify"> Results presented here are taken from XALT database at National Institute for Computational Sciences at Oak Ridge National Laboratory. XALT went live on November 2014 the data presented here is realtime.rmation that most computing centers need or want.
-                                    </p>
-                                </div> <!-- x_panel -->
-                            </div>
-                        </div> <!-- row -->
-
-                        <div class="row">
-
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="dashboard_graph x_panel">
                                     <div class="x_title">
                                         <div class="clearfix"></div>
-                                        <p align="justify"> <h4>Indentify User <small>Who used a particular library</small></h4> </p>
+                                        <p align="justify"> Select syshost and date range for your queries. Along with what Library (OR) Executable you want to search.</p>
                                     </div> <!-- x_title -->
 
                                     <form id="demo-form" class="form-inline" data-parsley-validate>
@@ -464,6 +437,7 @@
                     dateLimit: {days: 365},
                     showDropdowns: true,showWeekNumbers: true,timePicker: false,timePickerIncrement: 1,timePicker12Hour: true,ranges: 
                     {'This Year': [moment().startOf('year'), moment().endOf('month')],
+                    'Last Year': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')],
                     'Today': [moment(), moment()],
                     'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
                     'Last 7 Days': [moment().subtract(6, 'days'), moment()],
