@@ -398,10 +398,8 @@ function makeExecDetail(TableData, div_id, page) {
 function makeTable(TableData, div_id) {
 
     var tab_options = {title: 'Table View',showRowNumber: true,
-        height: '100%', width: '100%',
-        allowHtml: true, alternatingRowStyle: true,
-        page: 'enable', pageSize: '10',
-        pagingSymbols: {prev: ['< prev'], next: ['next >']}
+        height: 200, width: '100%',
+        allowHtml: true, alternatingRowStyle: true
     }
 
     // Instantiate and Draw our Table
