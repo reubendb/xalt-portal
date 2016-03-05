@@ -25,8 +25,7 @@ function jobSubmitted(sysHost, startDate, endDate) {
 
         //Define Chart Options
         var options = {title: 'Jobs Submitted',
-            pieHole: 0.4,
-            sliceVisibilityThreshold: 0.4/8,
+            pieHole: 0.4
         };
 
         // Instantiate and draw chart
