@@ -8,9 +8,12 @@ try {
     $conn = new PDO("mysql:host=$servername;dbname=$db", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $sql = "SELECT DISTINCT(build_syshost) AS syshost  
-            FROM xalt_link
-            ORDER BY syshost ASC";
+    $sql = "
+        SELECT DISTINCT(build_syshost) AS syshost, count(build_syshost) as count 
+        FROM xalt_link 
+        GROUP BY syshost 
+        ORDER BY count desc;
+    ";
 
     $query = $conn->prepare($sql);
     $query->execute();
