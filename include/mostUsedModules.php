@@ -23,27 +23,25 @@ try {
     if ($q == 1) {  /* if called from xalt_usage.html */
 
         $sql="
-            SELECT DISTINCT SUBSTRING_INDEX(xo.module_name,'/',1) AS Modules,
-                COUNT(distinct ka.link_id) as Count
-                FROM xalt_object xo           
-                INNER JOIN 
-                (SELECT distinct jlo.obj_id, jlo.link_id 
-                FROM join_link_object jlo 
-                INNER JOIN xalt_link xl   ON (jlo.link_id = xl.link_id)
-                WHERE 
-                xl.build_syshost='$sysHost' AND
-                xl.date BETWEEN  '$startDate 00:00:00' AND '$endDate 23:59:59'
-            ) 
-            ka ON ka.obj_id = xo.obj_id
-            WHERE xo.syshost='$sysHost' AND                             
+            SELECT DISTINCT SUBSTRING_INDEX(xo.module_name,'/',1) as Modules, 
+            COUNT(DISTINCT xl.link_id) as Count, 
+            COUNT(DISTINCT xl.build_user) as UniqueUser 
+            FROM xalt_object xo, join_link_object jlo, xalt_link xl 
+            WHERE jlo.link_id = xl.link_id AND 
+            xl.build_syshost='$sysHost' AND
+            xl.date BETWEEN '$startDate 00:00:00' AND '$endDate 23:59:59' AND 
+            jlo.obj_id = xo.obj_id AND 
+            xo.syshost = '$sysHost' AND
             xo.module_name IS NOT NULL
-            GROUP BY Modules                                             
-            ORDER BY Modules
-            ";
+            GROUP BY Modules
+            ORDER BY Modules;
+        ";
 
         $columns = "
     {\"id\":\"\",\"label\":\"Modules\",\"pattern\":\"\",\"type\":\"string\"}, 
-    {\"id\":\"\",\"label\":\"Count\",\"pattern\":\"\",\"type\":\"number\"}";
+    {\"id\":\"\",\"label\":\"Count\",\"pattern\":\"\",\"type\":\"number\"},
+    {\"id\":\"\",\"label\":\"UniqueUser\",\"pattern\":\"\",\"type\":\"number\"}
+    ";
 
     } else if ($q == 2) {      /* Go deep to look for versions xalt_usage.html */
 
@@ -98,7 +96,8 @@ try {
             if ($q == 1) {
                 echo "{\"c\":[
             {\"v\":\"" . $row['Modules'] . "\",\"f\":null},
-            {\"v\":" . $row['Count'] . ",\"f\":null}
+            {\"v\":" . $row['Count'] . ",\"f\":null},
+            {\"v\":" . $row['UniqueUser'] . ",\"f\":null}
             ]}";
             } else if ($q ==2) {
                 echo "{\"c\":[
@@ -112,7 +111,8 @@ try {
             if ($q == 1) {
                 echo "{\"c\":[
             {\"v\":\"" . $row['Modules'] . "\",\"f\":null},
-            {\"v\":" . $row['Count'] . ",\"f\":null}
+            {\"v\":" . $row['Count'] . ",\"f\":null},
+            {\"v\":" . $row['UniqueUser'] . ",\"f\":null}
             ]}, ";
             } else if ($q == 2) {
                 echo "{\"c\":[
