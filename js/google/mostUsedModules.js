@@ -46,7 +46,7 @@ function mostUsedModules(sysHost, startDate, endDate) {
 
         // Create our datatable out of Json Data loaded from php call.
         var div_id = 'mod2_div';
-        var table = drawTable(ChartData, div_id);
+        var table = drawTable(ChartData, div_id, count);
         document.getElementById("lblMod").style.visibility = 'visible';
 
         // Add listener (Get Version Details).
@@ -103,6 +103,7 @@ function gT0(syshost, startDate, endDate, module) {         /* List version of g
     hideAllDivs(idsToHide);
 
     var count = checkJsonData(jsonTableData);             /* if no data is returned do Nothing!! */
+
     if (count != 0) {
 
         document.getElementById("lblModVer0").style.visibility = 'visible';
@@ -111,7 +112,7 @@ function gT0(syshost, startDate, endDate, module) {         /* List version of g
 
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);
-        var table = drawTable(TableData, div_id);
+        var table = drawTable(TableData, div_id, count);
 
         // Add our Actions handler.
         google.visualization.events.addListener(table, 'select', selectHandler);
@@ -160,7 +161,7 @@ function gT1(sysHost, startDate, endDate, module, version) {      /* get list of
         
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);
-        var table = drawTable(TableData, div_id);
+        var table = drawTable(TableData, div_id, count);
 
         // Add our Actions handler.
         google.visualization.events.addListener(table, 'select', selectHandler);
@@ -206,7 +207,7 @@ function gT2(sysHost, startDate, endDate, module, version, user) {       /* get 
 
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);
-        var table = drawTable(TableData, div_id);
+        var table = drawTable(TableData, div_id, count);
 
         // Add our Actions handler.
         google.visualization.events.addListener(table, 'select', selectHandler);
@@ -306,7 +307,7 @@ function gT4(uuid) {               /* get job run details */
 
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);
-        var table = drawTable(TableData, div_id);
+        var table = drawTable(TableData, div_id, count);
 
         // Add our Actions handler.
         google.visualization.events.addListener(table, 'select', selectHandler);
@@ -346,7 +347,7 @@ function gT5(uuid) {               /* get object information*/
 
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);
-        var table = drawTable(TableData, div_id);
+        var table = drawTable(TableData, div_id, count);
 
     }
 }
@@ -373,7 +374,7 @@ function gT6(runId) {               /* get runtime env information*/
 
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);
-        var table = drawTable(TableData, div_id);
+        var table = drawTable(TableData, div_id, count);
     }
 }
 
@@ -399,7 +400,7 @@ function gT7(runId) {               /* get objects at runtime */
 
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);
-        var table = drawTable(TableData, div_id);
+        var table = drawTable(TableData, div_id, count);
     }
 }
 
@@ -425,7 +426,7 @@ function gT8(uuid) {               /* get fuctions called */
 
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);
-        var table = drawTable(TableData, div_id);
+        var table = drawTable(TableData, div_id, count);
 
     }
 }
@@ -446,14 +447,28 @@ function drawExecDetail(TableData, div_id, page) {
     return(table);
 }
 
-function drawTable(TableData, div_id) {
+function drawTable(TableData, div_id, count) {
 
-    var tab_options = {title: 'Table View', showRowNumber: true,
-        width: '100%', hieght: '100%',page: 'enable',
-        pageSize: '10',
-        pagingSymbols: {prev: ['< prev'],next: ['next >']},
-        allowHtml: true, alternatingRowStyle: true}
+    var tab_options;
+    if (count > 10){
+        tab_options = {title: 'Table View',
+            showRowNumber: true,
+            height: 260,
+            width: '100%',
+            allowHtml: true,
+            alternatingRowStyle: true
+        }
+    } else {
+        tab_options = {title: 'Table View',
+            showRowNumber: true,
+            height: '100%',
+            width: '100%',
+            allowHtml: true,
+            alternatingRowStyle: true,
+            page: 'enable', pageSize: '10'
+        }
 
+    }
     // Instantiate and Draw our Table
     var table = new google.visualization.Table(document.getElementById(div_id));
 
