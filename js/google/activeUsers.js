@@ -28,12 +28,12 @@ function callActiveUsers(sysHost, startDate, endDate) {
 
         // Define Chart Options .
         var options = {title: 'Active Users',
-            chartArea: {width: '50%'},
+            chartArea: {width: '50%', height:"50%", left: "auto" },
             hAxis: {title: 'Number of Users',minValue: 0},
             vAxis: {title: 'Month'}};
 
         // Instantiate and draw chart.
-        var chart = new google.visualization.BarChart(document.getElementById('active_users_div'));
+        var chart = new google.visualization.ColumnChart(document.getElementById('active_users_div'));
         chart.draw(barChartData, options);
     }
     if (count == 0){
