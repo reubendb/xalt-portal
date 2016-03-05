@@ -180,8 +180,8 @@
                     </div> <!-- row -->
 
                     <div class="row"> 
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                            <div class="x_panel fixed_height_320">
+                        <div class="col-md-6 col-md-6 col-xs-12">
+                            <div class="x_panel">
                                 <div class="x_title">
                                     <h2>Active Users</h2>
                                     <ul class="nav navbar-right panel_toolbox">
@@ -191,13 +191,13 @@
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="x_content">
-                                    <div id="active_users_div" style="visibility: hidden;"></div>
+                                    <div id="active_users_div" style="visibility: hidden; height: 400px;"></div>
                                 </div>
                             </div>
                         </div> <!-- col-md -->
 
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                            <div class="x_panel fixed_height_320">
+                        <div class="col-md-6 col-md-6 col-xs-12">
+                            <div class="x_panel">
                                 <div class="x_title">
                                     <h2>Jobs Submitted </h2>
                                     <ul class="nav navbar-right panel_toolbox">
@@ -207,13 +207,17 @@
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="x_content">
-                                    <div id="jobs_sub_div" style="visibility: hidden;"></div>
+                                    <div id="jobs_sub_div" style="visibility: hidden; height: 400px;"></div>
                                 </div>
                             </div>
                         </div> <!-- col-md -->
 
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                            <div class="x_panel fixed_height_320">
+
+                    </div> <!-- row -->
+
+                    <div class="row">
+                        <div class="col-md-6 col-md-6 col-xs-12">
+                            <div class="x_panel">
                                 <div class="x_title">
                                     <h2>Total SUs Charged </h2>
                                     <ul class="nav navbar-right panel_toolbox">
@@ -223,15 +227,12 @@
                                 </div>
 
                                 <div class="x_content">
-                                    <div id="total_su_div" style="visibility: hidden;"></div>
+                                    <div id="total_su_div" style="visibility: hidden; height: 550px;"></div>
                                 </div> 
                             </div>
                         </div> <!-- col-md -->
 
-                    </div> <!-- row -->
-
-                    <div class="row">
-                        <div class="col-md-10 col-md-8 col-xs-12"> 
+                        <div class="col-md-06 col-md-6 col-xs-12"> 
                             <div class="x_panel">
                                 <div class="x_title">
                                     <h2>Top Ten Executables </h2>
@@ -242,7 +243,7 @@
                                 </div>
 
                                 <div class="x_content">
-                                    <div id="ten_exec_div" style="visibility: hidden; height: 500px;"></div>
+                                    <div id="ten_exec_div" style="visibility: hidden; height: 550px;"></div>
                                 </div> 
                             </div>
                         </div> <!-- col-md -->
@@ -345,15 +346,24 @@
 
 <!-- loading spinner starts -->
 <script type="text/javascript">
-    $(document).ajaxStart(function() {
-            $('#spinner').show();
-            });
+    $(document).ajaxStart(function() {$('#spinner').show();}); 
+    $(document).ajaxStop(function() {setTimeout("$('#spinner').hide()", 1000);});
+</script>
+<!-- loading spinner ends --> 
 
-$(document).ajaxStop(function() {
-        setTimeout("$('#spinner').hide()", 1000);
-        });
-    </script>
-    <!-- loading spinner ends --> 
+<!-- Google Analytics --> 
+
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-74718719-1', 'auto');
+    ga('send', 'pageview');
+
+</script>
+<!-- Google Analytics --> 
 
 <!-- datepicker -->
 <script type="text/javascript">
