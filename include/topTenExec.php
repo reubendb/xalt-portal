@@ -36,12 +36,12 @@ try {
         WHEN LOWER(SUBSTRING_INDEX(xalt_run.exec_path,'/',-1)) REGEXP 'gene_d' then 'GENE*'
         WHEN LOWER(SUBSTRING_INDEX(xalt_run.exec_path,'/',-1)) REGEXP 'abinit' then 'ABINIT*'
         ELSE SUBSTRING_INDEX(xalt_run.exec_path,'/',-1) END 
-        AS execName, LOG10(ROUND(SUM(run_time*num_cores/3600))) as totalcput, 
-        LOG10(COUNT(date)) as n_jobs, COUNT(DISTINCT(user)) as n_users
+        AS execName, ROUND(SUM(run_time*num_cores/3600)) as totalcput, 
+        COUNT(date) as n_jobs, COUNT(DISTINCT(user)) as n_users
         FROM xalt_run 
         WHERE syshost = '$sysHost' 
         AND date BETWEEN '$startDate 00:00:00' AND '$endDate 23:59:59' 
-        GROUP BY execName ORDER BY totalcput DESC 
+        GROUP BY execName ORDER BY totalcput DESC, n_jobs DESC, n_users Desc 
         limit 10;
     ";
 
