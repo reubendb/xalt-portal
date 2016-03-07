@@ -44,7 +44,7 @@ function compilerMostUsed(sysHost, startDate, endDate) {
 
         // Create our datatable out of Json Data loaded from php call.
         var div_id = 'comp2_div';
-        var table = makeTable(ChartData, div_id);
+        var table = makeTable(ChartData, div_id, count);
         document.getElementById("lblComp").style.visibility = 'visible'; 
 
         // Add our selection handler.
@@ -105,7 +105,7 @@ function gTc1(sysHost, startDate, endDate, linkProgram) {         /* Get user li
 
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);
-        var table = makeTable(TableData, div_id);
+        var table = makeTable(TableData, div_id, count);
 
         // Add our Actions handler.
         google.visualization.events.addListener(table, 'select', selectHandler);
@@ -152,7 +152,7 @@ function gTc2(sysHost, startDate, endDate, linkProgram,user) {     /* get exec l
 
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);
-        var table = makeTable(TableData, div_id);
+        var table = makeTable(TableData, div_id, count);
 
         // Add our Actions handler.
         google.visualization.events.addListener(table, 'select', selectHandler);
@@ -252,7 +252,7 @@ function gTc4(uuid) {         /* get run details */
 
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);
-        var table = makeTable(TableData, div_id);
+        var table = makeTable(TableData, div_id, count);
 
         // Add our Actions handler.    *** REMOVE this event handler might not be required ***
         google.visualization.events.addListener(table, 'select', selectHandler);
@@ -294,7 +294,7 @@ function gTc5(uuid) {               /* get object information */
 
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);
-        var table = makeTable(TableData, div_id);
+        var table = makeTable(TableData, div_id, count);
     }
 }
 
@@ -321,7 +321,7 @@ function gTc6(runId) {               /* get runtime env information */
 
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);
-        var table = makeTable(TableData, div_id);
+        var table = makeTable(TableData, div_id, count);
     }
 }
 
@@ -348,7 +348,7 @@ function gTc7(runId) {               /* get objects at runtime */
 
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);
-        var table = makeTable(TableData, div_id);
+        var table = makeTable(TableData, div_id, count);
     }
 }
 
@@ -375,7 +375,7 @@ function gTc8(uuid) {               /* get function called */
 
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);
-        var table = makeTable(TableData, div_id);
+        var table = makeTable(TableData, div_id, count);
     }
 }
 
@@ -395,11 +395,26 @@ function makeExecDetail(TableData, div_id, page) {
     return (table);
 }
 
-function makeTable(TableData, div_id) {
+function makeTable(TableData, div_id, count) {
 
-    var tab_options = {title: 'Table View',showRowNumber: true,
-        height: 200, width: '100%',
-        allowHtml: true, alternatingRowStyle: true
+    var tab_options;
+    if (count > 10){                          // More records enable scroll
+        tab_options = {title: 'Table View',
+            showRowNumber: true,
+            height: 260,
+            width: '100%',
+            allowHtml: true,
+            alternatingRowStyle: true
+        }
+    } else {                                // < 10 records disable scroll
+        tab_options = {title: 'Table View',
+            showRowNumber: true,
+            height: '100%',
+            width: '100%',
+            allowHtml: true,
+            alternatingRowStyle: true,
+            page: 'enable', pageSize: '10'
+        }
     }
 
     // Instantiate and Draw our Table
