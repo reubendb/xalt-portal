@@ -35,9 +35,8 @@ function mostUsedModules(sysHost, startDate, endDate) {
         // Define Chart Options .
         var options = {title: 'Modules Usage',
             chartArea:{width: '90%'},
-            legend: 'none',
             hAxis:{title: 'Modules'},
-            vAxis:{title: 'Count', format: 'short', minValue: 0}
+            vAxis:{title: 'Count', scaleType: 'log'}
         };
 
         // Instantiate and draw chart.
