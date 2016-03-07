@@ -6,11 +6,9 @@ $sysHost   = $_GET["sysHost"];
 $startDate = $_GET["startDate"];
 $endDate   = $_GET["endDate"];
 
-
 try {
 
     include (__DIR__ ."/conn.php");
-
 
     $conn = new PDO("mysql:host=$servername;dbname=$db", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
