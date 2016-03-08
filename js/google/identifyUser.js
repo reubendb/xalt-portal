@@ -42,7 +42,7 @@ function identifyUser(sysHost, startDate, endDate, objPath, execName, query) {
         }
         // Create our data table out of JSON data loaded from server.
         var TableData = new google.visualization.DataTable(jsonTableData);
-        var table = makeTable(TableData, div_id);
+        var table = makeTable(TableData, div_id, count);
 
         // Add event handler 
         google.visualization.events.addListener(table, 'select', selectHandler);
@@ -101,7 +101,7 @@ function gTi1(sysHost, startDate, endDate,objPath, execName, user, query) {     
 
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);
-        var table = makeTable(TableData, div_id);
+        var table = makeTable(TableData, div_id, count);
 
         // Add our Actions handler.
         google.visualization.events.addListener(table, 'select', selectHandler);
@@ -203,7 +203,7 @@ function gTi3(uuid) {         /* get run details */
 
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);
-        var table = makeTable(TableData, div_id);
+        var table = makeTable(TableData, div_id, count);
 
         // Add our Actions handler.
         google.visualization.events.addListener(table, 'select', selectHandler);
@@ -245,7 +245,7 @@ function gTi4(uuid) {               /* get object information */
 
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);
-        var table = makeTable(TableData, div_id);
+        var table = makeTable(TableData, div_id, count);
     }
 }
 
@@ -271,7 +271,7 @@ function gTi5(runId) {               /* get runtime env information*/
 
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);
-        var table = makeTable(TableData, div_id);
+        var table = makeTable(TableData, div_id, count);
     }
 }
 
@@ -298,7 +298,7 @@ function gTi6(runId) {               /* get object at runtime */
 
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);
-        var table = makeTable(TableData, div_id);
+        var table = makeTable(TableData, div_id, count);
     }
 }
 
@@ -325,7 +325,7 @@ function gTi7(uuid) {               /* get functions called */
 
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);
-        var table = makeTable(TableData, div_id);
+        var table = makeTable(TableData, div_id, count);
     }
 }
 
@@ -345,13 +345,26 @@ function makeExecDetail(TableData, div_id, page) {
     return (table);
 }
 
-function makeTable(TableData, div_id) {
+function makeTable(TableData, div_id, count) {
 
-    var tab_options = {showRowNumber: true,
-        height: '100%', width: '100%',
-        page: 'enable', pageSize: '10',
-        pagingSymbols: {prev: ['< prev'],next: ['next >']},
-        allowHtml: true, alternatingRowStyle: true
+    var tab_options;
+    if (count > 10){
+        tab_options = {title: 'Table View',
+            showRowNumber: true,
+            height: 260,
+            width: '100%',
+            allowHtml: true,
+            alternatingRowStyle: true
+        }
+    } else {
+        tab_options = {title: 'Table View',
+            showRowNumber: true,
+            height: '100%',
+            width: '100%',
+            allowHtml: true,
+            alternatingRowStyle: true,
+            page: 'enable', pageSize: '10'
+        }
     }
     // Instantiate and Draw our Table
     var table = new google.visualization.Table(document.getElementById(div_id));
