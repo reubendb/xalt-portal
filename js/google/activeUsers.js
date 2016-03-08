@@ -28,9 +28,9 @@ function callActiveUsers(sysHost, startDate, endDate) {
 
         // Define Chart Options .
         var options = {title: 'Active Users',
-            chartArea: {width: '50%', height:"50%", left: "auto" },
-            hAxis: {title: 'Number of Users',minValue: 0},
-            vAxis: {title: 'Month'}};
+            chartArea: {width: '60%', height:"50%", left: "auto" },
+            hAxis: {title: 'Month'},
+            vAxis: {title: 'Number of Users'}};
 
         // Instantiate and draw chart.
         var chart = new google.visualization.ColumnChart(document.getElementById('active_users_div'));
