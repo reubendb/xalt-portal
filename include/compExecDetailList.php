@@ -73,18 +73,15 @@ try {
         $row_num++;
         $execPath = wrapper($row['ExecPath'], 45);
 
-        /* start ++ check if exec used in a job */
         $uuid = '';
-        $uuid = $row['Uuid'];
-        $sql = "SELECT IF (
-            (SELECT COUNT(*) FROM 
-            xalt_run WHERE uuid = '$uuid' >= 1), 'true', 'false') 
-            AS JobRun ";
+        $uuid = $row['Uuid'];         //check if exec used in a job
+        $sql = "SELECT 
+            IF ((SELECT COUNT(*) FROM xalt_run 
+            WHERE uuid = '$uuid' >= 1), 'true', 'false') AS JobRun ";
 
         $q = $conn->prepare($sql);
         $q->execute();
         $r = $q->fetchAll(PDO:: FETCH_ASSOC);
-        /* ends -- */
 
         if ($row_num == $total_rows){
             echo "{\"c\":[
