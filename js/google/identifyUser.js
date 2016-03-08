@@ -44,19 +44,18 @@ function identifyUser(sysHost, startDate, endDate, objPath, execName, query) {
         var TableData = new google.visualization.DataTable(jsonTableData);
         var table = makeTable(TableData, div_id, count);
 
-        // Add event handler 
-        google.visualization.events.addListener(table, 'select', selectHandler);
-
         function selectHandler() {
-
             // grab details 
             var selection = table.getSelection();
             var row = selection[0].row;
             var col = selection[0].column;
             var user = TableData.getValue(row,0);
-
             gTi1(sysHost, startDate, endDate, objPath, execName, user, query);    /* Get Exec List */
         }
+
+        // Add event handler 
+        google.visualization.events.addListener(table, 'select', selectHandler);
+
     }
 }
 
@@ -103,20 +102,19 @@ function gTi1(sysHost, startDate, endDate,objPath, execName, user, query) {     
         var TableData = new google.visualization.DataTable(jsonTableData);
         var table = makeTable(TableData, div_id, count);
 
-        // Add our Actions handler.
-        google.visualization.events.addListener(table, 'select', selectHandler);
-
         function selectHandler() {
-
             // grab a few details before redirecting
             var selection = table.getSelection();
             var row = selection[0].row;
             var col = selection[0].column;
             var exec = TableData.getValue(row,0);
             var page = 0;                         /* pagination changes */
-
             gTi2(sysHost, startDate, endDate, objPath, user, exec, query, page); /* Get Exec Detail*/
         }
+
+        // Add our Actions handler.
+        google.visualization.events.addListener(table, 'select', selectHandler);
+
     }
 }
 
@@ -150,12 +148,6 @@ function gTi2(sysHost, startDate, endDate,objPath, user, exec, query, page) {   
         var TableData = new google.visualization.DataTable(jsonTableData);
         var table = makeExecDetail(TableData, div_id, page);
 
-        // Add our Actions handler.
-        google.visualization.events.addListener(table, 'select', selectHandler);
-
-        // google.visualization.table exposes a 'page' event.
-        google.visualization.events.addListener(table, 'page', myPageEventHandler);
-
         function myPageEventHandler(e) {
             page = e['page'];
             /* get executable details */
@@ -175,6 +167,13 @@ function gTi2(sysHost, startDate, endDate,objPath, user, exec, query, page) {   
             gTi4(uuid);       /* get object information */
             gTi7(uuid);       /* get functions called */
         }
+
+        // Add our Actions handler.
+        google.visualization.events.addListener(table, 'select', selectHandler);
+
+        // google.visualization.table exposes a 'page' event.
+        google.visualization.events.addListener(table, 'page', myPageEventHandler);
+
     }
 }
 
@@ -205,20 +204,20 @@ function gTi3(uuid) {         /* get run details */
         var TableData = new google.visualization.DataTable(jsonTableData);
         var table = makeTable(TableData, div_id, count);
 
-        // Add our Actions handler.
-        google.visualization.events.addListener(table, 'select', selectHandler);
-
         function selectHandler() {
             // grab a few details before redirecting
             var selection = table.getSelection();
             var row = selection[0].row;
             var col = selection[0].column;
             var runId = TableData.getValue(row,0);
-
             // get run details irrespective of who built the code
             gTi5(runId);          /* get run env detail */
             gTi6(runId);          /* get object at run time */
         }
+
+        // Add our Actions handler.
+        google.visualization.events.addListener(table, 'select', selectHandler);
+
     }
 }
 
