@@ -172,11 +172,15 @@ function gTc2(sysHost, startDate, endDate, linkProgram,user) {     /* get exec l
 function gTc3(sysHost, startDate, endDate, linkProgram, user, exec, page) {      /* get exec detail */
 
     console.log("Exec= " + exec);
+    var start = new Date().getTime();
 
     var jsonTableData = $.ajax
         ({url:"include/compExecDetailList.php", 
          data:  "sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate + 
          "&linkProgram=" + linkProgram + "&user=" +user + "&exec=" + exec + "&page=" + page,
+         success: function(){
+         var end = new Date().getTime();
+         console.log("seconds TAKEN: ", (end - start)/1000);},
          datatype: "json", async: false
          }).responseText;
 
