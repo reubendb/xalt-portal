@@ -15,7 +15,6 @@ function compilerMostUsed(sysHost, startDate, endDate) {
          dataType:"json", async: false
          }).responseText;
 
-
     // List ids to hide
     var idsToHide = ['lblCompUser0', 'comp3_div', 'lblCompUser1', 'lblCompExec0', 'lblCompExec1', 
         'comp4_div', 'lblCompExecRow', 'lblCompExecDetail0','comp5_div','lblCompRun0','comp6_div',
@@ -47,10 +46,6 @@ function compilerMostUsed(sysHost, startDate, endDate) {
         var table = makeTable(ChartData, div_id, count);
         document.getElementById("lblComp").style.visibility = 'visible'; 
 
-        // Add our selection handler.
-        google.visualization.events.addListener(chart, 'select', selectHandler);
-        google.visualization.events.addListener(table, 'select', selectTable);
-
         function selectHandler() {
             // grab a few details before redirecting
             var selection = chart.getSelection();
@@ -70,6 +65,10 @@ function compilerMostUsed(sysHost, startDate, endDate) {
 
             gTc1(sysHost, startDate, endDate, linkProgram);       /* Get user list  */ 
         }
+
+        // Add our selection handler.
+        google.visualization.events.addListener(chart, 'select', selectHandler);
+        google.visualization.events.addListener(table, 'select', selectTable);
     }
 }
 
@@ -107,9 +106,6 @@ function gTc1(sysHost, startDate, endDate, linkProgram) {         /* Get user li
         var TableData = new google.visualization.DataTable(jsonTableData);
         var table = makeTable(TableData, div_id, count);
 
-        // Add our Actions handler.
-        google.visualization.events.addListener(table, 'select', selectHandler);
-
         function selectHandler() {
 
             // grab a few details before redirecting
@@ -120,6 +116,9 @@ function gTc1(sysHost, startDate, endDate, linkProgram) {         /* Get user li
 
             gTc2(sysHost, startDate, endDate, linkProgram, user);  /* get exec list  */    
         }
+
+        // Add our Actions handler.
+        google.visualization.events.addListener(table, 'select', selectHandler);
     }
 }   
 
@@ -154,9 +153,6 @@ function gTc2(sysHost, startDate, endDate, linkProgram,user) {     /* get exec l
         var TableData = new google.visualization.DataTable(jsonTableData);
         var table = makeTable(TableData, div_id, count);
 
-        // Add our Actions handler.
-        google.visualization.events.addListener(table, 'select', selectHandler);
-
         function selectHandler() {
 
             // grab a few details before redirecting
@@ -168,6 +164,8 @@ function gTc2(sysHost, startDate, endDate, linkProgram,user) {     /* get exec l
 
             gTc3(sysHost ,startDate , endDate, linkProgram, user, exec, page); /* get exec detail  */
         }
+        // Add our Actions handler.
+        google.visualization.events.addListener(table, 'select', selectHandler);
     }
 }
 
@@ -201,17 +199,6 @@ function gTc3(sysHost, startDate, endDate, linkProgram, user, exec, page) {     
         var TableData = new google.visualization.DataTable(jsonTableData);
         var table = makeExecDetail(TableData, div_id, page);
 
-        // Add our Actions handler.
-        google.visualization.events.addListener(table, 'select', selectHandler);
-
-        // google.visualization.table exposes a 'page' event.
-        google.visualization.events.addListener(table, 'page', myPageEventHandler);
-        function myPageEventHandler(e) {
-            page = e['page'];
-            /* get executable details */
-            gTc3(sysHost ,startDate , endDate, linkProgram, user, exec, page); /* get exec detail  */
-        }
-
         function selectHandler() {
             // grab a few details before redirecting
             var selection = table.getSelection();
@@ -224,6 +211,17 @@ function gTc3(sysHost, startDate, endDate, linkProgram, user, exec, page) {     
             gTc5(uuid);       /* get object information */
             gTc8(uuid);       /* get function information */
         }
+
+        function myPageEventHandler(e) {
+            page = e['page'];
+            /* get executable details */
+            gTc3(sysHost ,startDate , endDate, linkProgram, user, exec, page); /* get exec detail  */
+        }
+
+        // Add our Actions handler.
+        google.visualization.events.addListener(table, 'select', selectHandler);
+        // google.visualization.table exposes a 'page' event.
+        google.visualization.events.addListener(table, 'page', myPageEventHandler);
     }
 }
 
@@ -254,9 +252,6 @@ function gTc4(uuid) {         /* get run details */
         var TableData = new google.visualization.DataTable(jsonTableData);
         var table = makeTable(TableData, div_id, count);
 
-        // Add our Actions handler.    *** REMOVE this event handler might not be required ***
-        google.visualization.events.addListener(table, 'select', selectHandler);
-
         function selectHandler() {
 
             // grab a few details before redirecting
@@ -264,10 +259,13 @@ function gTc4(uuid) {         /* get run details */
             var row = selection[0].row;
             var col = selection[0].column;
             var runid = TableData.getValue(row,0);
-
             gTc6(runid);          /* get runtime env information */
             gTc7(runid);          /* get objects at runtime */
         }
+
+        // Add our Actions handler.    *** REMOVE this event handler might not be required ***
+        google.visualization.events.addListener(table, 'select', selectHandler);
+
     }
 }
 
