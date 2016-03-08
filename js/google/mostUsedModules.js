@@ -232,12 +232,17 @@ function gT3(sysHost, startDate, endDate, module, version, user, exec, page) {  
 
     console.log("&user= " + user + "&exec=" + exec + "&page=" + page);
 
+    var start = new Date().getTime();
+
     var jsonTableData = $.ajax
         ({url:"include/execDetailList.php", 
         //({url:"include/ed.php", 
          data: "sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate + 
              "&module=" + module + "&version=" + version + "&user=" + user + "&exec=" + exec + 
              "&page=" + page,
+         success: function(){
+         var end = new Date().getTime();
+         console.log("seconds TAKEN: ", (end - start)/1000);},
          datatype: "json", async: false
          }).responseText;
 
