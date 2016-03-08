@@ -51,7 +51,9 @@ try {
         xl.link_program as LinkProgram,                         
         xl.exit_code as ExitCode,
         xl.build_user as BuildUser,
-        xl.exec_path as ExecPath
+        xl.exec_path as ExecPath,
+        IF ((SELECT COUNT(*) 
+        FROM xalt_run WHERE uuid = '$uuid' >= 1), 'true', 'false') AS JobRun
         FROM xalt_link xl ,  join_link_object jlo , xalt_object xo 
         WHERE jlo.obj_id = xo.obj_id AND
         xl.link_id = jlo.link_id AND
@@ -85,20 +87,6 @@ try {
         $row_num++;
         $execPath = wrapper($row['ExecPath'],45);
 
-        /* start ++ check if exec used in a job */
-        $uuid = '';
-        $uuid = $row['Uuid'];
-        $sql = "SELECT IF (
-            (SELECT COUNT(*) FROM 
-            xalt_run WHERE uuid = '$uuid' >= 1), 'true', 'false') 
-            AS JobRun ";
-
-        $q = $conn->prepare($sql);
-        $q->execute();
-        $r = $q->fetchAll(PDO:: FETCH_ASSOC);
-
-        /* ends -- */ 
-
         if ($row_num == $total_rows){
             echo "{\"c\":[
         {\"v\":\"" . $execPath . "\",\"f\":null},
@@ -106,7 +94,7 @@ try {
         {\"v\":\"" . $row['LinkProgram'] . "\",\"f\":null},
         {\"v\":\"" . $row['ExitCode'] . "\",\"f\":null},
         {\"v\":\"" . $row['BuildUser'] . "\",\"f\":null},
-        {\"v\":" . $r[0]['JobRun'] . ",\"f\":null},
+        {\"v\":" . $row['JobRun'] . ",\"f\":null},
         {\"v\":\"" . $row['Uuid'] . "\",\"f\":null}
         ]}";
         } else {
@@ -116,7 +104,7 @@ try {
         {\"v\":\"" . $row['LinkProgram'] . "\",\"f\":null},
         {\"v\":\"" . $row['ExitCode'] . "\",\"f\":null},
         {\"v\":\"" . $row['BuildUser'] . "\",\"f\":null},
-        {\"v\":" . $r[0]['JobRun'] . ",\"f\":null},
+        {\"v\":" . $row['JobRun'] . ",\"f\":null},
         {\"v\":\"" . $row['Uuid'] . "\",\"f\":null}
         ]}, ";
         } 
