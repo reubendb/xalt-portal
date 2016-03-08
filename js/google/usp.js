@@ -14,7 +14,6 @@ function usp(sysHost, startDate, endDate, userId) {        /* get exec list */
          dataType:"json", async: false
          }).responseText;
 
-
     // Create our datatable out of Json Data loaded from php call.
     var div_id = 'usp_exec_div';
 
@@ -35,18 +34,18 @@ function usp(sysHost, startDate, endDate, userId) {        /* get exec list */
         var TableData = new google.visualization.DataTable(jsonTableData);
         var table = makeTable(TableData, div_id, count);
 
-        // Add our selection handler.
-        google.visualization.events.addListener(table, 'select', selectTable);
-
         function selectTable() {
             // grab a few details before redirecting
             var selection = table.getSelection();
             var row = selection[0].row;
             var col = selection[0].column;
             var exec = [TableData.getValue(row,0)];
-
             gTu0(sysHost, startDate, endDate, userId, exec);      /* get exec detail list  */
         }
+
+        // Add our selection handler.
+        google.visualization.events.addListener(table, 'select', selectTable);
+
     }
 }
 
@@ -76,21 +75,20 @@ function gTu0(syshost, startDate, endDate, userId, exec) {         /* get exec d
         var TableData = new google.visualization.DataTable(jsonTableData);
         var table = makeTable(TableData, div_id, count);
 
-        // Add our Actions handler.
-        google.visualization.events.addListener(table, 'select', selectHandler);
-
         function selectHandler() {
-
             // grab a few details before redirecting
             var selection = table.getSelection();
             var row = selection[0].row;
             var col = selection[0].column;
             var uuid = TableData.getValue(row,6);
-
             gTu1(uuid);       /* get run details */      
             gTu2(uuid);       /* get object information */
             gTu5(uuid);       /* get functions called  */
         }
+
+        // Add our Actions handler.
+        google.visualization.events.addListener(table, 'select', selectHandler);
+
     }
 }   
 
@@ -126,20 +124,20 @@ function gTu1(uuid) {         /* get run details */
         var TableData = new google.visualization.DataTable(jsonTableData);
         var table = makeTable(TableData, div_id, count);
 
-        // Add our Actions handler.
-        google.visualization.events.addListener(table, 'select', selectHandler);
-
         function selectHandler() {
             // grab a few details before redirecting
             var selection = table.getSelection();
             var row = selection[0].row;
             var col = selection[0].column;
             var runId = TableData.getValue(row,0);
-
             // get run details irrespective of who built the code
             gTu3(runId);            /* get runtime env detail */
             gTu4(runId);            /* get objects at runtime */
         }
+
+        // Add our Actions handler.
+        google.visualization.events.addListener(table, 'select', selectHandler);
+
     }
 }
 
