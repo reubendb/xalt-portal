@@ -217,9 +217,10 @@ function gT2(sysHost, startDate, endDate, module, version, user) {       /* get 
             var row  = selection[0].row;
             var col  = selection[0].column;
             var exec = TableData.getValue(row,0);
+            var totalNumRec = TableData.getValue(row,3);
             var page = 0;                         /* pagination changes */
 
-            gT3(sysHost, startDate, endDate, module, version, user, exec, page);    /* get executable details */
+            gT3(sysHost, startDate, endDate, module, version, user, exec, page, totalNumRec);    /* get executable details */
         }
 
         // Add our Actions handler.
@@ -228,18 +229,17 @@ function gT2(sysHost, startDate, endDate, module, version, user) {       /* get 
     }
 }
 
-function gT3(sysHost, startDate, endDate, module, version, user, exec, page) {      /* get executable details */
+function gT3(sysHost, startDate, endDate, module, version, user, exec, page, totalNumRec) {      /* get executable details */
 
-    console.log("&user= " + user + "&exec=" + exec + "&page=" + page);
+    console.log("&user= " + user + "&exec=" + exec + "&page=" + page + "&totalNumRec= " + totalNumRec);
 
     var start = new Date().getTime();
 
     var jsonTableData = $.ajax
         ({url:"include/execDetailList.php", 
-        //({url:"include/ed.php", 
          data: "sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate + 
              "&module=" + module + "&version=" + version + "&user=" + user + "&exec=" + exec + 
-             "&page=" + page,
+             "&page=" + page + "&totalNumRec=" + totalNumRec,
          success: function(){
          var end = new Date().getTime();
          console.log("seconds TAKEN: ", (end - start)/1000);},
@@ -267,7 +267,7 @@ function gT3(sysHost, startDate, endDate, module, version, user, exec, page) {  
         function myPageEventHandler(e) {
             page = e['page'];
             /* get executable details */
-            gT3(sysHost, startDate, endDate, module, version, user, exec, page);    
+            gT3(sysHost, startDate, endDate, module, version, user, exec, page, totalNumRec);    
         }
 
         function selectHandler() {
