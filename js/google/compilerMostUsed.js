@@ -161,23 +161,25 @@ function gTc2(sysHost, startDate, endDate, linkProgram,user) {     /* get exec l
             var col = selection[0].column;
             var exec = TableData.getValue(row,0);
             var page = 0;                         /* pagination changes */
+            var totalNumRec = TableData.getValue(row,3);
 
-            gTc3(sysHost ,startDate , endDate, linkProgram, user, exec, page); /* get exec detail  */
+            gTc3(sysHost ,startDate , endDate, linkProgram, user, exec, page, totalNumRec); /* get exec detail  */
         }
         // Add our Actions handler.
         google.visualization.events.addListener(table, 'select', selectHandler);
     }
 }
 
-function gTc3(sysHost, startDate, endDate, linkProgram, user, exec, page) {      /* get exec detail */
+function gTc3(sysHost, startDate, endDate, linkProgram, user, exec, page, totalNumRec) {      /* get exec detail */
 
-    console.log("Exec= " + exec);
+    console.log("Exec= " + exec + "totalNumRec=" + totalNumRec);
     var start = new Date().getTime();
 
     var jsonTableData = $.ajax
         ({url:"include/compExecDetailList.php", 
          data:  "sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate + 
-         "&linkProgram=" + linkProgram + "&user=" +user + "&exec=" + exec + "&page=" + page,
+         "&linkProgram=" + linkProgram + "&user=" +user + "&exec=" + exec + "&page=" + page +
+         "&totalNumRec=" + totalNumRec,
          success: function(){
          var end = new Date().getTime();
          console.log("seconds TAKEN: ", (end - start)/1000);},
@@ -219,7 +221,7 @@ function gTc3(sysHost, startDate, endDate, linkProgram, user, exec, page) {     
         function myPageEventHandler(e) {
             page = e['page'];
             /* get executable details */
-            gTc3(sysHost ,startDate , endDate, linkProgram, user, exec, page); /* get exec detail  */
+            gTc3(sysHost ,startDate , endDate, linkProgram, user, exec, page, totalNumRec); /* get exec detail  */
         }
 
         // Add our Actions handler.
