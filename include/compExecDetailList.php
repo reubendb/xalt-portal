@@ -2,7 +2,6 @@
 /*
  * Get compiler executable details for given user, sysHost , linkProgram and date range. 
  * */
-
 $sysHost     = $_GET["sysHost"];
 $startDate   = $_GET["startDate"];
 $endDate     = $_GET["endDate"];
@@ -10,7 +9,8 @@ $linkProgram = $_GET["linkProgram"];
 $user        = $_GET["user"];
 $exec        = $_GET["exec"];
 $page        = $_GET["page"];
-$rec_limit   = 11;
+$totalNumRec = $_GET["totalNumRec"];
+$rec_limit   = 10;
 $offset      = 0;
 
 try {
@@ -25,12 +25,14 @@ try {
         $linkProgram = 'g++'; 
     }
 
-    /* instead of using offset we need to use rec_limit there is no other way 
-     * to do this with google visualization */
+    if ($page == 0){
+        $offset = 0;
+    } else {
+        $offset = $rec_limit * $page;
+        if (($totalNumRec - $offset ) < 10 ){
+            $lastPage = true;
 
-    if ($page == 0){ $offset = 0; } 
-    else {
-        $rec_limit = 11 * ($page + 1);
+        }
     }
 
     $sql="SELECT
@@ -52,29 +54,25 @@ try {
 
     $query = $conn->prepare($sql);
     $query->execute();
-
     $result = $query->fetchAll(PDO:: FETCH_ASSOC);
 
     echo "{ \"cols\": [
-    {\"id\":\"\",\"label\":\"Executable Path\",\"pattern\":\"\",\"type\":\"string\"}, 
-    {\"id\":\"\",\"label\":\"Build Date\",\"pattern\":\"\",\"type\":\"string\"}, 
-    {\"id\":\"\",\"label\":\"Link Program\",\"pattern\":\"\",\"type\":\"string\"}, 
-    {\"id\":\"\",\"label\":\"ExitCode\",\"pattern\":\"\",\"type\":\"string\"}, 
-    {\"id\":\"\",\"label\":\"Build User\",\"pattern\":\"\",\"type\":\"string\"}, 
-    {\"id\":\"\",\"label\":\"Job Run[T/F]\",\"pattern\":\"\",\"type\":\"boolean\"}, 
-    {\"id\":\"\",\"label\":\"Uuid\",\"pattern\":\"\",\"type\":\"string\"} 
-    ], 
-    \"rows\": [ ";
+        {\"id\":\"\",\"label\":\"Executable Path\",\"pattern\":\"\",\"type\":\"string\"}, 
+        {\"id\":\"\",\"label\":\"Build Date\",\"pattern\":\"\",\"type\":\"string\"}, 
+        {\"id\":\"\",\"label\":\"Link Program\",\"pattern\":\"\",\"type\":\"string\"}, 
+        {\"id\":\"\",\"label\":\"ExitCode\",\"pattern\":\"\",\"type\":\"string\"}, 
+        {\"id\":\"\",\"label\":\"Build User\",\"pattern\":\"\",\"type\":\"string\"}, 
+        {\"id\":\"\",\"label\":\"Job Run[T/F]\",\"pattern\":\"\",\"type\":\"boolean\"}, 
+        {\"id\":\"\",\"label\":\"Uuid\",\"pattern\":\"\",\"type\":\"string\"} 
+        ], 
+        \"rows\": [ ";
 
-    $total_rows = $query->rowCount();
     $row_num = 0;
 
-    foreach($result as $row){
-        $row_num++;
-        $execPath = wrapper($row['ExecPath'], 45);
-
+    // Include JobRun to the result array 
+    for($i=0; $i < sizeof($result); $i++){
         $uuid = '';
-        $uuid = $row['Uuid'];         //check if exec used in a job
+        $uuid = $result[$i]['Uuid'];
         $sql = "SELECT 
             IF ((SELECT COUNT(*) FROM xalt_run 
             WHERE uuid = '$uuid' >= 1), 'true', 'false') AS JobRun ";
@@ -82,6 +80,35 @@ try {
         $q = $conn->prepare($sql);
         $q->execute();
         $r = $q->fetchAll(PDO:: FETCH_ASSOC);
+        $result[$i]['JobRun'] = $r[0]['JobRun'];
+    }
+
+    // Control Process for paging Starts ++ //
+    if ($lastPage) {
+        $total_rows = $query->rowCount();
+        $extraRec = $total_rows - ($totalNumRec  - ($rec_limit * $page) );
+        if($extraRec > 0){    // there are more records then actual totalNumRec
+            $totalNumRec = $totalNumRec + $extraRec;
+        }
+    }
+
+    // reiterate same 10 records for given #pages to make jsonTableData complete
+    if ($lastPage) {
+        for($i=0; $i < $totalNumRec - $total_rows; $i++){
+            $result[$total_rows + $i] = $result[$i];
+        }
+    } else {
+        for($i=0; $i < $totalNumRec - $rec_limit; $i++){
+            $result[$rec_limit + $i] = $result[$i];
+        }
+    }
+    // Control Process for paging Ends -- //
+
+    $total_rows = sizeof($result);
+
+    foreach($result as $row){
+        $row_num++;
+        $execPath = wrapper($row['ExecPath'], 45);
 
         if ($row_num == $total_rows){
             echo "{\"c\":[
@@ -90,7 +117,7 @@ try {
         {\"v\":\"" . $row['LinkProgram'] . "\",\"f\":null},
         {\"v\":\"" . $row['ExitCode'] . "\",\"f\":null},
         {\"v\":\"" . $row['BuildUser'] . "\",\"f\":null},
-        {\"v\":" . $r[0]['JobRun'] . ",\"f\":null},
+        {\"v\":" . $row['JobRun'] . ",\"f\":null},
         {\"v\":\"" . $row['Uuid'] . "\",\"f\":null}
         ]}";
         } else {
@@ -100,7 +127,7 @@ try {
         {\"v\":\"" . $row['LinkProgram'] . "\",\"f\":null},
         {\"v\":\"" . $row['ExitCode'] . "\",\"f\":null},
         {\"v\":\"" . $row['BuildUser'] . "\",\"f\":null},
-        {\"v\":" . $r[0]['JobRun'] . ",\"f\":null},
+        {\"v\":" . $row['JobRun'] . ",\"f\":null},
         {\"v\":\"" . $row['Uuid'] . "\",\"f\":null}
         ]}, ";
         } 
