@@ -35,9 +35,6 @@ try {
         break;
     }
 
-    /* instead of using offset we need to use rec_limit there is no other way 
-     * to do this with google visualization */
-
     if ($page == 0){
         $offset = 0;
     } else {
@@ -95,15 +92,13 @@ try {
         $q = $conn->prepare($sql);
         $q->execute();
         $r = $q->fetchAll(PDO:: FETCH_ASSOC);
-
         $result[$i]['JobRun'] = $r[0]['JobRun'];
     }
 
     // Control Process for paging Starts ++ //
     if ($lastPage) {
         $total_rows = $query->rowCount();
-
-        $extraRec = $total_rows - ($totalNumRec % $page);
+        $extraRec = $total_rows - ($totalNumRec - ($rec_limit * $page));
         if($extraRec > 0){    // there are more records then actual totalNumRec
             $totalNumRec = $totalNumRec + $extraRec;
         }
