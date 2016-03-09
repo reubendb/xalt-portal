@@ -109,7 +109,8 @@ function gTi1(sysHost, startDate, endDate,objPath, execName, user, query) {     
             var col = selection[0].column;
             var exec = TableData.getValue(row,0);
             var page = 0;                         /* pagination changes */
-            gTi2(sysHost, startDate, endDate, objPath, user, exec, query, page); /* Get Exec Detail*/
+            var totalNumRec = TableData.getValue(row,3);
+            gTi2(sysHost, startDate, endDate, objPath, user, exec, query, page, totalNumRec); /* Get Exec Detail*/
         }
 
         // Add our Actions handler.
@@ -118,15 +119,19 @@ function gTi1(sysHost, startDate, endDate,objPath, execName, user, query) {     
     }
 }
 
-function gTi2(sysHost, startDate, endDate,objPath, user, exec, query, page) {   /* Get Exec Detail*/
+function gTi2(sysHost, startDate, endDate,objPath, user, exec, query, page, totalNumRec) {   /* Get Exec Detail*/
 
-    console.log(user + exec + page);
+    console.log(user + exec + page + totalNumRec);
 
+    var start = new Date().getTime();
     var jsonTableData = $.ajax
         ({url:"include/identifyExecDetail.php",
          data: "sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate + 
          "&objPath=" + objPath + "&user=" + user + "&exec=" + exec + "&query=" + query + 
-         "&page=" + page,
+         "&page=" + page + "&totalNumRec=" + totalNumRec,
+         success: function(){
+         var end = new Date().getTime();
+         console.log("seconds TAKEN: ", (end - start)/1000);},
          datatype: "json", async: false
          }).responseText;
 
@@ -151,7 +156,7 @@ function gTi2(sysHost, startDate, endDate,objPath, user, exec, query, page) {   
         function myPageEventHandler(e) {
             page = e['page'];
             /* get executable details */
-            gTi2(sysHost, startDate, endDate, objPath, user, exec, query, page);
+            gTi2(sysHost, startDate, endDate, objPath, user, exec, query, page, totalNumRec);
         }
 
         function selectHandler() {
