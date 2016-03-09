@@ -10,6 +10,7 @@ $version    = $_GET["version"];
 $user       = $_GET["user"];
 $exec       = $_GET["exec"];
 $page       = $_GET["page"];
+$totalNumRec= $_GET["totalNumRec"];
 $moduleName = '';
 $rec_limit  = 11;
 $offset     = 0; 
@@ -41,6 +42,9 @@ try {
         $offset = 0;
     } else {
         $rec_limit = 11 * ($page + 1); 
+        if ($rec_limit >= $totalNumRec){
+            $lastPage = true;
+        }
     }
 
     /* get Executable details (run/compile both) irrespective of build user) */
@@ -73,27 +77,43 @@ try {
     {\"id\":\"\",\"label\":\"Link Program\",\"pattern\":\"\",\"type\":\"string\"}, 
     {\"id\":\"\",\"label\":\"Exit Code\",\"pattern\":\"\",\"type\":\"string\"}, 
     {\"id\":\"\",\"label\":\"Build User\",\"pattern\":\"\",\"type\":\"string\"}, 
-    {\"id\":\"\",\"label\":\"Job Run[T/F]\",\"pattern\":\"\",\"type\":\"string\"}, 
+    {\"id\":\"\",\"label\":\"Job Run[T/F]\",\"pattern\":\"\",\"type\":\"boolean\"}, 
     {\"id\":\"\",\"label\":\"Unique Id\",\"pattern\":\"\",\"type\":\"string\"}
     ], 
     \"rows\": [ ";
 
-    $total_rows = $query->rowCount();
     $row_num = 0;
 
-    foreach($result as $row){
-        $row_num++;
-        $execPath = wrapper($row['ExecPath'],45);
-
-        $uuid = '';                           // check if exec is used in job 
-        $uuid = $row['Uuid'];
+    // Include JobRun to the result array 
+    for($i=0; $i < sizeof($result); $i++){
+        $uuid = '';                           
+        $uuid = $result[$i]['Uuid'];
         $sql = "SELECT 
             IF ((SELECT COUNT(*) FROM xalt_run 
             WHERE uuid = '$uuid' >= 1), 'true', 'false') AS JobRun ";
 
         $q = $conn->prepare($sql);
         $q->execute();
-        $r = $q->fetchAll(PDO:: FETCH_ASSOC); 
+        $r = $q->fetchAll(PDO:: FETCH_ASSOC);
+
+        $result[$i]['JobRun'] = $r[0]['JobRun'];
+    }
+
+    // Control Process for paging Starts ++ //
+    if ($lastPage) {
+        $total_rows = $query->rowCount();
+    } else {
+        // append remaining records until total number of records
+        for($i=0; $i < $totalNumRec - $rec_limit; $i++){
+            $result[$rec_limit + $i] = $result[$i];
+        }
+        $total_rows = sizeof($result);
+      }
+    // Control Process for paging Ends -- //
+    
+    foreach($result as $row){
+        $row_num++;
+        $execPath = wrapper($row['ExecPath'],45);
 
         if ($row_num == $total_rows){
             echo "{\"c\":[
@@ -102,7 +122,7 @@ try {
         {\"v\":\"" . $row['LinkProgram'] . "\",\"f\":null},
         {\"v\":\"" . $row['ExitCode'] . "\",\"f\":null},
         {\"v\":\"" . $row['BuildUser'] . "\",\"f\":null},
-        {\"v\":" . $r[0]['JobRun'] . ",\"f\":null},
+        {\"v\":" . $row['JobRun'] . ",\"f\":null},
         {\"v\":\"" . $row['Uuid'] . "\",\"f\":null}
         ]}";
         } else {
@@ -112,12 +132,12 @@ try {
         {\"v\":\"" . $row['LinkProgram'] . "\",\"f\":null},
         {\"v\":\"" . $row['ExitCode'] . "\",\"f\":null},
         {\"v\":\"" . $row['BuildUser'] . "\",\"f\":null},
-        {\"v\":" . $r[0]['JobRun'] . ",\"f\":null},
+        {\"v\":" . $row['JobRun'] . ",\"f\":null},
         {\"v\":\"" . $row['Uuid'] . "\",\"f\":null}
         ]}, ";
         } 
-
     }
+     
     echo " ] }";
 }
 
