@@ -12,7 +12,8 @@ $user       = $_GET["user"];
 $exec       = $_GET["exec"];
 $query      = $_GET["query"];
 $page       = $_GET["page"];
-$rec_limit  = 11;
+$totalNumRec= $_GET["totalNumRec"];
+$rec_limit  = 10;
 $offset     = 0;
 
 try {
@@ -22,13 +23,14 @@ try {
     $conn = new PDO("mysql:host=$servername;dbname=$db", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    /* instead of using offset we need to use rec_limit there is no other way 
-     * to do this with google visualization */
-
     if ($page == 0){
         $offset = 0;
     } else {
-        $rec_limit = 11 * ($page + 1);
+        $offset = $rec_limit * $page;
+        if (($totalNumRec - $offset ) < 10 ){
+            $lastPage = true;
+
+        }
     }
 
     if ($query == 1) {        /* find exec for given objPath */
@@ -73,7 +75,6 @@ try {
 
     $query = $conn->prepare($sql);
     $query->execute();
-
     $result = $query->fetchAll(PDO:: FETCH_ASSOC);
 
     echo "{ \"cols\": [
@@ -87,26 +88,48 @@ try {
     ], 
     \"rows\": [ ";
 
-    $total_rows = $query->rowCount();
     $row_num = 0;
 
-    foreach($result as $row){
-        $row_num++;
-        $execPath = wrapper($row['ExecPath'],45);
-
-        /* start ++ check if exec used in a job */
+    // Include JobRun to the result array 
+    for($i=0; $i < sizeof($result); $i++){
         $uuid = '';
-        $uuid = $row['Uuid'];
-        $sql = "SELECT IF (
-            (SELECT COUNT(*) FROM 
-            xalt_run WHERE uuid = '$uuid' >= 1), 'true', 'false') 
-            AS JobRun ";
+        $uuid = $result[$i]['Uuid'];
+        $sql = "SELECT 
+            IF ((SELECT COUNT(*) FROM xalt_run 
+            WHERE uuid = '$uuid' >= 1), 'true', 'false') AS JobRun ";
 
         $q = $conn->prepare($sql);
         $q->execute();
         $r = $q->fetchAll(PDO:: FETCH_ASSOC);
-        /* ends -- */
+        $result[$i]['JobRun'] = $r[0]['JobRun'];
+    }
 
+    // Control Process for paging Starts ++ //
+    if ($lastPage) {
+        $total_rows = $query->rowCount();
+        $extraRec = $total_rows - ($totalNumRec  - ($rec_limit * $page) );
+        if($extraRec > 0){    // there are more records then actual totalNumRec
+            $totalNumRec = $totalNumRec + $extraRec;
+        }
+    }
+
+    // reiterate same 10 records for given #pages to make jsonTableData complete
+    if ($lastPage) {
+        for($i=0; $i < $totalNumRec - $total_rows; $i++){
+            $result[$total_rows + $i] = $result[$i];
+        }
+    } else {
+        for($i=0; $i < $totalNumRec - $rec_limit; $i++){
+            $result[$rec_limit + $i] = $result[$i];
+        }
+    }
+    // Control Process for paging Ends -- //
+
+    $total_rows = sizeof($result);
+
+    foreach($result as $row){
+        $row_num++;
+        $execPath = wrapper($row['ExecPath'],45);
         if ($row_num == $total_rows){
             echo "{\"c\":[
         {\"v\":\"" . $execPath . "\",\"f\":null},
@@ -128,7 +151,6 @@ try {
         {\"v\":\"" . $row['Uuid'] . "\",\"f\":null}
         ]}, ";
         } 
-
     }
     echo " ] }";
 }
