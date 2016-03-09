@@ -12,7 +12,7 @@ $exec       = $_GET["exec"];
 $page       = $_GET["page"];
 $totalNumRec= $_GET["totalNumRec"];
 $moduleName = '';
-$rec_limit  = 11;
+$rec_limit  = 10;
 $offset     = 0; 
 
 try {
@@ -41,8 +41,8 @@ try {
     if ($page == 0){
         $offset = 0;
     } else {
-        $rec_limit = 11 * ($page + 1); 
-        if ($rec_limit >= $totalNumRec){
+        $offset = $rec_limit * $page;
+        if (($totalNumRec - $offset ) < 10 ){
             $lastPage = true;
         }
     }
@@ -102,15 +102,29 @@ try {
     // Control Process for paging Starts ++ //
     if ($lastPage) {
         $total_rows = $query->rowCount();
+
+        $extraRec = $total_rows - ($totalNumRec % $page);
+        if($extraRec > 0){    // there are more records then actual totalNumRec
+            $totalNumRec = $totalNumRec + $extraRec;
+        }
+
+    }
+
+    // reiterate same 10 records for given #pages to make jsonTableData complete
+    if ($lastPage) {
+        for($i=0; $i < $totalNumRec - $total_rows; $i++){
+            $result[$total_rows + $i] = $result[$i];
+        }               
     } else {
-        // append remaining records until total number of records
         for($i=0; $i < $totalNumRec - $rec_limit; $i++){
             $result[$rec_limit + $i] = $result[$i];
         }
-        $total_rows = sizeof($result);
-      }
+    }
+
+    $total_rows = sizeof($result);
+
     // Control Process for paging Ends -- //
-    
+
     foreach($result as $row){
         $row_num++;
         $execPath = wrapper($row['ExecPath'],45);
@@ -137,7 +151,7 @@ try {
         ]}, ";
         } 
     }
-     
+
     echo " ] }";
 }
 
