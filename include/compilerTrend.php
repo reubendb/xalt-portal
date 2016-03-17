@@ -54,7 +54,7 @@ try {
 {\"id\":\"\",\"label\":\"Sep\",\"pattern\":\"\",\"type\":\"number\"},
 {\"id\":\"\",\"label\":\"Oct\",\"pattern\":\"\",\"type\":\"number\"},
 {\"id\":\"\",\"label\":\"Nov\",\"pattern\":\"\",\"type\":\"number\"},
-{\"id\":\"\",\"label\":\"December\",\"pattern\":\"\",\"type\":\"number\"} 
+{\"id\":\"\",\"label\":\"Dec\",\"pattern\":\"\",\"type\":\"number\"} 
 ], 
 \"rows\": [ ";
 
