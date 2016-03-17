@@ -27,7 +27,7 @@ function compilerTrend(sysHost, startDate, endDate) {
         // Define Chart Options .
         var options = {title: 'Compiler Trend',
             isStacked: true,
-            chartArea: {width: '70%', height:"50%", left: "auto" },
+            chartArea: {width: '65%', height:"50%", left: "auto" },
             hAxis: {title: 'LinkProgram'},
             vAxis: {title: '#Instances Linked',format: 'short'}
         };
