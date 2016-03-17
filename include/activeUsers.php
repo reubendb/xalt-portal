@@ -6,11 +6,7 @@
 $sysHost    = $_GET["sysHost"];
 $startDate  = $_GET["startDate"];
 $endDate    = $_GET["endDate"];
-/*
-$sysHost    = "darter";
-$startDate  = "2015-01-01";
-$endDate    = "2016-02-20";
- */
+
 try {
 
     include (__DIR__ ."/conn.php");
