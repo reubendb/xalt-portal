@@ -107,10 +107,6 @@ try {
     // Control Process for paging Starts ++ //
     if ($lastPage) {
         $total_rows = $query->rowCount();
-        $extraRec = $total_rows - ($totalNumRec  - ($rec_limit * $page) );
-        if($extraRec > 0){    // there are more records then actual totalNumRec
-            $totalNumRec = $totalNumRec + $extraRec;
-        }
     }
 
     // reiterate same 10 records for given #pages to make jsonTableData complete
