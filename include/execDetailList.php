@@ -58,6 +58,7 @@ try {
         xl.link_id = jlo.link_id AND
         xo.syshost='$sysHost' AND 
         xo.module_name LIKE '$moduleName' AND
+        xl.build_user like CONCAT('%', '$user', '%') AND
         xl.date BETWEEN '$startDate 00:00:00' AND '$endDate 23:59:59' AND
         SUBSTRING_INDEX(xl.exec_path, '/', -1) = '$exec' 
         ORDER BY Date desc
@@ -98,11 +99,6 @@ try {
     // Control Process for paging Starts ++ //
     if ($lastPage) {
         $total_rows = $query->rowCount();
-        $extraRec = $total_rows - ($totalNumRec - ($rec_limit * $page));
-        if($extraRec > 0){    // there are more records then actual totalNumRec
-            $totalNumRec = $totalNumRec + $extraRec;
-        }
-
     }
 
     // reiterate same 10 records for given #pages to make jsonTableData complete
