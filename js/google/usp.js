@@ -40,6 +40,7 @@ function usp(sysHost, startDate, endDate, userId) {        /* get exec list */
             var row = selection[0].row;
             var col = selection[0].column;
             var exec = [TableData.getValue(row,0)];
+            userId = [TableData.getValue(row,2)];
             gTu0(sysHost, startDate, endDate, userId, exec);      /* get exec detail list  */
         }
 
@@ -51,6 +52,7 @@ function usp(sysHost, startDate, endDate, userId) {        /* get exec list */
 
 function gTu0(syshost, startDate, endDate, userId, exec) {         /* get exec detail list  */
 
+    console.log("[uspExecDetail] " + userId + exec);
     var jsonTableData = $.ajax
         ({url: "include/uspExecDetail.php",
          data: "sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate + "&userId=" + userId + "&exec=" + exec,
