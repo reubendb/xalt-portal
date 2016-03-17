@@ -26,7 +26,7 @@ function totalSus(sysHost, startDate, endDate) {
         // Define Chart Options .
         var options = {title: 'SUs Charged: Total',
             chartArea: {width: '50%', height:"50%", left: "auto" },
-            hAxis: {title: 'Month'},
+            hAxis: {title: 'DateTimeRange'},
             vAxis: {title: 'TotalSUs',format: 'short',minValue: 0}
         };
 
