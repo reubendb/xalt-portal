@@ -1,50 +1,29 @@
-/*!
- * Chart for Compiler Trend
- * History
- * 2015-Aug-10
- */
-
-google.load('visualization', '1', {packages: ['corechart']});
-
-function compilerTrend(sysHost, startDate, endDate) {
+function compilerTrend(sysHost, startDate, endDate){
 
     console.log("CompilerTrend: " + sysHost + startDate + endDate);
-    var jsonBarChartData = $.ajax
+    var chartData = $.ajax
         ({url: "include/compilerTrend.php",
          data: "sysHost="+sysHost + "&startDate=" + startDate + "&endDate=" + endDate,
          dataType:"json", async: false
          }).responseText;
+    var dataChart = chartData.split('#');
+    var dc = JSON.parse(dataChart[1]);
+    var dctg = dataChart[0].split(",");
 
-    var count = checkJsonData(jsonBarChartData);
+    console.log(dc);
+    console.log(dctg);
 
-    if (count != 0) {
+    var chart = new Highcharts.Chart(
+            {chart: {renderTo: 'comp_div',defaultSeriesType: 'line'}
+            ,title: {text: 'Compiler Trend Over Time'}
+            ,xAxis: {categories: dctg}
+            ,yAxis: {title: 
+            {text: '#Instance'},plotLines: [{value: 0,width: 1,color: '#808080'}]
+            }
+            ,legend: {layout: 'vertical',align: 'right',verticalAlign: 'middle',borderWidth: 0}
+            ,credits:{enabled: false}
+            ,series: dc 
+            });
 
-        document.getElementById("compTrend_div").style.visibility = 'visible';
-        // Create our data table out of JSON data loaded from server.
-        var barChartData = new google.visualization.DataTable(
-                jsonBarChartData);
-
-        // Define Chart Options .
-        var options = {title: 'Compiler Trend',
-            isStacked: true,
-            chartArea: {width: '65%', height:"50%", left: "auto" },
-            hAxis: {title: 'LinkProgram'},
-            vAxis: {title: '#Instances Linked',format: 'short'}
-        };
-
-
-        // Instantiate and draw chart.
-        var chart = new google.visualization.ColumnChart(document.getElementById('compTrend_div'));
-        chart.draw(barChartData, options);
-
-    }
-    if (count ==0){
-        document.getElementById("compTrend_div").style.visibility = 'hidden';
-    }
-
-}
-function checkJsonData (jsonTableData) {
-    var o = JSON.parse(jsonTableData);
-    return (o.rows.length);
 }
 
