@@ -2,106 +2,110 @@
 /* 
  * Get totatSUs, though this query may not given the correct picture.
  */ 
+
 $sysHost   = $_GET["sysHost"];
 $startDate = $_GET["startDate"];
 $endDate   = $_GET["endDate"];
+/*
+$sysHost   = "darter";
+$startDate = "2015-01-01";
+$endDate   = "2015-12-31";
+ */
 try {
 
-    print_r($sysHost, $startDate, $endDate);
     include (__DIR__ ."/conn.php");
 
     $conn = new PDO("mysql:host=$servername;dbname=$db", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $sql="
-        select xl.link_program as Compiler,
-        sum(case when month(xl.date) = 1 then 1 else 0 end) as Jan,
-        sum(case when month(xl.date) = 2 then 1 else 0 end) as Feb,
-        sum(case when month(xl.date) = 3 then 1 else 0 end) as Mar,
-        sum(case when month(xl.date) = 4 then 1 else 0 end) as Apr,
-        sum(case when month(xl.date) = 5 then 1 else 0 end) as May,
-        sum(case when month(xl.date) = 6 then 1 else 0 end) as Jun,
-        sum(case when month(xl.date) = 7 then 1 else 0 end) as Jul,
-        sum(case when month(xl.date) = 8 then 1 else 0 end) as Aug,
-        sum(case when month(xl.date) = 9 then 1 else 0 end) as Sep,
-        sum(case when month(xl.date) = 10 then 1 else 0 end) as Oct,
-        sum(case when month(xl.date) = 11 then 1 else 0 end) as Nov,
-        sum(case when month(xl.date) = 12 then 1 else 0 end) as December
-        from xalt_link xl
-        WHERE xl.build_syshost='$sysHost' AND 
+    $sql = "SELECT DISTINCT xl.link_program as linkProgram from xalt_link xl 
+        where xl.build_syshost = '$sysHost' AND 
         xl.link_program IS NOT NULL AND 
-        xl.link_program NOT like '' AND 
         xl.date BETWEEN '$startDate 00:00:00' AND '$endDate 23:59:59'
-        group by compiler
-        order by compiler;
-    ";
+        ";
+    $query = $conn->prepare($sql);
+    $query->execute();
+    $total_rows = $query->rowCount();
+    $result = $query->fetchAll(PDO:: FETCH_ASSOC);
+
+    $datetime1 = strtotime($startDate);
+    $datetime2 = strtotime($endDate);
+
+    $days = ($datetime2-$datetime1)/(3600*24);
+
+    switch(true) {
+    case ($days > 30) :           # group by month 
+        $dateFormat = " DATE_FORMAT(xl.date, '%b') AS Month ";
+        $groupBy    = " GROUP BY Month, Year ";
+        break;
+    case ($days < 30 && $days > 7):    # group by week
+        $dateFormat = " DATE_FORMAT(xl.date, '%u') AS Week ";
+        $groupBy    = " GROUP BY Week, Year ";
+        break;
+    case ($days < 7) :            # group by day
+        $dateFormat = " DATE_FORMAT(xl.date, '%d-%b') AS Day ";
+        $groupBy    = " GROUP BY Day, Year ";
+        break;
+    }
+
+
+    /* Get Case statement for SQL query */
+    $sum_col = array();
+    foreach($result as $row){
+        $sum_col[] = "SUM(CASE WHEN xl.link_program = '".$row['linkProgram']."' THEN 1 ELSE 0 END) AS '".$row['linkProgram']."'";
+    }
+
+    /* Get all compiler as object in json output */ 
+    $col = array();
+    foreach($result as $row){
+        $col[] = $row[linkProgram];
+    }                
+
+    if(count($sum_col) > 0) {
+        $sql = "
+            SELECT Month(xl.date) AS MonNum,
+                DATE_FORMAT(xl.date, '%b') AS Month ,
+                YEAR(xl.date) AS Year,  
+                ".implode(",", $sum_col)."
+                FROM xalt_link xl         
+                WHERE xl.build_syshost='$sysHost' AND          
+                xl.link_program IS NOT NULL AND 
+                xl.link_program NOT LIKE ' ' AND
+                xl.date BETWEEN '$startDate 00:00:00' AND '$endDate 23:59:59'         
+                GROUP BY Month         
+                ORDER BY Year desc, MonNum desc; 
+        ";
+    }
 
     $query = $conn->prepare($sql);
     $query->execute();
-
     $result = $query->fetchAll(PDO:: FETCH_ASSOC);
 
-    echo "{ \"cols\": [
-{\"id\":\"\",\"label\":\"Compiler\",\"pattern\":\"\",\"type\":\"string\"}, 
-{\"id\":\"\",\"label\":\"Jan\",\"pattern\":\"\",\"type\":\"number\"},
-{\"id\":\"\",\"label\":\"Feb\",\"pattern\":\"\",\"type\":\"number\"},
-{\"id\":\"\",\"label\":\"Mar\",\"pattern\":\"\",\"type\":\"number\"},
-{\"id\":\"\",\"label\":\"Apr\",\"pattern\":\"\",\"type\":\"number\"},
-{\"id\":\"\",\"label\":\"May\",\"pattern\":\"\",\"type\":\"number\"},
-{\"id\":\"\",\"label\":\"Jun\",\"pattern\":\"\",\"type\":\"number\"},
-{\"id\":\"\",\"label\":\"Jul\",\"pattern\":\"\",\"type\":\"number\"},
-{\"id\":\"\",\"label\":\"Aug\",\"pattern\":\"\",\"type\":\"number\"},
-{\"id\":\"\",\"label\":\"Sep\",\"pattern\":\"\",\"type\":\"number\"},
-{\"id\":\"\",\"label\":\"Oct\",\"pattern\":\"\",\"type\":\"number\"},
-{\"id\":\"\",\"label\":\"Nov\",\"pattern\":\"\",\"type\":\"number\"},
-{\"id\":\"\",\"label\":\"Dec\",\"pattern\":\"\",\"type\":\"number\"} 
-], 
-\"rows\": [ ";
+    /* Get xAxis Category */
+    $month = array();
+    foreach($result as $row){
+        $month[] = $row['Month'];
+    }
+    $strmonth = implode(",", $month);
 
-$total_rows = $query->rowCount();
-$row_num = 0;
+    /* make dataseries in JSON format */
+    $dataseries = array();
+    for($i=0; $i < sizeof($col); $i++) {
+        $data= array();
+        // print_r($col[$i]);
+        foreach($result as $row){
+            // print_r($row[$col[$i]] . "     ");
+            $data[] = $row[$col[$i]];
+        }
+        $strdata = implode(",", $data);
+        //  print_r($strdata);
+        $dataseries[] = "{\"name\" : " . "\"" . $col[$i] . "\", " . "\"data\" :[" . $strdata . "]}"; 
+    }
+    $strdataseries = "[".implode(", ",$dataseries)."]";
 
-foreach($result as $row){
-    $row_num++;
-
-    if ($row_num == $total_rows){
-        echo "{\"c\":[
-    {\"v\":\"" . $row['Compiler'] . "\",\"f\":null},
-    {\"v\":" . $row['Jan'] . ",\"f\":null},
-    {\"v\":" . $row['Feb'] . ",\"f\":null},
-    {\"v\":" . $row['Mar'] . ",\"f\":null},
-    {\"v\":" . $row['Apr'] . ",\"f\":null},
-    {\"v\":" . $row['May'] . ",\"f\":null},
-    {\"v\":" . $row['Jun'] . ",\"f\":null},
-    {\"v\":" . $row['Jul'] . ",\"f\":null},
-    {\"v\":" . $row['Aug'] . ",\"f\":null},
-    {\"v\":" . $row['Sep'] . ",\"f\":null},
-    {\"v\":" . $row['Oct'] . ",\"f\":null},
-    {\"v\":" . $row['Nov'] . ",\"f\":null},
-    {\"v\":" . $row['December'] . ",\"f\":null}
-    ]}";
-    } else {
-        echo "{\"c\":[
-    {\"v\":\"" . $row['Compiler'] . "\",\"f\":null},
-    {\"v\":" . $row['Jan'] . ",\"f\":null},
-    {\"v\":" . $row['Feb'] . ",\"f\":null},
-    {\"v\":" . $row['Mar'] . ",\"f\":null},
-    {\"v\":" . $row['Apr'] . ",\"f\":null},
-    {\"v\":" . $row['May'] . ",\"f\":null},
-    {\"v\":" . $row['Jun'] . ",\"f\":null},
-    {\"v\":" . $row['Jul'] . ",\"f\":null},
-    {\"v\":" . $row['Aug'] . ",\"f\":null},
-    {\"v\":" . $row['Sep'] . ",\"f\":null},
-    {\"v\":" . $row['Oct'] . ",\"f\":null},
-    {\"v\":" . $row['Nov'] . ",\"f\":null},
-    {\"v\":" . $row['December'] . ",\"f\":null}
-    ]}, ";
-    } 
-
+    echo ($strmonth. "#");
+    echo ($strdataseries); 
 }
-echo " ] }";
-}
-
 catch(PDOException $e) {
     echo "Error: " . $e->getMessage();
 }
