@@ -4,6 +4,7 @@
  * Query 1 - Given Object/Library Path.
  * Query 2 - Given ExecName.
  */
+
 $sysHost    = $_GET["sysHost"];
 $startDate  = $_GET["startDate"];
 $endDate    = $_GET["endDate"];
@@ -15,6 +16,7 @@ $page       = $_GET["page"];
 $totalNumRec= $_GET["totalNumRec"];
 $rec_limit  = 10;
 $offset     = 0;
+
 
 try {
     include (__DIR__ ."/wrapper.php");
@@ -71,7 +73,7 @@ try {
             LIMIT $offset, $rec_limit
             ;";
     }
-    #    print_r($sql);
+#    print_r($sql);
 
     $query = $conn->prepare($sql);
     $query->execute();
@@ -133,7 +135,7 @@ try {
         {\"v\":\"" . $row['LinkProgram'] . "\",\"f\":null},
         {\"v\":\"" . $row['ExitCode'] . "\",\"f\":null},
         {\"v\":\"" . $row['BuildUser'] . "\",\"f\":null},
-        {\"v\":" . $r[0]['JobRun'] . ",\"f\":null},
+        {\"v\":" . $row['JobRun'] . ",\"f\":null},
         {\"v\":\"" . $row['Uuid'] . "\",\"f\":null}
         ]}";
         } else {
@@ -143,7 +145,7 @@ try {
         {\"v\":\"" . $row['LinkProgram'] . "\",\"f\":null},
         {\"v\":\"" . $row['ExitCode'] . "\",\"f\":null},
         {\"v\":\"" . $row['BuildUser'] . "\",\"f\":null},
-        {\"v\":" . $r[0]['JobRun'] . ",\"f\":null},
+        {\"v\":" . $row['JobRun'] . ",\"f\":null},
         {\"v\":\"" . $row['Uuid'] . "\",\"f\":null}
         ]}, ";
         } 
