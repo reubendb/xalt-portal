@@ -106,9 +106,9 @@ FILE_PATTERNS          = *.html \
                          *.js \
                          *.php
 RECURSIVE              = NO
-EXCLUDE                = ../include/conn.php 
+EXCLUDE                =  
 EXCLUDE_SYMLINKS       = NO
-EXCLUDE_PATTERNS       =
+EXCLUDE_PATTERNS       = conn.php
 EXCLUDE_SYMBOLS        =
 EXAMPLE_PATH           =
 EXAMPLE_PATTERNS       =
