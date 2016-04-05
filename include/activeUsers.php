@@ -1,6 +1,7 @@
 <?php
-/* 
- * Get active users based on sysHost and given date range.
+/*  
+ * \brief Get active users based on sysHost and given date range.
+ *        X-axis caters for day-week-month distribution depending upon the daterange.
  * */
 
 $sysHost    = $_GET["sysHost"];
