@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <!-- Meta, title, CSS, favicons, etc. -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>XALT! | </title>
+
+        <!-- Bootstrap core CSS -->
+
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+
+        <link href="fonts/css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/animate.min.css" rel="stylesheet">
+
+        <!-- Custom styling plus plugins -->
+        <link href="css/custom.css" rel="stylesheet">
+        <link href="css/icheck/flat/green.css" rel="stylesheet">
+
+
+        <script src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+        <!--[if lt IE 9]>
+        <script src="../assets/js/ie8-responsive-file-warning.js"></script>
+        <![endif]-->
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+
+
+    <body class="nav-md">
+
+        <div class="container body">
+
+
+            <div class="main_container">
+
+                <div class="col-md-3 left_col">
+                    <div class="left_col scroll-view">
+                        <div class="profile">
+                            <div class="profile_pic">
+                                <a href="xaltindex.html" class="site_title"><img src="images/xalt-image.png" alt="..." class="img-thumbnail profile_img"></a>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+
+
+                        <!-- sidebar menu -->
+                        <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+
+                            <div class="menu_section">
+                                <br />
+                                <h3>General</h3>
+                                <ul class="nav side-menu">
+                                    <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu" style="display: none">
+                                        <li><a href="xaltindex.html">Dashboard</a>
+                                        </li>
+                                        <li><a href="xalt_usage.html">Usage</a>
+                                        </li>
+                                        <li><a href="xalt_usp.html">User Provenance</a>
+                                        </li>
+                                        <li><a href="xalt_identify.html">Identify User</a>
+                                        </li>
+                                        <li><a href="xalt_lookup.html">Database LookUp</a>
+                                        </li>
+                                    </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="menu_section">
+                                <ul class="nav side-menu">
+                                    <li><a><i class="fa fa-bug"></i> Additional Pages <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu" style="display: none">
+                                        <li><a href="https://github.com/Fahey-McLay/xalt" target="_blank">Download from Github</a>
+                                        </li>
+                                        <li><a href="https://sourceforge.net/projects/xalt" target="_blank">Download from Sourceforge</a>
+                                        </li>
+                                    </ul>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+                        <!-- /sidebar menu -->
+
+                        <!-- /menu footer buttons -->
+                        <div class="sidebar-footer hidden-small">
+                            <a data-toggle="tooltip" data-placement="top" title="Settings">
+                                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                            </a>
+                            <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+                            </a>
+                            <a data-toggle="tooltip" data-placement="top" title="Lock">
+                                <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+                            </a>
+                            <a data-toggle="tooltip" data-placement="top" title="Logout">
+                                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                            </a>
+                        </div>
+                        <!-- /menu footer buttons -->
+                    </div>
+                </div>
+
+                <!-- top navigation -->
+                <div class="top_nav">
+
+                    <div class="nav_menu">
+                        <nav class="" role="navigation">
+                        <div class="nav toggle">
+                            <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                        </div>
+                        </nav>
+                    </div>
+
+                </div>
+                <!-- /top navigation -->
+
+                <!-- page content -->
+                <div class="right_col" role="main">
+                    <div class="">
+                        <div class="page-title">
+                            <div class="title_left">
+                                <h3>Database LookUp
+                                    <small> Online access to query xalt database through  MySQL query</small>
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+
+                        <div class="row">
+
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="dashboard_graph x_panel">
+                                    <div class="x_title">
+                                        <div class="clearfix"></div>
+                                        <p align="justify"> Select syshost and date range for your queries and enter whole/part of UserID.</p>
+                                    </div> <!-- x_title -->
+                                    <div class="x_content">
+                                        <form id="demo-form" class="form-horizontal form-label-left" data-parsley-validate>
+                                            <div class="form-group">
+                                                <label class="control-label" for="query"> MySQL Query </label>
+                                                    <textarea class="form-control" id="textQuery" rows="8" required="required" ></textarea>
+                                            </div> </br> 
+                                            <div class="form-group">
+                                                <span class="btn btn-default btn-xs" id="startBtn">Submit</span>
+                                            </div>
+                                        </form>
+
+                                    </div> <!-- x_content -->
+                                </div> <!-- x_panel -->
+
+                            </div> <!-- col-md -->
+                        </div> <!-- row -->
+
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="dashboard_graph x_panel">
+                                    <div class="row x_title">
+                                        <div class="col-md-20">
+                                            <h2>Further Details </h2>
+                                            <ul class="nav navbar-right panel_toolbox">
+                                                <li><a class="collapse-link"><i class="fa fa-chevron-down"></i></a></li>
+                                            </ul>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </div>
+                                    <div class="x_content">
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                </br>
+                                                <label id="lblLookup" style="visibility: hidden">Result
+                                                </label>
+                                                <div id="lookup_div" style="visibility: hidden;"></div> <!-- lookup -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>  <!-- col-md -->
+                        </div> <!-- row -->
+
+                        <div id="spinner" style="display: none;" alt="loading..."/>
+                        </div>
+                    </div>
+
+                    <!-- footer content -->
+                    <footer>
+                    <div class="">
+                        <p class="pull-right"><a></a> |
+                        <span class="lead"> <i class="fa fa-paw"></i> XALT!</span>
+                        </p>
+                    </div>
+                    <div class="clearfix"></div>
+                    </footer>
+                    <!-- /footer content -->
+
+                </div>
+                <!-- /page content -->
+            </div>
+
+        </div>
+
+        <div id="custom_notifications" class="custom-notifications dsp_none">
+            <ul class="list-unstyled notifications clearfix" data-tabbed_notifications="notif-group">
+            </ul>
+            <div class="clearfix"></div>
+            <div id="notif-group" class="tabbed_notifications"></div>
+        </div>
+
+        <script src="js/bootstrap.min.js"></script>
+
+        <!-- chart js -->
+        <script src="js/chartjs/chart.min.js"></script>
+        <!-- bootstrap progress js -->
+        <script src="js/progressbar/bootstrap-progressbar.min.js"></script>
+        <script src="js/nicescroll/jquery.nicescroll.min.js"></script>
+        <!-- daterangepicker -->
+        <script type="text/javascript" src="js/moment.min2.js"></script>
+        <script type="text/javascript" src="js/datepicker/daterangepicker.js"></script>
+        <!-- icheck -->
+        <script src="js/icheck/icheck.min.js"></script>
+
+        <script src="js/custom.js"></script>
+
+        <!-- moris js
+        <script src="js/moris/raphael-min.js"></script>
+        <script src="js/moris/morris.js"></script>
+        <script src="js/moris/example.js"></script>
+        -->
+
+        <!-- google/chart -->
+        <script type="text/javascript" src="js/google/lookUp.js"></script>
+
+        <!-- form validation STARTs-->
+        <script type="text/javascript" src="js/parsley/parsley.min.js"></script>
+
+        <!-- startBtn and Validate Form -->
+        <script>
+            var query; 
+
+            $(document).ready(function () {
+                $.listen('parsley:field:validate', function () {
+                    validateFront();
+                });
+                $('#demo-form .btn').on('click', function () {
+                    $('#demo-form').parsley().validate();
+                    validateFront();
+                });
+                var validateFront = function () {
+                    if (true === $('#demo-form').parsley().isValid()) {
+                        $('.bs-callout-info').removeClass('hidden');
+                        $('.bs-callout-warning').addClass('hidden');
+                        } else {
+                        $('.bs-callout-info').addClass('hidden');
+                        $('.bs-callout-warning').removeClass('hidden');
+                    }
+                };  
+                $('#startBtn').on('click', function () {
+                    if (true === $('#demo-form').parsley().isValid()) {
+                        $('#spinner').show();
+                        query = document.getElementById("textQuery").value; 
+                        lookUp(query);
+                    }
+
+                }); 
+
+            });
+            try {
+                hljs.initHighlightingOnLoad();
+            } catch (err) {} 
+        </script>
+        <!-- startBtn and form validation  ENDs-->
+        <!-- form validation  ENDs-->
+
+        <!-- loading spinner starts -->
+        <script type="text/javascript">
+            var t;
+            $(document).ajaxStart(function() {
+                    $('#spinner').show();
+                    });
+            $(document).ajaxStop(function() {
+                    setTimeout("$('#spinner').hide()", 1000);
+                    });
+                </script>
+                <!-- loading spinner ends -->
+
+                <!-- autocomplete -->
+                <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+                <script>
+                    $(function() {
+                        var availableTags = [
+                        "join_id", "env_id", "run_id", "env_value",
+                        "env_name",
+                        "job_id", "run_uuid", "date", "syshost", "uuid", "hash_id", "account", "exec_type", "start_time", "end_time", "run_time", 
+                        "num_cores", "job_num_cores", "num_nodes", "num_threads","queue", "exit_code", "user", "exec_path", "module_name", "cwd",  
+                        "obj_id","object_path", "timestamp", "lib_type", 
+                        "link_id","link_program", "build_user","build_syshost", "build_epoch", "exit_code",
+                        "func_id","function_name",
+                        "xalt_env_name", "join_run_env", "xalt_run", "join_run_object", "xalt_object", "join_link_object", "xalt_link", "join_link_function", "xalt_function" 
+                        ];
+                        function split( val ) {
+                            // return val.split( /,\s*/ );
+                            return val.split( /[,\s]+/ );
+                        }
+                        function extractLast( term ) {
+                            return split( term ).pop();
+                        }
+
+                        $( "#textQuery" )
+                        // don't navigate away from the field on tab when selecting an item
+                        .bind( "keydown", function( event ) {
+                            if ( event.keyCode === $.ui.keyCode.TAB &&
+                            $( this ).autocomplete( "instance" ).menu.active ) {
+                                event.preventDefault();
+                            }
+                        })
+                        .autocomplete({
+                            minLength: 0,
+                            source: function( request, response ) {
+                                // delegate back to autocomplete, but extract the last term
+                                response( $.ui.autocomplete.filter(
+                                availableTags, extractLast( request.term ) ) );
+                            },
+                            focus: function() {
+                                // prevent value inserted on focus
+                                return false;
+                            },
+                            select: function( event, ui ) {
+                                var terms = split( this.value );
+                                // remove the current input
+                                terms.pop();
+                                // add the selected item
+                                terms.push( ui.item.value );
+                                // add placeholder to get the comma-and-space at the end
+                                terms.push( "" );
+                                this.value = terms.join( " " );
+                                return false;
+                            }
+                        });
+                    });
+                </script>
+                <!-- autocomplete -->
+
+            </body>
+
+
+        </html>
