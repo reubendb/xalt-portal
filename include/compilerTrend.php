@@ -88,17 +88,15 @@ try {
     $dataseries = array();
     for($i=0; $i < sizeof($col); $i++) {
         $data= array();
-        // print_r($col[$i]);
         foreach($result as $row){
-            // print_r($row[$col[$i]] . "     ");
             $data[] = $row[$col[$i]];
         }
         $strdata = implode(",", $data);
-        //  print_r($strdata);
         $dataseries[] = "{\"name\" : " . "\"" . $col[$i] . "\", " . "\"data\" :[" . $strdata . "]}"; 
     }
     $strdataseries = "[".implode(", ",$dataseries)."]";
 
+    # header and body of the json data chart
     echo ($strmonth. "#");
     echo ($strdataseries); 
 }
