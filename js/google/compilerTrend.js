@@ -1,3 +1,7 @@
+/*!
+ * Compiler Trend 
+ * */
+
 function compilerTrend(sysHost, startDate, endDate){
 
     console.log("CompilerTrend: " + sysHost + startDate + endDate);
@@ -6,13 +10,15 @@ function compilerTrend(sysHost, startDate, endDate){
          data: "sysHost="+sysHost + "&startDate=" + startDate + "&endDate=" + endDate,
          dataType:"json", async: false
          }).responseText;
+    
+    // Get column header of dataseries 
     var dataChart = chartData.split('#');
+
+    // Get column body of dataseries 
     var dc = JSON.parse(dataChart[1]);
     var dctg = dataChart[0].split(",");
 
-    console.log(dc);
-    console.log(dctg);
-
+    // call chart to render
     var chart = new Highcharts.Chart(
             {chart: {renderTo: 'comp_div',defaultSeriesType: 'line'}
             ,title: {text: 'Compiler Trend Over Time'}
