@@ -7,6 +7,7 @@ $sysHost    = $_GET["sysHost"];
 $startDate  = $_GET["startDate"];
 $endDate    = $_GET["endDate"];
 
+
 try {
 
     include (__DIR__ ."/conn.php");
