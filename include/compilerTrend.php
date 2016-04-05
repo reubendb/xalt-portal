@@ -6,11 +6,7 @@
 $sysHost   = $_GET["sysHost"];
 $startDate = $_GET["startDate"];
 $endDate   = $_GET["endDate"];
-/*
-$sysHost   = "darter";
-$startDate = "2015-01-01";
-$endDate   = "2015-12-31";
- */
+ 
 try {
 
     include (__DIR__ ."/conn.php");
@@ -73,7 +69,7 @@ try {
                 xl.link_program NOT LIKE ' ' AND
                 xl.date BETWEEN '$startDate 00:00:00' AND '$endDate 23:59:59'         
                 GROUP BY Month         
-                ORDER BY Year desc, MonNum desc; 
+                ORDER BY Year desc, MonNum; 
         ";
     }
 
