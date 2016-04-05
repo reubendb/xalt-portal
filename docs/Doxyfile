@@ -156,8 +156,8 @@ HTML_DYNAMIC_SECTIONS  = YES
 HTML_INDEX_NUM_ENTRIES = 100
 GENERATE_DOCSET        = YES
 DOCSET_FEEDNAME        = "XALT Web-portal docs"
-DOCSET_BUNDLE_ID       = org.doxygen.Doxygen
-DOCSET_PUBLISHER_ID    = org.doxygen.Publisher
+DOCSET_BUNDLE_ID       = 
+DOCSET_PUBLISHER_ID    = 
 DOCSET_PUBLISHER_NAME  = Publisher
 GENERATE_HTMLHELP      = NO
 CHM_FILE               =
@@ -168,7 +168,7 @@ BINARY_TOC             = NO
 TOC_EXPAND             = NO
 GENERATE_QHP           = NO
 QCH_FILE               =
-QHP_NAMESPACE          = org.doxygen.Project
+QHP_NAMESPACE          = 
 QHP_VIRTUAL_FOLDER     = doc
 QHP_CUST_FILTER_NAME   =
 QHP_CUST_FILTER_ATTRS  =
@@ -271,7 +271,7 @@ SKIP_FUNCTION_MACROS   = YES
 # Configuration options related to external references
 #---------------------------------------------------------------------------
 TAGFILES               = qtools_docs/qtools.tag=../../qtools_docs/html
-GENERATE_TAGFILE       = doxygen.tag
+GENERATE_TAGFILE       = xalt-web-portal.tag
 ALLEXTERNALS           = NO
 EXTERNAL_GROUPS        = YES
 EXTERNAL_PAGES         = YES
