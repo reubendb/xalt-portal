@@ -72,7 +72,8 @@ try {
     echo "{\"cols\": [
 {\"id\":\"\",\"label\":\"DateTimeRange\",\"pattern\":\"\",\"type\":\"string\"},
 {\"id\":\"\",\"label\":\"Job Users\",\"pattern\":\"\",\"type\":\"number\"},
-{\"id\":\"\",\"label\":\"Build Users\",\"pattern\":\"\",\"type\":\"number\"}
+{\"id\":\"\",\"label\":\"Build Users\",\"pattern\":\"\",\"type\":\"number\"},
+{\"id\":\"\",\"label\":\"Average\",\"pattern\":\"\",\"type\":\"number\"}
 ], 
 \"rows\": [ ";
 
@@ -81,17 +82,22 @@ $row_num = 0;
 $i = 0;
 foreach($result as $row){
     $row_num++;
+    $avg = 0;
+    $avg = ($row['RunUsers'] + $result2[$i]['BuildUsers'] ) / 2;
+
     if ($row_num == $total_rows){
         echo "{\"c\":[
     {\"v\":\"" . $row['DateTimeRange'] . "\",\"f\":null},
     {\"v\":" . $row['RunUsers'] . ",\"f\":null},
-    {\"v\":" . $result2[$i]['BuildUsers'] . ",\"f\":null}
+    {\"v\":" . $result2[$i]['BuildUsers'] . ",\"f\":null},
+    {\"v\":" . $avg . ",\"f\":null}
     ]}";
     } else {
         echo "{\"c\":[
     {\"v\":\"" . $row['DateTimeRange'] . "\",\"f\":null},
     {\"v\":" . $row['RunUsers'] . ",\"f\":null},
-    {\"v\":" . $result2[$i]['BuildUsers'] . ",\"f\":null}
+    {\"v\":" . $result2[$i]['BuildUsers'] . ",\"f\":null},
+    {\"v\":" . $avg . ",\"f\":null}
     ]}, ";
     } 
     $i++;
