@@ -30,10 +30,13 @@ function callActiveUsers(sysHost, startDate, endDate) {
         var options = {title: 'Active Users',
             chartArea: {width: '60%', height:"50%", left: "auto" },
             hAxis: {title: 'DateTimeRange'},
-            vAxis: {title: 'Number of Users'}};
+            vAxis: {title: 'Number of Users'},
+            seriesType: 'bars',
+            series: {2: {type: 'line'}}
+        };
 
         // Instantiate and draw chart.
-        var chart = new google.visualization.ColumnChart(document.getElementById('active_users_div'));
+        var chart = new google.visualization.ComboChart(document.getElementById('active_users_div'));
         chart.draw(barChartData, options);
     }
     if (count == 0){
