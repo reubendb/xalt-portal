@@ -46,7 +46,7 @@ try {
         WHERE xr.syshost = '$sysHost' AND 
         xr.date BETWEEN '$startDate 00:00:00' AND '$endDate 23:59:59'
         $groupBy  
-        ORDER BY Year desc, DateTimeRange desc;
+        ORDER BY Year desc, DateTimeRange ASC;
     ";
 
     $query = $conn->prepare($sql);
@@ -62,7 +62,7 @@ try {
         WHERE xl.build_syshost = '$sysHost' AND 
         xl.date BETWEEN '$startDate 00:00:00' AND '$endDate 23:59:59'
         $groupBy
-        ORDER BY Year desc,DateTimeRange desc; 
+        ORDER BY Year desc,DateTimeRange ASC; 
     ";
 
     $query2 = $conn->prepare($sql_xl);
