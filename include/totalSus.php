@@ -41,7 +41,7 @@ try {
         FROM xalt_run xr WHERE xr.syshost='$sysHost' AND 
         xr.date BETWEEN '$startDate 00:00:00' AND '$endDate 23:59:59'
         $groupBy 
-        ORDER BY Year desc, DateTimeRange desc;
+        ORDER BY Year desc, DateTimeRange asc;
     ";
 
     $query = $conn->prepare($sql);
