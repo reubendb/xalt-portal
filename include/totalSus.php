@@ -1,6 +1,10 @@
 <?php
-/* 
- * Get totatSUs, though this query may not given the correct picture.
+/*
+ * NOTE : THE FILE NAME SAYS TOTAL SU, 
+ * BUT THE QUERY IS CHANGED TO RETURN TOTAL CPU HOURS
+ * 
+ * TOTAL CPU HOURS = NUMBER OF CPU CORES X WALL TIME HOURS
+ * Get CPU hours, though this query may not given the correct picture.
  */ 
 $sysHost   = $_GET["sysHost"];
 $startDate = $_GET["startDate"];
@@ -35,7 +39,7 @@ try {
     }
 
     $sql = "SELECT $dateFormat,  
-        ROUND(SUM(xr.run_time * xr.num_cores)/3600) AS TotalSUs, 
+        ROUND(SUM((xr.run_time/3600) * xr.num_cores)) AS TotalCPUhrs, 
         date(min(xr.date)) as DateTimeRange,
         YEAR(xr.date) AS Year
         FROM xalt_run xr WHERE xr.syshost='$sysHost' AND 
@@ -51,7 +55,7 @@ try {
 
     echo "{ \"cols\": [
 {\"id\":\"\",\"label\":\"DateTimeRange\",\"pattern\":\"\",\"type\":\"string\"}, 
-{\"id\":\"\",\"label\":\"TotalSUs\",\"pattern\":\"\",\"type\":\"number\"} 
+{\"id\":\"\",\"label\":\"Total CPU hrs\",\"pattern\":\"\",\"type\":\"number\"} 
 ], 
 \"rows\": [ ";
 
@@ -64,12 +68,12 @@ foreach($result as $row){
     if ($row_num == $total_rows){
         echo "{\"c\":[
     {\"v\":\"" . $row['DateTimeRange'] . "\",\"f\":null},
-    {\"v\":" . $row['TotalSUs'] . ",\"f\":null}
+    {\"v\":" . $row['TotalCPUhrs'] . ",\"f\":null}
     ]}";
     } else {
         echo "{\"c\":[
     {\"v\":\"" . $row['DateTimeRange'] . "\",\"f\":null},
-    {\"v\":" . $row['TotalSUs'] . ",\"f\":null}
+    {\"v\":" . $row['TotalCPUhrs'] . ",\"f\":null}
     ]}, ";
     } 
 
