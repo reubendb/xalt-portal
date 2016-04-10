@@ -57,7 +57,7 @@ try {
 {\"id\":\"\",\"label\":\"Executable\",\"pattern\":\"\",\"type\":\"string\"},
 {\"id\":\"\",\"label\":\"#Jobs\",\"pattern\":\"\",\"type\":\"number\"},
 {\"id\":\"\",\"label\":\"TotalCPUT\",\"pattern\":\"\",\"type\":\"number\"},
-{\"id\":\"\",\"label\":\"Executable\",\"pattern\":\"\",\"type\":\"string\"},
+{\"id\":\"\",\"label\":\"Average\",\"pattern\":\"\",\"type\":\"number\"},
 {\"id\":\"\",\"label\":\"#Users\",\"pattern\":\"\",\"type\":\"number\"}
 ],
 \"rows\": [ ";
@@ -67,12 +67,14 @@ try {
 
         foreach($result as $row){
             $row_num++;
+            $avg = 0;
+            $avg = round($row['totalcput'] / $row['n_jobs']);
             if ($row_num == $total_rows){
                 echo "{\"c\":[
             {\"v\":\"" . $row['execName'] . "\",\"f\":null},
             {\"v\":" . $row['n_jobs'] . ",\"f\":null},
             {\"v\":" . $row['totalcput'] . ",\"f\":null},
-            {\"v\":\"" . $row['execName'] . "\",\"f\":null},
+            {\"v\":" . $avg . ",\"f\":null},
             {\"v\":" . $row['n_users'] . ",\"f\":null}
             ]}";
             } else {
@@ -80,7 +82,7 @@ try {
             {\"v\":\"" . $row['execName'] . "\",\"f\":null},
             {\"v\":" . $row['n_jobs'] . ",\"f\":null},
             {\"v\":" . $row['totalcput'] . ",\"f\":null},
-            {\"v\":\"" . $row['execName'] . "\",\"f\":null},
+            {\"v\":" . $avg . ",\"f\":null},
             {\"v\":" . $row['n_users'] . ",\"f\":null}
             ]}, ";
             } 
