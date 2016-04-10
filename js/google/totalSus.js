@@ -24,10 +24,10 @@ function totalSus(sysHost, startDate, endDate) {
                 jsonBarChartData);
 
         // Define Chart Options .
-        var options = {title: 'SUs Charged: Total',
+        var options = {title: 'CPU Hours: Total',
             chartArea: {width: '50%', height:"50%", left: "auto" },
             hAxis: {title: 'DateTimeRange'},
-            vAxis: {title: 'TotalSUs',format: 'short',minValue: 0}
+            vAxis: {title: 'CPU Hours',format: 'short',minValue: 0}
         };
 
 
