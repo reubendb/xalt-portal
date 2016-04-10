@@ -20,7 +20,7 @@ try {
         WHERE xr.syshost = '$sysHost' AND
         xr.date BETWEEN '$startDate 00:00:00'  AND '$endDate 23:59:59'
         GROUP BY Month
-        ORDER BY Mon_numeric desc 
+        ORDER BY Mon_numeric asc 
         ";
 
 #    print_r($sql);
