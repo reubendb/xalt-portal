@@ -25,7 +25,7 @@ function totalSus(sysHost, startDate, endDate) {
 
         // Define Chart Options .
         var options = {title: 'CPU Hours: Total',
-            chartArea: {width: '50%', height:"50%", left: "auto" },
+            chartArea: {width: '60%', height:"50%", left: "auto" },
             hAxis: {title: 'DateTimeRange'},
             vAxis: {title: 'CPU Hours',format: 'short',minValue: 0}
         };
