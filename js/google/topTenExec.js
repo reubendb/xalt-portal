@@ -26,9 +26,9 @@ function topTenExec(sysHost, startDate, endDate) {
         // Define Chart Options .
         var options = {title: 'Top Ten Executables',
             height: '50%',
-            width: '50%',
-            hAxis: {title: 'Number of Jobs (log)',scaleType: 'log'},
-            vAxis: {title: 'CPU Time (log)', scaleType: 'log'},
+            width: '60%',
+            hAxis: {title: 'Number of Jobs (log)',logScale: 'True', maxValue: '1000000'},
+            vAxis: {title: 'Core Hours (log)', logScale: 'True', maxValue: '10000000'},
             bubble: {textstyle: {fontSize: 5}}
         };
 
