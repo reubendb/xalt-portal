@@ -17,10 +17,13 @@ try {
     $sql = "
         SELECT CASE 
         WHEN LOWER(SUBSTRING_INDEX(xalt_run.exec_path,'/',-1)) REGEXP 'wrf' then 'WRF*' 
+        WHEN LOWER(SUBSTRING_INDEX(xalt_run.exec_path,'/',-1)) REGEXP 'sgf' then 'SGF*' 
         WHEN LOWER(SUBSTRING_INDEX(xalt_run.exec_path,'/',-1)) REGEXP 'chim' then 'CHIMERA*' 
         WHEN LOWER(SUBSTRING_INDEX(xalt_run.exec_path,'/',-1)) REGEXP 'vasp' then 'VASP*' 
         WHEN LOWER(SUBSTRING_INDEX(xalt_run.exec_path,'/',-1)) REGEXP 'namd' then 'NAMD*' 
         WHEN LOWER(SUBSTRING_INDEX(xalt_run.exec_path,'/',-1)) REGEXP 'lmp' then 'LAMMPS*' 
+        WHEN LOWER(SUBSTRING_INDEX(xalt_run.exec_path,'/',-1)) REGEXP 'kvc' then 'KVC*' 
+        WHEN LOWER(SUBSTRING_INDEX(xalt_run.exec_path,'/',-1)) REGEXP 'md.exe' then 'md.exe*' 
         WHEN LOWER(SUBSTRING_INDEX(xalt_run.exec_path,'/',-1)) REGEXP 'amber' then 'AMBER*' 
         WHEN LOWER(SUBSTRING_INDEX(xalt_run.exec_path,'/',-1)) REGEXP 'charm' then 'CHARMM*' 
         WHEN LOWER(SUBSTRING_INDEX(xalt_run.exec_path,'/',-1)) REGEXP 'enzo' then 'ENZO*' 
@@ -37,7 +40,7 @@ try {
         WHEN LOWER(SUBSTRING_INDEX(xalt_run.exec_path,'/',-1)) REGEXP 'abinit' then 'ABINIT*'
         ELSE SUBSTRING_INDEX(xalt_run.exec_path,'/',-1) END 
         AS execName, ROUND(SUM(run_time*num_cores/3600)) as totalcput, 
-        COUNT(date) as n_jobs, COUNT(DISTINCT(user)) as n_users
+        COUNT(distinct job_id) as n_jobs, COUNT(DISTINCT(user)) as n_users
         FROM xalt_run 
         WHERE syshost = '$sysHost' 
         AND date BETWEEN '$startDate 00:00:00' AND '$endDate 23:59:59' 
