@@ -28,7 +28,8 @@ function callActiveUsers(sysHost, startDate, endDate) {
 
         // Define Chart Options .
         var options = {title: 'Active Users',
-            chartArea: {width: '60%', height:"50%", left: "auto" },
+            chartArea: {width: '80%', height:"70%", left: "auto" },
+            legend: {position: 'top'},
             hAxis: {title: 'DateTimeRange'},
             vAxis: {title: 'Number of Users'},
             seriesType: 'bars',
