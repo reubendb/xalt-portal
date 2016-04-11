@@ -71,8 +71,8 @@ try {
 
     echo "{\"cols\": [
 {\"id\":\"\",\"label\":\"DateTimeRange\",\"pattern\":\"\",\"type\":\"string\"},
-{\"id\":\"\",\"label\":\"Job Users\",\"pattern\":\"\",\"type\":\"number\"},
-{\"id\":\"\",\"label\":\"Build Users\",\"pattern\":\"\",\"type\":\"number\"},
+{\"id\":\"\",\"label\":\"Users Running Jobs\",\"pattern\":\"\",\"type\":\"number\"},
+{\"id\":\"\",\"label\":\"Users Compiling Codes\",\"pattern\":\"\",\"type\":\"number\"},
 {\"id\":\"\",\"label\":\"Average\",\"pattern\":\"\",\"type\":\"number\"}
 ], 
 \"rows\": [ ";
