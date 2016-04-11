@@ -219,6 +219,22 @@
                         <div class="col-md-6 col-md-6 col-xs-12">
                             <div class="x_panel">
                                 <div class="x_title">
+                                    <h2>Top Ten Users <small> using given resource (syshost)</small></h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+
+                                <div class="x_content">
+                                    <div id="top_user_div" style="visibility: hidden; height: 550px;"></div>
+                                </div> 
+                            </div>
+                        </div> <!-- col-md -->
+                        <!--
+                        <div class="col-md-6 col-md-6 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_title">
                                     <h2>Total CPU Hours <small> (number of CPU cores X wall time hours)</small></h2>
                                     <ul class="nav navbar-right panel_toolbox">
                                         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
@@ -230,7 +246,7 @@
                                     <div id="total_su_div" style="visibility: hidden; height: 550px;"></div>
                                 </div> 
                             </div>
-                        </div> <!-- col-md -->
+                        </div> --> <!-- col-md -->
 
                         <div class="col-md-06 col-md-6 col-xs-12"> 
                             <div class="x_panel">
@@ -338,8 +354,9 @@
     <!-- google chart -->
     <script type="text/javascript" src="js/google/activeUsers.js"></script>
     <script type="text/javascript" src="js/google/jobSubmitted.js"></script>
-    <script type="text/javascript" src="js/google/totalSus.js"></script>
+    <!-- <script type="text/javascript" src="js/google/totalSus.js"></script> -->
     <script type="text/javascript" src="js/google/topTenExec.js"></script>
+    <script type="text/javascript" src="js/google/topTenUser.js"></script>
     <script type="text/javascript" src="js/google/compilerTrend.js"></script>
 
 
@@ -451,8 +468,9 @@ cancelClass: 'btn-small',format: 'MM/DD/YYYY',separator: ' to ',locale: {applyLa
             $('#spinner').show();
             callActiveUsers(sysHost, startDate, endDate);
             jobSubmitted(sysHost, startDate, endDate);
-            totalSus(sysHost, startDate, endDate);
+            // totalSus(sysHost, startDate, endDate);
             topTenExec(sysHost, startDate, endDate);
+            topTenUser(sysHost, startDate, endDate);
             compilerTrend(sysHost, startDate, endDate);
             console.log(startDate + endDate + sysHost);});
 
