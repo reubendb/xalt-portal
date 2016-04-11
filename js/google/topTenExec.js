@@ -25,11 +25,10 @@ function topTenExec(sysHost, startDate, endDate) {
 
         // Define Chart Options .
         var options = {title: 'Top Ten Executables',
-            height: '50%',
-            width: '60%',
-            hAxis: {title: 'Number of Jobs (log)',logScale: 'True', maxValue: '1000000'},
-            vAxis: {title: 'Core Hours (log)', logScale: 'True', maxValue: '10000000'},
-            bubble: {textstyle: {fontSize: 5}}
+            chartArea: {width: '80%', height:"70%", left: "auto" },
+            hAxis: {title: 'Number of Jobs (log)',logScale: 'True', minValue: '0', maxValue: '1000000'},
+            vAxis: {title: 'Core Hours (log)', logScale: 'True', minValue: '0' , maxValue: '10000000'},
+            bubble: {textstyle: {fontSize: '3'}}
         };
 
         // Instantiate and draw chart.
