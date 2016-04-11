@@ -4,7 +4,7 @@
  * 2015-Aug-10
  */
 
-google.load("visualization", "1", {packages:["corechart"]});
+google.load("visualization", "1", {packages:["corechart", "line"]});
 function jobSubmitted(sysHost, startDate, endDate) {
 
     console.log("JobSubmitted: " + sysHost + startDate + endDate);
@@ -24,12 +24,15 @@ function jobSubmitted(sysHost, startDate, endDate) {
                 jsonChartData);
 
         //Define Chart Options
-        var options = {title: 'Jobs Submitted',
-            pieHole: 0.4
+        var options = {title: 'Total Number of Jobs Submitted',
+            chartArea: {width: '80%', height:"70%", left: "auto" },
+            legend: {position: 'top'},
+            hAxis: {title: 'Time'},
+            vAxis: {title: 'Number of Jobs', format:'short'}
         };
 
         // Instantiate and draw chart
-        var chart = new google.visualization.PieChart(document.getElementById('jobs_sub_div'));
+        var chart = new google.visualization.LineChart(document.getElementById('jobs_sub_div'));
         chart.draw(chartData, options);
 
     }
