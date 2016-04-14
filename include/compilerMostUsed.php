@@ -5,6 +5,7 @@
 $sysHost   = $_GET["sysHost"];
 $startDate = $_GET["startDate"];
 $endDate   = $_GET["endDate"];
+$numRec    = $_GET["numRec"];
 
 try {
 
@@ -21,6 +22,7 @@ try {
         xl.date BETWEEN '$startDate 00:00:00' AND '$endDate 23:59:59' 
         GROUP BY xl.link_program 
         ORDER BY Count DESC 
+        LIMIT $numRec
         ;";
 
     $query = $conn->prepare($sql);
