@@ -159,8 +159,19 @@
 
                                                 <span>December 30, 2014 - January 28, 2015</span> <b class="caret"></b>
                                             </label>
-
                                         </div>
+                                        </br>
+                                        <div class="form-group">
+                                            <label class="pull-left" for="numRec">Number of Records<span class="required">*</span>
+                                                <select id="select-numRec" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc"> 
+                                                    <option value="5">Top 5</option>
+                                                    <option value="10">Top 10</option>
+                                                    <option value="20">Top 20</option>
+                                                    <option value="10000">All</option>
+                                                </select>
+                                            </label>
+                                        </div>
+                                        </br>
                                         <div class="form-group">
                                             <span class="btn btn-default btn-xs" id="startBtn">Submit</span>
                                         </div>
@@ -207,7 +218,7 @@
                                     </div>
                                     <div class="x_content">
                                         <div class="row">
-                                            <div class="col-xs-auto">
+                                            <div class="col-xs-12">
                                                 <label id="lblModVer0" style="visibility: hidden;">List of Version(s)
                                                     <small>(for given Module)</small>
                                                 </label>
@@ -217,7 +228,8 @@
                                                     <small>[Count = Number of time Object was Linked for given Module-Version]</small>
                                                 </label>
                                             </div>
-                                            <div class="col-xs-auto">
+                                            <div class="col-xs-12">
+                                                </br>
                                                 <label id="lblUserList0" style="visibility: hidden">List of User(s)
                                                     <small>(for given module-verison)</small>
                                                 </label>
@@ -233,8 +245,8 @@
                                                 </label>
                                                 <div id="exec_div" style="visibility: hidden;"></div> <!-- Exec table chart -->
                                                 <label id="lblExecList1" style="visibility: hidden">
-                                                    <small>[Count = Number of Executable Linked Grouped by same ExecName]</small>
-                                                    <small>(*same executable name can be used for multiple linkages)</small>
+                                                    <small>[Count = Number of Executable Linked having same name]</small>
+                                                    <small>(*each compilation is unique for XALT)</small>
                                                 </label>
                                             </div>
                                         </div>
@@ -250,7 +262,7 @@
                                 <div class="dashboard_graph x_panel">
                                     <div class="row x_title">
                                         <div class="col-md-20">
-                                            <h2>Executable Details </h2></br>
+                                            <h2>Executable Compile Time Details </h2>
                                             <ul class="nav navbar-right panel_toolbox">
                                                 <li><a class="collapse-link"><i class="fa fa-chevron-down"></i></a></li>
                                             </ul>
@@ -260,7 +272,6 @@
                                         <div class="row">
                                             <div class="col-xs-auto">
                                                 <label id="lblExecDetailList" style="visibility: hidden">Executable details 
-                                                    <small> (Number of records may be more as it is irrespective of build user)</small>
                                                 </label>
                                                 <div id="exec_detail_div" style="visibility: hidden;" ></div> <!-- Exec Detail table chart -->
                                             </div> 
@@ -277,7 +288,7 @@
                                                 </label>
                                                 <div id="func_div" style="visibility: hidden;"></div> <!-- Function table -->
                                             </div>
-                                           <div class="col-xs-auto">
+                                            <div class="col-xs-auto">
                                                 </br>
                                                 <label id="lblRunDetail" style="visibility: hidden">Job Run details 
                                                     <small>(*nC-nJC-nN-nT ~ #Cores-#JobNumCores-#Nodes-#Threads)</small>
@@ -590,8 +601,9 @@
                     $('#startBtn').on('click', function () {
                             console.log("start/end dates are " + startDate + " to " + endDate + " to Syshost " + sysHost );
                             query = 1;
-                            mostUsedModules(sysHost, startDate, endDate);
-                            compilerMostUsed(sysHost, startDate, endDate);
+                            var numRec = document.getElementById("select-numRec").value;
+                            mostUsedModules(sysHost, startDate, endDate, numRec);
+                            compilerMostUsed(sysHost, startDate, endDate, numRec);
                             console.log(startDate + endDate + sysHost);
                             });
             });
