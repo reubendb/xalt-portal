@@ -10,6 +10,7 @@ $endDate   = $_GET["endDate"];
 $q         = $_GET["query"];
 $module    = $_GET["module"];
 $userId    = $_GET["userId"];
+$numRec    = $_GET["numRec"];
 
 try {
 
@@ -34,13 +35,14 @@ try {
             xo.syshost = '$sysHost' AND
             xo.module_name IS NOT NULL
             GROUP BY Modules
-            ORDER BY Modules;
+            ORDER BY Count Desc 
+            LIMIT $numRec;
         ";
 
         $columns = "
     {\"id\":\"\",\"label\":\"Modules\",\"pattern\":\"\",\"type\":\"string\"}, 
     {\"id\":\"\",\"label\":\"Count\",\"pattern\":\"\",\"type\":\"number\"},
-    {\"id\":\"\",\"label\":\"#UniqueUser\",\"pattern\":\"\",\"type\":\"number\"}
+    {\"id\":\"\",\"label\":\"#UniqueBuildUser\",\"pattern\":\"\",\"type\":\"number\"}
     ";
 
     } else if ($q == 2) {      /* Go deep to look for versions xalt_usage.html */
@@ -65,7 +67,7 @@ try {
     {\"id\":\"\",\"label\":\"Modules\",\"pattern\":\"\",\"type\":\"string\"}, 
     {\"id\":\"\",\"label\":\"Versions\",\"pattern\":\"\",\"type\":\"string\"}, 
     {\"id\":\"\",\"label\":\"Count\",\"pattern\":\"\",\"type\":\"number\"},
-    {\"id\":\"\",\"label\":\"#UniqueUser\",\"pattern\":\"\",\"type\":\"number\"}
+    {\"id\":\"\",\"label\":\"#UniqueBuildUser\",\"pattern\":\"\",\"type\":\"number\"}
     ";
     } 
 
