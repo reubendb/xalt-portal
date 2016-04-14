@@ -7,11 +7,12 @@
 
 google.load('visualization', '1', {packages: ['corechart','table']});
 
-function compilerMostUsed(sysHost, startDate, endDate) {
+function compilerMostUsed(sysHost, startDate, endDate, numRec) {
 
     var jsonChartData = $.ajax
         ({url: "include/compilerMostUsed.php",
-         data: "sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate, 
+         data: "sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate 
+         + "&numRec=" + numRec, 
          dataType:"json", async: false
          }).responseText;
 
