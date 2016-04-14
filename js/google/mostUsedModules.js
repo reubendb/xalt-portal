@@ -7,14 +7,14 @@
 
 google.load('visualization', '1.0', {packages: ['corechart','table']});
 
-function mostUsedModules(sysHost, startDate, endDate) {
+function mostUsedModules(sysHost, startDate, endDate, numRec) {
 
     console.log('query = ' + query);   /* query = 1 for first call */
 
     var jsonChartData = $.ajax
         ({url: "include/mostUsedModules.php",
          data: "sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate + 
-         "&query=" + query,
+         "&query=" + query + "&numRec=" + numRec,
          dataType:"json", async: false
          }).responseText;
 
@@ -34,9 +34,10 @@ function mostUsedModules(sysHost, startDate, endDate) {
 
         // Define Chart Options .
         var options = {title: 'Modules Usage',
-            chartArea:{width: '90%'},
+            chartArea:{width: '80%', left: 'auto'},
+            legend: {position: 'top'},
             hAxis:{title: 'Modules'},
-            vAxis:{title: 'Count', scaleType: 'log'}
+            vAxis:{title: '#Instance / #Users (log scale)', scaleType: 'log', format:'short'}
         };
 
         // Instantiate and draw chart.
