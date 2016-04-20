@@ -21,7 +21,7 @@ function mostUsedModules(sysHost, startDate, endDate, numRec) {
     // Hide all tables which are not required.
     var idsToHide = ['lblModVer0', 'mod3_div', 'lblModVer1', 'lblUserList0', 'mod4_div',
         'lblUserList1','lblExecList0','exec_div', 'lblExecList1', 'lblExecDetailRow', 
-        'lblExecDetailList','exec_detail_div','lblRunDetail','run_detail_div',
+        'lblExecDetailList','exec_detail_div','lblRunDetail','run_detail_div', 'lblRunDetail1',
         'lblObj', 'obj_div', 'lblRunObj', 'runObj_div', 'lblRunEnv', 'run_env_div',
         'lblFunc', 'func_div'];
     hideAllDivs(idsToHide);
@@ -99,8 +99,8 @@ function gT0(syshost, startDate, endDate, module) {         /* List version of g
     var idsToHide = ['lblModVer0', 'lblModVer1', 'mod3_div',
         'lblUserList0', 'mod4_div','lblUserList1', 'lblExecList0','exec_div', 
         'lblExecList1', 'lblExecDetailRow', 'lblExecDetailList','exec_detail_div',
-        'lblRunDetail','run_detail_div', 'lblObj', 'obj_div', 'lblRunObj', 'runObj_div', 
-        'lblRunEnv', 'run_env_div', 'lblFunc', 'func_div'];
+        'lblRunDetail','run_detail_div', 'lblRunDetail1', 'lblObj', 'obj_div', 
+        'lblRunObj', 'runObj_div', 'lblRunEnv', 'run_env_div', 'lblFunc', 'func_div'];
     hideAllDivs(idsToHide);
 
     var count = checkJsonData(jsonTableData);             /* if no data is returned do Nothing!! */
@@ -148,7 +148,8 @@ function gT1(sysHost, startDate, endDate, module, version) {      /* get list of
     // List ids to hide
     var idsToHide = ['lblUserList0', 'lblUserList1','mod4_div', 'lblExecList0','exec_div', 
         'lblExecList1', 'lblExecDetailRow', 'lblExecDetailList','exec_detail_div',
-        'lblRunDetail','run_detail_div', 'lblObj', 'obj_div', 'lblRunObj', 'runObj_div', 
+        'lblRunDetail','run_detail_div', 'lblRunDetail1', 'lblObj', 'obj_div', 
+        'lblRunObj', 'runObj_div', 
         'lblRunEnv', 'run_env_div', 'lblFunc', 'func_div'];
     hideAllDivs(idsToHide);
 
@@ -197,8 +198,8 @@ function gT2(sysHost, startDate, endDate, module, version, user) {       /* get 
     // List ids to hide
     var idsToHide = ['lblExecList0', 'lblExecList1', 'exec_div',
         'lblExecDetailRow','lblExecDetailList','exec_detail_div',
-        'lblRunDetail','run_detail_div','lblObj', 'obj_div', 'lblRunObj', 'runObj_div', 
-        'lblRunEnv', 'run_env_div', 'lblFunc', 'func_div'];
+        'lblRunDetail','run_detail_div','lblRunDetail1', 'lblObj', 'obj_div', 
+        'lblRunObj', 'runObj_div', 'lblRunEnv', 'run_env_div', 'lblFunc', 'func_div'];
     hideAllDivs(idsToHide);
 
     var count = checkJsonData(jsonTableData);             /* if no data is returned do Nothing!! */
@@ -251,8 +252,8 @@ function gT3(sysHost, startDate, endDate, module, version, user, exec, page, tot
 
     // List ids to hide
     var idsToHide = ['lblExecDetailRow', 'lblExecDetailList', 'exec_detail_div', 
-        'lblRunDetail','run_detail_div', 'lblObj', 'obj_div', 'lblRunObj', 'runObj_div', 
-        'lblRunEnv', 'run_env_div', 'lblFunc', 'func_div'];
+        'lblRunDetail','run_detail_div', 'lblRunDetail1', 'lblObj', 'obj_div', 
+        'lblRunObj', 'runObj_div', 'lblRunEnv', 'run_env_div', 'lblFunc', 'func_div'];
     hideAllDivs(idsToHide);
 
     var count = checkJsonData(jsonTableData);        /* if no data is returned do Nothing!! */
@@ -306,14 +307,15 @@ function gT4(uuid) {               /* get job run details */
     var div_id = 'run_detail_div';
 
     // List ids to hide
-    var idsToHide = ['lblRunDetail','run_detail_div', 'lblRunObj', 'runObj_div',
-        'lblRunEnv', 'run_env_div'];
+    var idsToHide = ['lblRunDetail','run_detail_div','lblRunDetail1', 
+        'lblRunObj', 'runObj_div','lblRunEnv', 'run_env_div'];
     hideAllDivs(idsToHide);
 
     var count = checkJsonData(jsonTableData);             /* if no data is returned do Nothing!! */
     if (count != 0) {
         document.getElementById("lblRunDetail").style.visibility = 'visible';
         document.getElementById("run_detail_div").style.visibility = 'visible';
+        document.getElementById("lblRunDetail1").style.visibility = 'visible';
 
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);
