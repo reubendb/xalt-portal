@@ -2,7 +2,6 @@
 /*
  * Get Job Details for given userID, sysHost and date range. 
  */
-
 $sysHost    = $_GET["sysHost"];
 $startDate  = $_GET["startDate"];
 $endDate    = $_GET["endDate"];
@@ -33,7 +32,7 @@ try {
         ORDER BY Date DESC;
     ";
 
-    # print_r($sql);
+#    print_r($sql);
 
     $query = $conn->prepare($sql);
     $query->execute();
