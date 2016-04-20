@@ -96,14 +96,15 @@ function gTu0(sysHost, startDate, endDate, userId, exec) {         /* get exec d
 
 function gTu1(sysHost, startDate, endDate, userId, uuid) {         /* get run details */
 
-    console.log("UUId= " + uuid);
-
+    console.log("[uspJobDetail:]" + sysHost + startDate + endDate + userId + uuid);
     var jsonTableData = $.ajax
         ({url:"include/uspJobDetail.php",
          data: "sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate + 
-         "&userId=" + userId  + "uuid=" + uuid,
+         "&userId=" + userId  + "&uuid=" + uuid,
          datatype: "json", async: false
          }).responseText;
+
+    console.log(jsonTableData);
 
     var div_id = 'usp_run_div';
 
