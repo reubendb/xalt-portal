@@ -3,7 +3,7 @@
  * 2015-Aug-10
  */
 
-google.load('visualization', '1', {packages: ['corechart', 'bar']});
+google.load('visualization', '1', {packages: ['corechart', 'table']});
 
 function lookUp(query) {
 
@@ -41,6 +41,7 @@ function drawTable(TableData, div_id, count) {
     if (count > 10){
         tab_options = {title: 'Table View',
             height: 260,
+            showRowNumber: 'True',
             width: '100%',
             allowHtml: true,
             alternatingRowStyle: true
@@ -49,6 +50,7 @@ function drawTable(TableData, div_id, count) {
         tab_options = {title: 'Table View',
             height: '100%',
             width: '100%',
+            showRowNumber: 'True',
             allowHtml: true,
             alternatingRowStyle: true,
             page: 'enable', pageSize: '10'
