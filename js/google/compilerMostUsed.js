@@ -18,9 +18,9 @@ function compilerMostUsed(sysHost, startDate, endDate, numRec) {
 
     // List ids to hide
     var idsToHide = ['lblCompUser0', 'comp3_div', 'lblCompUser1', 'lblCompExec0', 'lblCompExec1', 
-        'comp4_div', 'lblCompExecRow', 'lblCompExecDetail0','comp5_div','lblCompRun0','comp6_div',
-        'lblObj1', 'obj_div1', 'lblRunObj1', 'runObj_div1','lblRunEnv1', 'run_env_div1',
-        'lblFunc1', 'func_div1']; 
+        'comp4_div', 'lblCompExecRow', 'lblCompExecDetail0','comp5_div',
+        'lblCompRun0','comp6_div','lblCompRunDetail1', 'lblObj1', 'obj_div1', 
+        'lblRunObj1', 'runObj_div1','lblRunEnv1', 'run_env_div1','lblFunc1', 'func_div1']; 
     hideAllDivs(idsToHide);
 
     var count = checkJsonData(jsonChartData);             /* if no data is returned do Nothing!! */
@@ -92,8 +92,8 @@ function gTc1(sysHost, startDate, endDate, linkProgram) {         /* Get user li
     // List ids to hide
     var idsToHide = ['lblCompUser0', 'comp3_div', 'lblCompUser1',
         'lblCompExec0', 'comp4_div', 'lblCompExec1', 'lblCompExecRow', 'lblCompExecDetail0',
-        'comp5_div','lblCompRun0','comp6_div', 'lblObj1', 'obj_div1', 'lblRunObj1', 
-        'runObj_div1', 'lblRunEnv1', 'run_env_div1', 'lblFunc1', 'func_div1']; 
+        'comp5_div','lblCompRun0','comp6_div', 'lblCompRunDetail1', 'lblObj1', 'obj_div1', 
+        'lblRunObj1', 'runObj_div1', 'lblRunEnv1', 'run_env_div1', 'lblFunc1', 'func_div1']; 
     hideAllDivs(idsToHide);
 
     var count = checkJsonData(jsonTableData);             /* if no data is returned do Nothing!! */
@@ -138,7 +138,7 @@ function gTc2(sysHost, startDate, endDate, linkProgram,user) {     /* get exec l
 
     // List ids to hide
     var idsToHide = ['lblCompExec0', 'lblCompExec1', 'comp4_div',
-        'lblCompExecRow', 'lblCompExecDetail0','comp5_div','lblCompRun0','comp6_div',
+        'lblCompExecRow', 'lblCompExecDetail0','comp5_div','lblCompRun0','comp6_div','lblCompRunDetail1',
         'lblObj1', 'obj_div1', 'lblRunObj1', 'runObj_div1', 'lblRunEnv1', 'run_env_div1',
         'lblFunc1', 'func_div1']; 
     hideAllDivs(idsToHide);
@@ -191,8 +191,8 @@ function gTc3(sysHost, startDate, endDate, linkProgram, user, exec, page, totalN
 
     // List ids to hide
     var idsToHide = ['lblCompExecRow', 'lblCompExecDetail0','comp5_div', 'lblCompRun0',
-        'comp6_div', 'lblObj1', 'obj_div1', 'lblRunObj1', 'runObj_div1', 'lblRunEnv1', 
-        'run_env_div1', 'lblFunc1', 'func_div1']; 
+        'comp6_div', 'lblCompRunDetail1', 'lblObj1', 'obj_div1', 'lblRunObj1', 
+        'runObj_div1', 'lblRunEnv1', 'run_env_div1', 'lblFunc1', 'func_div1']; 
     hideAllDivs(idsToHide);
 
     var count = checkJsonData(jsonTableData);             /* if no data is returned do Nothing!! */
@@ -245,7 +245,7 @@ function gTc4(uuid) {         /* get run details */
     var div_id = 'comp6_div';
 
     // List ids to hide
-    var idsToHide = ['lblCompRun0','comp6_div',
+    var idsToHide = ['lblCompRun0','comp6_div','lblCompRunDetail1',
        'lblRunObj1', 'runObj_div1', 'lblRunEnv1', 'run_env_div1']; 
     hideAllDivs(idsToHide);
 
@@ -254,6 +254,7 @@ function gTc4(uuid) {         /* get run details */
 
         document.getElementById("lblCompRun0").style.visibility = 'visible';
         document.getElementById("comp6_div").style.visibility = 'visible';
+        document.getElementById("lblCompRunDetail1").style.visibility = 'visible';
 
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);
