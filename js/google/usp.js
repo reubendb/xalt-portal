@@ -19,7 +19,7 @@ function usp(sysHost, startDate, endDate, userId) {        /* get exec list */
 
     // Hide all tables which are not required.
     var idsToHide = ['lblExec0', 'usp_exec_div', 'lblExec1', 'lblExecDetail0', 
-        'usp_exDetail_div', 'lblObj', 'obj_div', 'lblUspRun0', 'usp_run_div', 
+        'usp_exDetail_div', 'lblObj', 'obj_div', 'lblUspRun0', 'usp_run_div','lblUspRun1', 
         'lblRunObj', 'runObj_div', 'lblRunEnv', 'run_env_div', 'lblFunc', 'func_div'];
     hideAllDivs(idsToHide);
 
@@ -63,7 +63,7 @@ function gTu0(sysHost, startDate, endDate, userId, exec) {         /* get exec d
 
     // Hide all tables which are not required.
     var idsToHide = ['lblExecDetail0', 'usp_exDetail_div', 'lblObj', 'obj_div',
-        'lblUspRun0', 'usp_run_div', 'lblRunObj', 'runObj_div', 'lblRunEnv', 
+        'lblUspRun0', 'usp_run_div', 'lblUspRun1','lblRunObj', 'runObj_div', 'lblRunEnv', 
         'run_env_div','lblFunc', 'func_div'];
     hideAllDivs(idsToHide);
 
@@ -109,8 +109,9 @@ function gTu1(sysHost, startDate, endDate, userId, uuid) {         /* get run de
     var div_id = 'usp_run_div';
 
     // Hide all tables which are not required.
-    var idsToHide = ['lblUspRun0', 'usp_run_div', 'lblObj', 'obj_div','lblRunObj', 
-        'runObj_div', 'lblRunEnv', 'run_env_div', 'lblFunc', 'func_div'];
+    var idsToHide = ['lblUspRun0', 'usp_run_div', 'lblUspRun1',
+        'lblObj', 'obj_div','lblRunObj', 'runObj_div', 
+        'lblRunEnv', 'run_env_div', 'lblFunc', 'func_div'];
     hideAllDivs(idsToHide);
 
     var count = checkJsonData(jsonTableData);             /* if no data is returned do Nothing!! */
@@ -118,6 +119,7 @@ function gTu1(sysHost, startDate, endDate, userId, uuid) {         /* get run de
 
         document.getElementById("lblUspRun0").style.visibility = 'visible';
         document.getElementById("usp_run_div").style.visibility = 'visible';
+        document.getElementById("lblUspRun1").style.visibility = 'visible';
 
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);
