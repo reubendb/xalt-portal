@@ -50,7 +50,7 @@ function usp(sysHost, startDate, endDate, userId) {        /* get exec list */
     }
 }
 
-function gTu0(syshost, startDate, endDate, userId, exec) {         /* get exec detail list  */
+function gTu0(sysHost, startDate, endDate, userId, exec) {         /* get exec detail list  */
 
     console.log("[uspExecDetail] " + userId + exec);
     var jsonTableData = $.ajax
@@ -83,7 +83,7 @@ function gTu0(syshost, startDate, endDate, userId, exec) {         /* get exec d
             var row = selection[0].row;
             var col = selection[0].column;
             var uuid = TableData.getValue(row,6);
-            gTu1(uuid);       /* get run details */      
+            gTu1(sysHost, startDate, endDate, userId, uuid);       /* get run details */      
             gTu2(uuid);       /* get object information */
             gTu5(uuid);       /* get functions called  */
         }
@@ -94,18 +94,14 @@ function gTu0(syshost, startDate, endDate, userId, exec) {         /* get exec d
     }
 }   
 
-/* gTu1:
- * userId is not needed as User A might be using exec compiled by user B   
- * Date Range is also not required as we don't care if it was comipled by User xyz at xyz time
- */
-
-function gTu1(uuid) {         /* get run details */
+function gTu1(sysHost, startDate, endDate, userId, uuid) {         /* get run details */
 
     console.log("UUId= " + uuid);
 
     var jsonTableData = $.ajax
-        ({url:"include/runDetail.php",
-         data:  "uuid=" + uuid,
+        ({url:"include/uspJobDetail.php",
+         data: "sysHost=" + sysHost + "&startDate=" + startDate + "&endDate=" + endDate + 
+         "&userId=" + userId  + "uuid=" + uuid,
          datatype: "json", async: false
          }).responseText;
 
