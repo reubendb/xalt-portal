@@ -26,7 +26,7 @@ try {
         ORDER BY No_Jobs DESC;
     ";
 
-    # print_r($sql);
+#     print_r($sql);
 
     $query = $conn->prepare($sql);
     $query->execute();
