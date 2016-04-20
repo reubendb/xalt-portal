@@ -270,7 +270,7 @@
                                     </div>
                                     <div class="x_content">
                                         <div class="row">
-                                            <div class="col-xs-auto">
+                                            <div class="col-xs-12">
                                                 <label id="lblExecDetailList" style="visibility: hidden">Executable details 
                                                 </label>
                                                 <div id="exec_detail_div" style="visibility: hidden;" ></div> <!-- Exec Detail table chart -->
@@ -288,21 +288,24 @@
                                                 </label>
                                                 <div id="func_div" style="visibility: hidden;"></div> <!-- Function table -->
                                             </div>
-                                            <div class="col-xs-auto">
+                                            <div class="col-xs-12">
                                                 </br>
                                                 <label id="lblRunDetail" style="visibility: hidden">Job Run details 
-                                                    <small>(*nC-nJC-nN-nT ~ #Cores-#JobNumCores-#Nodes-#Threads)</small>
+                                                    <small>(Run Details of UUID, irrespective of build users.)</small>
                                                 </label>
                                                 <div id="run_detail_div" style="visibility: hidden;"></div> <!-- Job Run table chart -->
+                                                <label id="lblRunDetail1" style="visibility: hidden">
+                                                    <small>(*nC-nJC-nN-nT ~ #Cores-#JobNumCores-#Nodes-#Threads)</small>
+                                                </label>
                                             </div>
-                                            <div class="col-xs-auto">
+                                            <div class="col-xs-12">
                                                 </br>
                                                 <label id="lblRunEnv" style="visibility: hidden">Run Environment Details 
                                                     <small>(for the given Job)</small>
                                                 </label>
                                                 <div id="run_env_div" style="visibility: hidden;"></div> <!-- Job Run table chart -->
                                             </div>
-                                            <div class="col-xs-auto">
+                                            <div class="col-xs-12">
                                                 </br>
                                                 <label id="lblRunObj" style="visibility: hidden">Objects Linked at RunTime 
                                                     <small>(to the given Executable)</small>
@@ -353,7 +356,7 @@
                                     </div>
                                     <div class="x_content">
                                         <div class="row">
-                                            <div class="col-xs-auto">
+                                            <div class="col-xs-12">
                                                 <label id="lblCompUser0" style="visibility: hidden;">List of User(s) 
                                                     <small>(for given LinkProgram)</small>
                                                 </label>
@@ -361,8 +364,9 @@
                                                 <label id="lblCompUser1" style="visibility: hidden;" align="right"> 
                                                     <small>[Count = Number of Executable linked by the User]</small>
                                                 </label>
-                                            </div> </br>
-                                            <div class="col-xs-auto">
+                                            </div> 
+                                            <div class="col-xs-12">
+                                                </br>
                                                 <label id="lblCompExec0" style="visibility: hidden;">
                                                     List of Executable(s) <small>(for given user-linkProgram)</small>
                                                 </label>
@@ -396,7 +400,7 @@
                                     </div>
                                     <div class="x_content">
                                         <div class="row">
-                                            <div class="col-xs-auto">
+                                            <div class="col-xs-12">
                                                 <label id="lblCompExecDetail0" style="visibility: hidden">Executable Details </label>
                                                 <div id="comp5_div" style="visibility: hidden;"></div> <!-- Exec Detail table -->
                                             </div> 
@@ -413,21 +417,24 @@
                                                 </label>
                                                 <div id="func_div1" style="visibility: hidden;"></div> <!-- Function table -->
                                             </div>
-                                            <div class="col-xs-auto">
+                                            <div class="col-xs-12">
                                                 </br>
                                                 <label id="lblCompRun0" style="visibility: hidden">Job Run details 
-                                                    <small>(*nC-nJC-nN-nT ~ #Cores-#JobNumCores-#Nodes-#Threads)</small>
+                                                    <small>(Run Details of UUID, irrespective of build users.)</small>
                                                 </label>
                                                 <div id="comp6_div" style="visibility: hidden;"></div> <!-- Job Run table -->
+                                                <label id="lblCompRunDetail1" style="visibility: hidden">
+                                                    <small>(*nC-nJC-nN-nT ~ #Cores-#JobNumCores-#Nodes-#Threads)</small>
+                                                </label>
                                             </div>
-                                            <div class="col-xs-auto">
+                                            <div class="col-xs-12">
                                                 </br>
                                                 <label id="lblRunEnv1" style="visibility: hidden">Run Environment Details 
                                                     <small>(for the given Job)</small>
                                                 </label>
                                                 <div id="run_env_div1" style="visibility: hidden;"></div> <!-- Job Run table chart -->
                                             </div>
-                                            <div class="col-xs-auto">
+                                            <div class="col-xs-12">
                                                 </br>
                                                 <label id="lblRunObj1" style="visibility: hidden">Objects Linked at RunTime 
                                                     <small>(to the given Executable)</small>
