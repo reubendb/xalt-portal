@@ -10,19 +10,21 @@ $userId     = $_GET["userId"];
 $uuid       = $_GET["uuid"];
 
 try {
+    include (__DIR__ ."/wrapper.php");
     include (__DIR__ ."/conn.php");
 
     $conn = new PDO("mysql:host=$servername;dbname=$db", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $sql="SELECT xr.job_id AS Job_ID, xr.date AS Date, 
-        FROM_UNIXTIME(xr.start_time) AS StartTime,
-        FROM_UNIXTIME(xr.end_time) AS EndTime,
-        xr.account AS Account,
-        CONCAT(xr.num_cores, '      ', xr.num_nodes, '      ', xr.num_threads) AS
-        'Cores  Nodes  Threads',
-        queue AS Queue
-        FROM xalt_run xr 
+    $sql="
+        SELECT xr.run_id AS RunId, xr.job_id AS JobId, xr.date AS Date,
+        CONCAT(xr.num_cores,'     ',  xr.job_num_cores, '     ',num_nodes, '    ', num_threads) AS
+        'Cores JobNumCores  Nodes Threads', 
+        xr.account AS Account, xr.exec_type AS ExecType, xr.run_time AS RunTime,
+        xr.exit_code AS ExitCode,
+        xr.user AS RunUser, 
+        xr.cwd AS Cwd 
+        FROM xalt_run AS xr
         WHERE xr.uuid = '$uuid' AND
         xr.user = '$userId' AND
         xr.syshost = '$sysHost' AND
@@ -39,46 +41,56 @@ try {
     $result = $query->fetchAll(PDO:: FETCH_ASSOC);
 
     echo "{ \"cols\": [
-{\"id\":\"\",\"label\":\"Job_ID\",\"pattern\":\"\",\"type\":\"string\"}, 
-{\"id\":\"\",\"label\":\"Date\",\"pattern\":\"\",\"type\":\"string\"}, 
-{\"id\":\"\",\"label\":\"StartTime\",\"pattern\":\"\",\"type\":\"string\"}, 
-{\"id\":\"\",\"label\":\"EndTime\",\"pattern\":\"\",\"type\":\"string\"}, 
-{\"id\":\"\",\"label\":\"Account\",\"pattern\":\"\",\"type\":\"string\"},
-{\"id\":\"\",\"label\":\"Cores  Nodes  Threads\",\"pattern\":\"\",\"type\":\"string\"},
-{\"id\":\"\",\"label\":\"Queue\",\"pattern\":\"\",\"type\":\"string\"}
+{\"id\":\"\",\"label\":\"RunId\",\"pattern\":\"\",\"type\":\"string\"},
+{\"id\":\"\",\"label\":\"JobId\",\"pattern\":\"\",\"type\":\"string\"}, 
+{\"id\":\"\",\"label\":\"Run Date\",\"pattern\":\"\",\"type\":\"string\"}, 
+{\"id\":\"\",\"label\":\"nC-nJC-nN-nT\",\"pattern\":\"\",\"type\":\"string\"}, 
+{\"id\":\"\",\"label\":\"Account\",\"pattern\":\"\",\"type\":\"string\"}, 
+{\"id\":\"\",\"label\":\"Exec Type\",\"pattern\":\"\",\"type\":\"string\"}, 
+{\"id\":\"\",\"label\":\"Run Time (sec)\",\"pattern\":\"\",\"type\":\"string\"}, 
+{\"id\":\"\",\"label\":\"ExitCode\",\"pattern\":\"\",\"type\":\"string\"}, 
+{\"id\":\"\",\"label\":\"Run User\",\"pattern\":\"\",\"type\":\"string\"}, 
+{\"id\":\"\",\"label\":\"CurrentWorkingDir\",\"pattern\":\"\",\"type\":\"string\"} 
 ], 
 \"rows\": [ ";
 
-$total_rows = $query->rowCount();
-$row_num = 0;
+    $total_rows = $query->rowCount();
+    $row_num = 0;
 
-foreach($result as $row){
-    $row_num++;
+    foreach($result as $row){
+        $row_num++;
+        $cwd= wrapper($row['Cwd'], 45);
 
-    if ($row_num == $total_rows){
-        echo "{\"c\":[
-    {\"v\":\"" . $row['Job_ID'] . "\",\"f\":null},
-    {\"v\":\"" . $row['Date'] . "\",\"f\":null},
-    {\"v\":\"" . $row['StartTime'] . "\",\"f\":null},
-    {\"v\":\"" . $row['EndTime'] . "\",\"f\":null},
-    {\"v\":\"" . $row['Account'] . "\",\"f\":null},
-    {\"v\":\"" . $row['Cores  Nodes  Threads'] . "\",\"f\":null},
-    {\"v\":\"" . $row['Queue'] . "\",\"f\":null}
-    ]}";
-    } else {
-        echo "{\"c\":[
-    {\"v\":\"" . $row['Job_ID'] . "\",\"f\":null},
-    {\"v\":\"" . $row['Date'] . "\",\"f\":null},
-    {\"v\":\"" . $row['StartTime'] . "\",\"f\":null},
-    {\"v\":\"" . $row['EndTime'] . "\",\"f\":null},
-    {\"v\":\"" . $row['Account'] . "\",\"f\":null},
-    {\"v\":\"" . $row['Cores  Nodes  Threads'] . "\",\"f\":null},
-    {\"v\":\"" . $row['Queue'] . "\",\"f\":null}
-    ]}, ";
-    } 
+        if ($row_num == $total_rows){
+            echo "{\"c\":[
+        {\"v\":\"" . $row['RunId'] . "\",\"f\":null},
+        {\"v\":\"" . $row['JobId'] . "\",\"f\":null},
+        {\"v\":\"" . $row['Date'] . "\",\"f\":null},
+        {\"v\":\"" . $row['Cores JobNumCores  Nodes Threads'] . "\",\"f\":null},
+        {\"v\":\"" . $row['Account'] . "\",\"f\":null},
+        {\"v\":\"" . $row['ExecType'] . "\",\"f\":null},
+        {\"v\":\"" . $row['RunTime'] . "\",\"f\":null},
+        {\"v\":\"" . $row['ExitCode'] . "\",\"f\":null},
+        {\"v\":\"" . $row['RunUser'] . "\",\"f\":null},
+        {\"v\":\"" . $cwd . "\",\"f\":null}
+        ]}";
+        } else {
+            echo "{\"c\":[
+        {\"v\":\"" . $row['RunId'] . "\",\"f\":null},
+        {\"v\":\"" . $row['JobId'] . "\",\"f\":null},
+        {\"v\":\"" . $row['Date'] . "\",\"f\":null},
+        {\"v\":\"" . $row['Cores JobNumCores  Nodes Threads'] . "\",\"f\":null},
+        {\"v\":\"" . $row['Account'] . "\",\"f\":null},
+        {\"v\":\"" . $row['ExecType'] . "\",\"f\":null},
+        {\"v\":\"" . $row['RunTime'] . "\",\"f\":null},
+        {\"v\":\"" . $row['ExitCode'] . "\",\"f\":null},
+        {\"v\":\"" . $row['RunUser'] . "\",\"f\":null},
+        {\"v\":\"" . $cwd . "\",\"f\":null}
+        ]}, ";
+        }
 
-}
-echo " ] }";
+    }
+    echo " ] }";
 }
 
 catch(PDOException $e) {
