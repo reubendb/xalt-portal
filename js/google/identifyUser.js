@@ -23,7 +23,7 @@ function identifyUser(sysHost, startDate, endDate, objPath, execName, query) {
     var idsToHide = ['lblIdentifyUser0', 'identify_user_div', 'lblIdentifyUser1', 
         'lblIdentifyExec0', 'identify_exec_div', 'lblIdentifyExec1', 
         'lblIdenExecDetail0','identify_exDetail_div', 'lblIdenRun0', 
-        'identify_run_div','lblObj', 'obj_div', 'lblRunObj', 'runObj_div', 
+        'identify_run_div','lblIdenRun1', 'lblObj', 'obj_div', 'lblRunObj', 'runObj_div', 
         'lblRunEnv', 'run_env_div','lblFunc', 'func_div']; 
     hideAllDivs(idsToHide);
 
@@ -75,7 +75,7 @@ function gTi1(sysHost, startDate, endDate,objPath, execName, user, query) {     
     // Hide all tables which are not required.
     var idsToHide = [ 'lblIdentifyExec0', 'identify_exec_div', 'lblIdentifyExec1',
         'lblIdenExecDetail0', 'identify_exDetail_div', 'lblIdenRun0', 'identify_run_div',
-        'lblObj', 'obj_div', 'lblRunObj', 'runObj_div', 'lblRunEnv', 'run_env_div',
+        'lblIdenRun1', 'lblObj', 'obj_div', 'lblRunObj', 'runObj_div', 'lblRunEnv', 'run_env_div',
         'lblFunc', 'func_div']; 
     hideAllDivs(idsToHide);
 
@@ -139,7 +139,7 @@ function gTi2(sysHost, startDate, endDate,objPath, user, exec, query, page, tota
 
     // Hide all tables which are not required.
     var idsToHide = ['lblIdenExecDetail0', 'identify_exDetail_div', 
-        'lblIdenRun0', 'identify_run_div','lblObj', 'obj_div', 'lblRunObj', 
+        'lblIdenRun0', 'identify_run_div','lblIdenRun1','lblObj', 'obj_div', 'lblRunObj', 
         'runObj_div', 'lblRunEnv', 'run_env_div', 'lblFunc', 'func_div']; 
     hideAllDivs(idsToHide);
 
@@ -195,7 +195,7 @@ function gTi3(uuid) {         /* get run details */
     var div_id = 'identify_run_div';
 
     // Hide all tables which are not required.
-    var idsToHide = ['lblIdenRun0', 'identify_run_div','lblRunObj', 'runObj_div', 
+    var idsToHide = ['lblIdenRun0', 'identify_run_div','lblIdenRun1','lblRunObj', 'runObj_div', 
         'lblRunEnv', 'run_env_div'];
     hideAllDivs(idsToHide);
 
@@ -204,6 +204,7 @@ function gTi3(uuid) {         /* get run details */
 
         document.getElementById("lblIdenRun0").style.visibility = 'visible';
         document.getElementById("identify_run_div").style.visibility = 'visible';
+        document.getElementById("lblIdenRun1").style.visibility = 'visible';
 
         // Create our datatable out of Json Data loaded from php call.
         var TableData = new google.visualization.DataTable(jsonTableData);
