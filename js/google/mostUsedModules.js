@@ -19,8 +19,8 @@ function mostUsedModules(sysHost, startDate, endDate, numRec) {
          }).responseText;
 
     // Hide all tables which are not required.
-    var idsToHide = ['lblModVer0', 'mod3_div', 'lblModVer1', 'lblUserList0', 'mod4_div',
-        'lblUserList1','lblExecList0','exec_div', 'lblExecList1', 'lblExecDetailRow', 
+    var idsToHide = ['mod1_div', 'mod2_div','lblModVer0', 'mod3_div', 'lblModVer1', 'lblUserList0', 
+        'mod4_div','lblUserList1','lblExecList0','exec_div', 'lblExecList1', 'lblExecDetailRow', 
         'lblExecDetailList','exec_detail_div','lblRunDetail','run_detail_div', 'lblRunDetail1',
         'lblObj', 'obj_div', 'lblRunObj', 'runObj_div', 'lblRunEnv', 'run_env_div',
         'lblFunc', 'func_div'];
