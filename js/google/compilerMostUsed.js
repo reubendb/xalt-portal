@@ -17,9 +17,9 @@ function compilerMostUsed(sysHost, startDate, endDate, numRec) {
          }).responseText;
 
     // List ids to hide
-    var idsToHide = ['lblCompUser0', 'comp3_div', 'lblCompUser1', 'lblCompExec0', 'lblCompExec1', 
-        'comp4_div', 'lblCompExecRow', 'lblCompExecDetail0','comp5_div',
-        'lblCompRun0','comp6_div','lblCompRunDetail1', 'lblObj1', 'obj_div1', 
+    var idsToHide = ['comp1_div','comp2_div','lblCompUser0', 'comp3_div', 'lblCompUser1', 
+        'lblCompExec0', 'lblCompExec1', 'comp4_div', 'lblCompExecRow', 'lblCompExecDetail0',
+        'comp5_div','lblCompRun0','comp6_div','lblCompRunDetail1', 'lblObj1', 'obj_div1', 
         'lblRunObj1', 'runObj_div1','lblRunEnv1', 'run_env_div1','lblFunc1', 'func_div1']; 
     hideAllDivs(idsToHide);
 
