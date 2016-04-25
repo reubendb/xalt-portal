@@ -19,22 +19,26 @@ try {
     $datetime2 = strtotime($endDate);
 
     $days = ($datetime2-$datetime1)/(3600*24);
+    $monFlag = False; $weekFlag = False; $dayFlag = False;
 
     switch(true) {
     case ($days > 30) :           # group by month 
-        $dateFormat = " DATE_FORMAT(xr.date, '%b') AS Month ";
+        $dateFormat    = " DATE_FORMAT(xr.date, '%b') AS Month ";
         $xl_dateFormat = " DATE_FORMAT(xl.date, '%b') AS Month ";
-        $groupBy    = " GROUP BY Month, Year ";
+        $groupBy       = " GROUP BY Month, Year ";
+        $monFlag       = True;
         break;
     case ($days < 30 && $days > 7):    # group by week
-        $dateFormat = " DATE_FORMAT(xr.date, '%u') AS Week ";
+        $dateFormat    = " DATE_FORMAT(xr.date, '%u') AS Week ";
         $xl_dateFormat = " DATE_FORMAT(xl.date, '%u') AS Week ";
-        $groupBy    = " GROUP BY Week, Year ";
+        $groupBy       = " GROUP BY Week, Year ";
+        $weekFlag      = True;
         break;
     case ($days < 7) :            # group by day
-        $dateFormat = " DATE_FORMAT(xr.date, '%d-%b') AS Day ";
+        $dateFormat    = " DATE_FORMAT(xr.date, '%d-%b') AS Day ";
         $xl_dateFormat = " DATE_FORMAT(xl.date, '%d-%b') AS Day ";
-        $groupBy    = " GROUP BY Day, Year ";
+        $groupBy       = " GROUP BY Day, Year ";
+        $dayFlag       = True;
         break;
     }
 
@@ -85,21 +89,55 @@ foreach($result as $row){
     $avg = 0;
     $avg = ($row['RunUsers'] + $result2[$i]['BuildUsers'] ) / 2;
 
-    if ($row_num == $total_rows){
-        echo "{\"c\":[
-    {\"v\":\"" . $row['DateTimeRange'] . "\",\"f\":null},
-    {\"v\":" . $row['RunUsers'] . ",\"f\":null},
-    {\"v\":" . $result2[$i]['BuildUsers'] . ",\"f\":null},
-    {\"v\":" . $avg . ",\"f\":null}
-    ]}";
-    } else {
-        echo "{\"c\":[
-    {\"v\":\"" . $row['DateTimeRange'] . "\",\"f\":null},
-    {\"v\":" . $row['RunUsers'] . ",\"f\":null},
-    {\"v\":" . $result2[$i]['BuildUsers'] . ",\"f\":null},
-    {\"v\":" . $avg . ",\"f\":null}
-    ]}, ";
-    } 
+    if ($monFlag){
+        if ($row_num == $total_rows){
+            echo "{\"c\":[
+        {\"v\":\"" . $row['Month'] . "\",\"f\":null},
+        {\"v\":" . $row['RunUsers'] . ",\"f\":null},
+        {\"v\":" . $result2[$i]['BuildUsers'] . ",\"f\":null},
+        {\"v\":" . $avg . ",\"f\":null}
+        ]}";
+        } else {
+            echo "{\"c\":[
+        {\"v\":\"" . $row['Month'] . "\",\"f\":null},
+        {\"v\":" . $row['RunUsers'] . ",\"f\":null},
+        {\"v\":" . $result2[$i]['BuildUsers'] . ",\"f\":null},
+        {\"v\":" . $avg . ",\"f\":null}
+        ]}, ";
+        } 
+    } elseif ($weekFlag){
+        if ($row_num == $total_rows){
+            echo "{\"c\":[
+        {\"v\":\"" . $row['DateTimeRange'] . "\",\"f\":null},
+        {\"v\":" . $row['RunUsers'] . ",\"f\":null},
+        {\"v\":" . $result2[$i]['BuildUsers'] . ",\"f\":null},
+        {\"v\":" . $avg . ",\"f\":null}
+        ]}";
+        } else {
+            echo "{\"c\":[
+        {\"v\":\"" . $row['DateTimeRange'] . "\",\"f\":null},
+        {\"v\":" . $row['RunUsers'] . ",\"f\":null},
+        {\"v\":" . $result2[$i]['BuildUsers'] . ",\"f\":null},
+        {\"v\":" . $avg . ",\"f\":null}
+        ]}, ";
+        } 
+    } elseif ($dayFlag) {
+        if ($row_num == $total_rows){
+            echo "{\"c\":[
+        {\"v\":\"" . $row['Day'] . "\",\"f\":null},
+        {\"v\":" . $row['RunUsers'] . ",\"f\":null},
+        {\"v\":" . $result2[$i]['BuildUsers'] . ",\"f\":null},
+        {\"v\":" . $avg . ",\"f\":null}
+        ]}";
+        } else {
+            echo "{\"c\":[
+        {\"v\":\"" . $row['Day'] . "\",\"f\":null},
+        {\"v\":" . $row['RunUsers'] . ",\"f\":null},
+        {\"v\":" . $result2[$i]['BuildUsers'] . ",\"f\":null},
+        {\"v\":" . $avg . ",\"f\":null}
+        ]}, ";
+        } 
+    }
     $i++;
 }
 echo " ] }";
