@@ -27,7 +27,7 @@ function jobSubmitted(sysHost, startDate, endDate) {
         var options = {title: 'Total Number of Jobs Submitted',
             chartArea: {width: '80%', height:"70%", left: "auto" },
             legend: {position: 'top'},
-            hAxis: {title: 'Time'},
+            hAxis: {title: 'DateTimeRange'},
             vAxis: {title: 'Number of Jobs', format:'short'}
         };
 
