@@ -28,19 +28,23 @@ try {
     $datetime2 = strtotime($endDate);
 
     $days = ($datetime2-$datetime1)/(3600*24);
+    $monFlag = False; $weekFlag = False; $dayFlag = False; 
 
     switch(true) {
     case ($days > 30) :           # group by month 
         $dateFormat = " DATE_FORMAT(xl.date, '%b') AS Month ";
         $groupBy    = " GROUP BY Month, Year ";
+        $monFlag    = True;
         break;
     case ($days < 30 && $days > 7):    # group by week
         $dateFormat = " DATE_FORMAT(xl.date, '%u') AS Week ";
         $groupBy    = " GROUP BY Week, Year ";
+        $weekFlag    = True;
         break;
     case ($days < 7) :            # group by day
         $dateFormat = " DATE_FORMAT(xl.date, '%d-%b') AS Day ";
         $groupBy    = " GROUP BY Day, Year ";
+        $dayFlag    = True;
         break;
     }
 
@@ -59,17 +63,17 @@ try {
 
     if(count($sum_col) > 0) {
         $sql = "
-            SELECT Month(xl.date) AS MonNum,
-                DATE_FORMAT(xl.date, '%b') AS Month ,
-                YEAR(xl.date) AS Year,  
-                ".implode(",", $sum_col)."
-                FROM xalt_link xl         
-                WHERE xl.build_syshost='$sysHost' AND          
-                xl.link_program IS NOT NULL AND 
-                xl.link_program NOT LIKE ' ' AND
-                xl.date BETWEEN '$startDate 00:00:00' AND '$endDate 23:59:59'         
-                GROUP BY Month         
-                ORDER BY Year desc, MonNum; 
+            SELECT $dateFormat,
+            date(min(xl.date)) as DateTimeRange,
+            YEAR(xl.date) AS Year,  
+            ".implode(",", $sum_col)."
+            FROM xalt_link xl         
+            WHERE xl.build_syshost='$sysHost' AND          
+            xl.link_program IS NOT NULL AND 
+            xl.link_program NOT LIKE ' ' AND
+            xl.date BETWEEN '$startDate 00:00:00' AND '$endDate 23:59:59'         
+            $groupBy         
+            ORDER BY Year desc, DateTimeRange ASC; 
         ";
     }
 
@@ -78,11 +82,23 @@ try {
     $result = $query->fetchAll(PDO:: FETCH_ASSOC);
 
     /* Get xAxis Category */
-    $month = array();
-    foreach($result as $row){
-        $month[] = $row['Month'];
+    $timeLine    = array();
+    $strTimeLine = "";
+
+    if ($monFlag){
+        foreach($result as $row){
+            $timeLine[] = $row['Month'];
+        }
+    } elseif ($weekFlag){
+        foreach($result as $row){
+            $timeLine[] = $row['DateTimeRange'];
+        }
+    } elseif ($dayFlag){
+        foreach($result as $row){
+            $timeLine[] = $row['Day'];
+        }
     }
-    $strmonth = implode(",", $month);
+    $strTimeLine = implode(",", $timeLine);
 
     /* make dataseries in JSON format */
     $dataseries = array();
@@ -97,7 +113,7 @@ try {
     $strdataseries = "[".implode(", ",$dataseries)."]";
 
     # header and body of the json data chart
-    echo ($strmonth. "#");
+    echo ($strTimeLine. "#");
     echo ($strdataseries); 
 }
 catch(PDOException $e) {
