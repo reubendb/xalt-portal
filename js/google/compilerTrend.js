@@ -15,14 +15,14 @@ function compilerTrend(sysHost, startDate, endDate){
     var dataChart = chartData.split('#');
 
     // Get column body of dataseries 
-    var dc = JSON.parse(dataChart[1]);
-    var dctg = dataChart[0].split(",");
+    var dc = JSON.parse(dataChart[1]);     // DataSeries
+    var dctg = dataChart[0].split(",");    // DateTimeRange
 
     // call chart to render
     var chart = new Highcharts.Chart(
             {chart: {renderTo: 'comp_div',defaultSeriesType: 'line'}
             ,title: {text: 'Compiler Trend Over Time'}
-            ,xAxis: {categories: dctg}
+            ,xAxis: {title:{text: 'DateTimeRange'}, categories: dctg}
             ,yAxis: {title: 
             {text: '#Instance'},plotLines: [{value: 0,width: 1,color: '#808080'}]
             }
